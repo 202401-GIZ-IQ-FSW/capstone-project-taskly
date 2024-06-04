@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // example route structure
-app.use('/api/v1/', 'routeHandler');
+// app.use('/api/v1', 'routeHandlerHere');
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);

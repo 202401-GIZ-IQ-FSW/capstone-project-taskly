@@ -1,5 +1,5 @@
 {
-  "name": "Capstone-Server",
+  "name": "capstone-cerver-taskly",
   "version": "1.0.0",
   "description": "Express server for capstone",
   "main": "index.js",
