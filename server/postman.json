@@ -1,0 +1,688 @@
+{
+  "info": {
+    "_postman_id": "your_unique_postman_id",
+    "name": "Taskly API",
+    "description": "Ticket Management App",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "User Management",
+      "item": [
+        {
+          "name": "Register a new user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "register"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login an existing user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout the currently logged-in user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/auth/logout",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "logout"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get user profile information",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/users/{{userId}}/profile",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "users", "{{userId}}", "profile"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update user profile information",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/users/{{userId}}/profile",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "users", "{{userId}}", "profile"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Upload a new profile picture",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/users/{{userId}}/profile-picture",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "users", "{{userId}}", "profile-picture"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin Action",
+      "item": [
+        {
+          "name": "Delete a user by ID (Admin access only)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/users/{{userId}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "users", "{{userId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Project Management",
+      "item": [
+        {
+          "name": "Create a new project",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "projects"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all projects for the current user",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "projects"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get a specific project by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects/{{projectId}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "projects", "{{projectId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update a project by ID",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects/{{projectId}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "projects", "{{projectId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete a project by ID",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects/{{projectId}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "projects", "{{projectId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Invite a user to a project (Project Owner only)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects/{{projectId}}/invite",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "projects", "{{projectId}}", "invite"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all members of a project",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects/{{projectId}}/members",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "projects", "{{projectId}}", "members"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove a user from a project (Project Owner only)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects/{{projectId}}/members/{{userId}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "projects", "{{projectId}}", "members", "{{userId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Endpoint to Accept Invitation",
+      "item": [
+        {
+          "name": "Accept an invitation to join a project",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects/{{projectId}}/invite/accept",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "projects", "{{projectId}}", "invite", "accept"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Ticket Management",
+      "item": [
+        {
+          "name": "Create a new ticket within a project",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects/{{projectId}}/tickets",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "projects", "{{projectId}}", "tickets"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all tickets for a project",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects/{{projectId}}/tickets",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "projects", "{{projectId}}", "tickets"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get a specific ticket by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects/{{projectId}}/tickets/{{ticketId}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "projects", "{{projectId}}", "tickets", "{{ticketId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update a ticket by ID",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects/{{projectId}}/tickets/{{ticketId}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "projects", "{{projectId}}", "tickets", "{{ticketId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete a ticket by ID",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects/{{projectId}}/tickets/{{ticketId}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "projects", "{{projectId}}", "tickets", "{{ticketId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Assign Ticket",
+      "item": [
+        {
+          "name": "Assign a ticket to a user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects/{{projectId}}/tickets/{{ticketId}}/assign",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "projects", "{{projectId}}", "tickets", "{{ticketId}}", "assign"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Comment Management",
+      "item": [
+        {
+          "name": "Create a new comment on a ticket",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects/{{projectId}}/tickets/{{ticketId}}/comments",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "projects", "{{projectId}}", "tickets", "{{ticketId}}", "comments"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all comments for a ticket",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects/{{projectId}}/tickets/{{ticketId}}/comments",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "projects", "{{projectId}}", "tickets", "{{ticketId}}", "comments"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get a specific comment by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects/{{projectId}}/tickets/{{ticketId}}/comments/{{commentId}}",
+              "host": ["{{base_url}}"],
+              "path": [
+                "api",
+                "v1",
+                "projects",
+                "{{projectId}}",
+                "tickets",
+                "{{ticketId}}",
+                "comments",
+                "{{commentId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update a comment by ID",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects/{{projectId}}/tickets/{{ticketId}}/comments/{{commentId}}",
+              "host": ["{{base_url}}"],
+              "path": [
+                "api",
+                "v1",
+                "projects",
+                "{{projectId}}",
+                "tickets",
+                "{{ticketId}}",
+                "comments",
+                "{{commentId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete a comment by ID",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects/{{projectId}}/tickets/{{ticketId}}/comments/{{commentId}}",
+              "host": ["{{base_url}}"],
+              "path": [
+                "api",
+                "v1",
+                "projects",
+                "{{projectId}}",
+                "tickets",
+                "{{ticketId}}",
+                "comments",
+                "{{commentId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Ticket Search and Filtering",
+      "item": [
+        {
+          "name": "Search tickets within a project",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects/{{projectId}}/tickets/search?q={query}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "projects", "{{projectId}}", "tickets", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "{query}",
+                  "description": "Search query"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Filter tickets within a project by status and priority",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects/{{projectId}}/tickets/filter?status={status}&priority={priority}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "projects", "{{projectId}}", "tickets", "filter"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "{status}",
+                  "description": "Ticket status"
+                },
+                {
+                  "key": "priority",
+                  "value": "{priority}",
+                  "description": "Ticket priority"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Notification Management",
+      "item": [
+        {
+          "name": "Get all notifications for the current user",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/notifications",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "notifications"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Mark a notification as read",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/notifications/{{notificationId}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "notifications", "{{notificationId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Trigger a notification for an action on a ticket",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects/{{projectId}}/tickets/{{ticketId}}/notify",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "projects", "{{projectId}}", "tickets", "{{ticketId}}", "notify"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Trigger a notification for an action on a project",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/projects/{{projectId}}/notify",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "projects", "{{projectId}}", "notify"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Analytics",
+      "item": [
+        {
+          "name": "User Analytics",
+          "item": [
+            {
+              "name": "Get the total count of tickets created by a user",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {},
+                "url": {
+                  "raw": "{{base_url}}/analytics/users/{{userId}}/tickets/count",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "analytics", "users", "{{userId}}", "tickets", "count"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get the number of resolved tickets assigned to a user",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {},
+                "url": {
+                  "raw": "{{base_url}}/analytics/users/{{userId}}/tickets/resolved",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "analytics", "users", "{{userId}}", "tickets", "resolved"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Project Analytics",
+          "item": [
+            {
+              "name": "Get the total count of tickets for a project",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {},
+                "url": {
+                  "raw": "{{base_url}}/analytics/projects/{{projectId}}/tickets/count",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "analytics", "projects", "{{projectId}}", "tickets", "count"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get the number of resolved tickets for a project",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {},
+                "url": {
+                  "raw": "{{base_url}}/analytics/projects/{{projectId}}/tickets/resolved",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "analytics", "projects", "{{projectId}}", "tickets", "resolved"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Ticket Analytics",
+          "item": [
+            {
+              "name": "Get the total count of tickets",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {},
+                "url": {
+                  "raw": "{{base_url}}/analytics/tickets/count",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "analytics", "tickets", "count"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get the number of resolved tickets",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {},
+                "url": {
+                  "raw": "{{base_url}}/analytics/tickets/resolved",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "analytics", "tickets", "resolved"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get the average resolution time of tickets",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {},
+                "url": {
+                  "raw": "{{base_url}}/analytics/tickets/avg-resolution-time",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "analytics", "tickets", "avg-resolution-time"]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3001/api/v1",
+      "type": "string"
+    }
+  ]
+}
