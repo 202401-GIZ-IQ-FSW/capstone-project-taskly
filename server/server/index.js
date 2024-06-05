@@ -14,7 +14,7 @@ app.use(express.json());
 
 const authRoutes = require('./routes/auth/auth');
 
-app.use('/api/v1', authRoutes);
+app.use('/api/v1/auth', authRoutes);
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
