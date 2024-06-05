@@ -12,8 +12,9 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// example route structure
-// app.use('/api/v1', 'routeHandlerHere');
+const authRoutes = require('./routes/auth/auth');
+
+app.use('/api/v1', authRoutes);
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
