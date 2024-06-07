@@ -1,11 +1,47 @@
-import Test from '../components/Test';
+import React from 'react';
+import Header from '../components/Header';
+import TicketSubmission from '../components/TicketSubmission';
+import TicketStats from '../components/TicketStats';
+import Footer from '../components/Footer';
 
-export default function Home() {
+const Home = () => {
+  const headerLinks = [
+    { text: 'Home', url: '/' },
+    { text: 'Search tickets', url: '/search-tickets' },
+    { text: 'Create', url: '#' },
+    { text: 'Notifications', url: '#' },
+  ];
+
+  const footerLinks = [
+    { text: 'Submit a Ticket', url: '#' },
+    { text: 'Track Ticket', url: '#' },
+    { text: 'Receive', url: '#' },
+    { text: 'Troubleshooting', url: '#' },
+    { text: 'Contact Support', url: '#' },
+  ];
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex ">
-        <Test />
-      </div>
-    </main>
+    <div>
+      <Header links={headerLinks} signInText="Sign In" />
+      <TicketSubmission 
+        title="Submit your technical issues and queries easily!"
+        subtitle="Securely submit and manage support tickets for technical issues"
+        submitText="Submit"
+        newTicketText="New ticket"
+      />
+      <TicketStats 
+        activity="10K+" 
+        submitted="100K+" 
+        resolved="500K+" 
+        supportText="Get help now"
+      />
+      <Footer 
+        companyName="TicketMaster" 
+        footerText="Your ultimate ticket support solution!" 
+        links={footerLinks}
+      />
+    </div>
   );
-}
+};
+
+export default Home;

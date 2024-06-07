@@ -1,3 +1,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #f8f9fa;
+}
+
+nav a {
+  margin: 0 10px;
+}
+
+.ticket-submission {
+  text-align: center;
+  padding: 20px;
+  background-color: #e9ecef;
+}
+
+.ticket-stats {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+.stat {
+  text-align: center;
+}
+
+footer {
+  padding: 20px;
+  background-color: #e9ecef;
+  text-align: center;
+}
+
+footer nav a {
+  margin: 0 10px;
+}
