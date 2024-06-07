@@ -13,8 +13,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 const authRoutes = require('./routes/auth/auth');
+const ticketRoutes = require('./routes/ticket/ticket');
 
 app.use('/api/v1/auth', authRoutes);
+app.use(ticketRoutes);
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
