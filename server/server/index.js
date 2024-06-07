@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+// const session = require('express-session');
+const passport = require('./config/passportConfig');
 
 require('dotenv').config();
 
@@ -11,6 +13,9 @@ const port = process.env.NODE_ENV === 'test' ? process.env.NODE_LOCAL_TEST_PORT 
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 const authRoutes = require('./routes/auth/auth');
 
