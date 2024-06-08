@@ -10,8 +10,8 @@ router.post('/logout', handleLogout);
 // router.post('/refresh-token', handleRefreshToken);
 
 // Google OAuth routes
-router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-router.get('/auth/google/tickets', passport.authenticate('google', { failureRedirect: '/' }), handleGoogleCallback);
+router.get('/google/tickets', passport.authenticate('google', { failureRedirect: '/' }), handleGoogleCallback);
 
 module.exports = router;
