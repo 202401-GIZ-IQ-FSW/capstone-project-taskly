@@ -2,7 +2,8 @@ const express = require('express');
 const cors = require('cors');
 // const session = require('express-session');
 const passport = require('./config/passportConfig');
-
+const path = require('path')
+ 
 require('dotenv').config();
 
 const connectToMongo = require('./db/connection');
@@ -10,15 +11,19 @@ const connectToMongo = require('./db/connection');
 const app = express();
 const port = process.env.NODE_ENV === 'test' ? process.env.NODE_LOCAL_TEST_PORT : process.env.NODE_LOCAL_PORT;
 
+// a middleware for return static files like pictures when i want to search about them after uploading 
+app.use(express.static(path.join(__dirname, './images')));
+
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 
 const authRoutes = require('./routes/auth/auth');
 const ticketRoutes = require('./routes/ticket/ticket');
+const profileUser = require('./routes/userProfile/profile')
 
 app.use('/api/v1/auth', authRoutes);
 app.use(ticketRoutes);
