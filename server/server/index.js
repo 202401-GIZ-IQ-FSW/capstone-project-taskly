@@ -10,6 +10,7 @@ const cookieParser = require('cookie-parser');
 // routes
 const authRoutes = require('./routes/auth/auth');
 const ticketRoutes = require('./routes/tickets/ticket');
+const verifyJWT = require('./middleware/verifyJWT');
 
 const app = express();
 const port = process.env.NODE_ENV === 'test' ? process.env.NODE_LOCAL_TEST_PORT : process.env.NODE_LOCAL_PORT;
@@ -24,6 +25,8 @@ app.use(cookieParser());
 // app.use(passport.session());
 
 app.use('/api/v1/auth', authRoutes);
+
+app.use(verifyJWT); // everything below this line will use verifyJWT
 app.use('/api/v1/projects/:projectId/tickets', ticketRoutes);
 
 app.listen(port, () => {
