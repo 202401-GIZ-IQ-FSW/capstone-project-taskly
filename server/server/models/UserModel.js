@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const USER_ROLES = require('../config/userRoles');
+const { passwordValidation } = require('../util/passwordValidation');
 
 const userSchema = new mongoose.Schema(
   {
@@ -24,7 +25,12 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: [true, 'Please add a password'],
+      validate: {
+        validator: passwordValidation,
+        message:
+          'Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, and a special character.',
+      },
     },
     profile_picture: {
       type: String,

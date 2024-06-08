@@ -41,9 +41,9 @@ const handleLogin = async (req, res) => {
   const { email, username, password } = req.body;
 
   // Basic validation
-  // if (!email || !password ) {
-  //   return res.status(400).json({ message: 'Please provide email and password' });
-  // }
+  if ((!email || !username) && !password) {
+    return res.status(400).json({ message: 'Please provide email or username and password' });
+  }
   try {
     // Find the user by email or username
     const user = await UserModel.findOne({ $or: [{ username }, { email }] });
