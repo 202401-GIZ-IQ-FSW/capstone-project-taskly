@@ -12,6 +12,7 @@ router.post('/logout', handleLogout);
 // Google OAuth routes
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
+// this was causing error
 // router.get('/google/tickets', passport.authenticate('google', { failureRedirect: '/' }), handleGoogleCallback);
 
 module.exports = router;
