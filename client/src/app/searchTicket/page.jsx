@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import SearchTickets from '../components/SearchTickets';
+import SearchTickets from '../components/searchTicket/SearchTickets';
 
 const SearchTicketsPage = () => {
   const handleSearch = () => {
