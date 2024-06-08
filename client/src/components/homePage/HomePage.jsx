@@ -7,11 +7,10 @@ import Footer from '../footer/Footer';
 const Home = () => {
   const headerLinks = [
     { text: 'Home', url: '/' },
-    { text: 'Search tickets', url: '/search-tickets' },
     { text: 'Create', url: '#' },
     { text: 'Notifications', url: '#' },
   ];
-
+  
   const footerLinks = [
     { text: 'Submit a Ticket', url: '#' },
     { text: 'Track Ticket', url: '#' },
