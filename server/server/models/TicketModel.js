@@ -2,7 +2,16 @@ const mongoose = require('mongoose');
 
 const ticketSchema = new mongoose.Schema(
   {
+    project_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Project',
+      required: true,
+    },
     title: {
+      type: String,
+      required: true,
+    },
+    description: {
       type: String,
       required: true,
     },
@@ -16,16 +25,7 @@ const ticketSchema = new mongoose.Schema(
       enum: ['low', 'medium', 'high'],
       default: 'medium',
     },
-    projectId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Project',
-      required: true,
-    },
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-    },
-    assignedTo: {
+    assignee_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       default: null,
@@ -34,4 +34,6 @@ const ticketSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Ticket', ticketSchema);
+const TicketModel = mongoose.model('Ticket', ticketSchema);
+
+module.exports = TicketModel;
