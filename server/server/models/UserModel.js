@@ -34,6 +34,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: USER_ROLES.User,
     },
+    refresh_token: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true }
 );
@@ -52,7 +56,7 @@ userSchema.pre('save', async function (next) {
 });
 
 // Method to compare entered password with the hashed password
-userSchema.methods.comparePassword = async function (password) {
+userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 

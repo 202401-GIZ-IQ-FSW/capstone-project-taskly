@@ -1,11 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 // const session = require('express-session');
-const passport = require('./config/passportConfig');
+// const passport = require('./config/passportConfig');
 
 require('dotenv').config();
 
 const connectToMongo = require('./db/connection');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const port = process.env.NODE_ENV === 'test' ? process.env.NODE_LOCAL_TEST_PORT : process.env.NODE_LOCAL_PORT;
@@ -13,9 +14,10 @@ const port = process.env.NODE_ENV === 'test' ? process.env.NODE_LOCAL_TEST_PORT 
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cookieParser());
 
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 const authRoutes = require('./routes/auth/auth');
 const ticketRoutes = require('./routes/ticket/ticket');
