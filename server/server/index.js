@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-// const session = require('express-session');
-// const passport = require('./config/passportConfig');
+const projectRoutes = require('./routes/project/project')
 
 require('dotenv').config();
 
@@ -20,11 +19,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
 
-// these are causign errors so I commented them
-// app.use(passport.initialize());
-// app.use(passport.session());
+
 
 app.use('/api/v1/auth', authRoutes);
+// routes for project crud
+app.use(projectRoutes);
+
 
 app.use(verifyJWT); // everything below this line will use verifyJWT
 app.use('/api/v1/projects/:projectId/tickets', ticketRoutes);
