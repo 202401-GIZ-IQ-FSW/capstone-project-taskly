@@ -5,6 +5,11 @@ const { passwordValidation } = require('../util/passwordValidation');
 
 const userSchema = new mongoose.Schema(
   {
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true, // Allows multiple users without a Google ID
+    },
     username: {
       type: String,
       required: true,

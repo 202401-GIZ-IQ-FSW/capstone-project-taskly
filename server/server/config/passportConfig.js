@@ -32,6 +32,7 @@ passport.use(
             last_name: profile.name.familyName,
             email: profile.emails[0].value,
             profile_picture: profile.photos[0].value,
+            password: null,
           });
           await user.save();
         }
