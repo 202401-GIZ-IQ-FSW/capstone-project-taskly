@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const USER_ROLES = require('../config/userRoles');
+const { passwordValidation } = require('../util/passwordValidation');
 
 const userSchema = new mongoose.Schema(
   {
@@ -24,7 +25,12 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: [true, 'Please add a password'],
+      validate: {
+        validator: passwordValidation,
+        message:
+          'Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, and a special character.',
+      },
     },
     profile_picture: {
       type: String,
@@ -33,6 +39,10 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       default: USER_ROLES.User,
+    },
+    refresh_token: {
+      type: String,
+      default: null,
     },
   },
   { timestamps: true }
@@ -52,11 +62,10 @@ userSchema.pre('save', async function (next) {
 });
 
 // Method to compare entered password with the hashed password
-userSchema.methods.comparePassword = async function (password) {
+userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-// Create the User model
 const UserModel = mongoose.model('User', userSchema);
 
 module.exports = UserModel;

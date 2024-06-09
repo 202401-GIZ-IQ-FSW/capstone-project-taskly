@@ -1,7 +1,5 @@
 const UserModel = require('../../models/UserModel');
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
 
 const handleRegistration = async (req, res) => {
   const { username, first_name, last_name, email, password } = req.body;
@@ -23,7 +21,7 @@ const handleRegistration = async (req, res) => {
 
     // Save the user to the database
     await newUser.save();
-    // Return the registered user details excluding the password
+    // Return the registered user details
     res.status(201).json({
       message: 'User registered successfully',
       user: {
@@ -32,61 +30,87 @@ const handleRegistration = async (req, res) => {
         first_name: newUser.first_name,
         last_name: newUser.last_name,
         email: newUser.email,
-        profile_picture: newUser.profile_picture,
-        role: newUser.role,
-        createdAt: newUser.createdAt,
-        updatedAt: newUser.updatedAt,
       },
     });
   } catch (error) {
-    console.error('Error registering user:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 };
 
 const handleLogin = async (req, res) => {
+  const { email, username, password } = req.body;
+
+  // Basic validation
+  if ((!email || !username) && !password) {
+    return res.status(400).json({ message: 'Please provide email or username and password' });
+  }
   try {
-    const { email, password } = req.body;
+    // Find the user by email or username
+    const user = await UserModel.findOne({ $or: [{ username }, { email }] });
 
-    // Find the user by email
-    const checkUser = await UserModel.findOne({ email });
-
-    if (!checkUser) {
+    if (!user) {
       return res.status(401).json({ message: 'Authentication failed! User not found.' });
     }
 
     // Compare the provided password with the stored hashed password
-    const isMatch = await bcrypt.compare(password, checkUser.password);
+    const isMatch = await user.isCorrectPassword(password);
 
     if (!isMatch) {
       return res.status(401).json({ message: 'Authentication failed! Wrong password.' });
     }
 
-    // If password matches, create a JWT token
-    const token = jwt.sign({ id: checkUser._id, email: checkUser.email }, process.env.JWT_SECRET, { expiresIn: '72h' });
+    // If password matches, create JWT tokens
+    const userInfo = { id: user._id, role: user.role };
+    const accessToken = jwt.sign({ userInfo }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+    const refreshToken = jwt.sign({ userInfo }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
 
-    // Return the token and user info (excluding password)
-    return res.status(200).json({ message: 'Login successful', token, user: { id: checkUser._id, email: checkUser.email, username: checkUser.username } });
+    // Store refresh token in the database
+    user.refresh_token = refreshToken;
+    await user.save();
+
+    // Set refresh token in cookie
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      sameSite: 'None',
+      secure: true,
+      maxAge: 24 * 60 * 60 * 1000, // one day
+    });
+
+    // Return the access token and user info
+    const { password: _password, refreshToken: _refreshToken, ...userData } = user._doc;
+
+    res.status(200).json({
+      message: 'Login successful',
+      accessToken,
+      user: userData,
+    });
   } catch (error) {
-    return res.status(500).json({ message: 'An error occurred during login', error });
+    res.status(500).json({ message: 'Something went wrong', error: error.message });
   }
 };
 
 const handleLogout = async (req, res) => {
+  const cookies = req.cookies;
+  if (!cookies?.refreshToken) return res.sendStatus(204); // No content
+  const refreshToken = cookies.refreshToken;
   try {
-    // If you're using sessions:
-    // req.session.destroy((err) => {
-    //   if (err) {
-    //     return res.status(500).json({ message: 'An error occurred during logout', error: err });
-    //   }
-    //   res.status(200).json({ message: 'Logout successful' });
-    // });
+    // Find the user by refresh token
+    const user = await UserModel.findOne({ refresh_token: refreshToken });
 
-    // If you're using JWTs:
-    // Simply instruct the client to discard the token
+    if (!user) {
+      res.clearCookie('refreshToken', { httpOnly: true, sameSite: 'None', secure: true });
+      return res.sendStatus(204);
+    }
+
+    // Delete the refresh token from the database
+    user.refresh_token = null;
+    await user.save();
+
+    // Clear the refresh token cookie
+    res.clearCookie('refreshToken', { httpOnly: true, sameSite: 'None', secure: true });
     res.status(200).json({ message: 'Logout successful' });
   } catch (error) {
-    return res.status(500).json({ message: 'An error occurred during logout', error });
+    return res.status(500).json({ message: 'An error occurred during logout', error: error.message });
   }
 };
 
