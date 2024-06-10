@@ -23,11 +23,12 @@ app.use(cookieParser());
 
 app.use('/api/v1/auth', authRoutes);
 // routes for project crud
-app.use(projectRoutes);
 
 
 app.use(verifyJWT); // everything below this line will use verifyJWT
 app.use('/api/v1/projects/:projectId/tickets', ticketRoutes);
+app.use('/api/v1/projects', projectRoutes);
+
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
