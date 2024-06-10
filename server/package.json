@@ -5,15 +5,16 @@
   "main": "index.js",
   "scripts": {
     "start:app": "NODE_ENV=development nodemon server/index.js",
-    "postinstall": "CONT=$(docker ps -aqf name=node-app) && [ $CONT ] && docker exec -w /backend-app $CONT npm i || true",
+    "postinstall": "docker-compose exec -w /backend-app app npm install || true",
     "start": "docker-compose up",
     "build": "docker-compose up --build",
     "prune": "docker-compose down -v",
     "stop": "docker-compose down",
     "test:app": "NODE_ENV=test jest --noStackTrace --forceExit --detectOpenHandles",
-    "test": "docker exec -t -w /backend-app node-app npm run test:app"
+    "test": "docker exec -t -w /backend-app node-app npm run test:app",
+    "reset": "docker-compose up -d && npm install && npm run stop && npm run build"
   },
-  "author": "",
+  "author": "Ninos,Ali,Elaf,Merah,Ahmed AL-Essam",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
