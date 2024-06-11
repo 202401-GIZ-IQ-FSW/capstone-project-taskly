@@ -5,21 +5,16 @@ const { passwordValidation } = require('../util/passwordValidation');
 
 const userSchema = new mongoose.Schema(
   {
-    googleId: {
-      type: String,
-      unique: true,
-      sparse: true, // Allows multiple users without a Google ID
-    },
     username: {
       type: String,
       required: true,
       unique: true,
     },
-    first_name: {
+    firstName: {
       type: String,
       required: true,
     },
-    last_name: {
+    lastName: {
       type: String,
       required: true,
     },
@@ -37,7 +32,7 @@ const userSchema = new mongoose.Schema(
           'Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, and a special character.',
       },
     },
-    profile_picture: {
+    profilePicture: {
       type: String,
       default: '',
     },
@@ -45,9 +40,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: USER_ROLES.User,
     },
-    refresh_token: {
+    refreshToken: {
       type: String,
       default: null,
+    },
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true, // Allows multiple users without a Google ID
     },
   },
   { timestamps: true }

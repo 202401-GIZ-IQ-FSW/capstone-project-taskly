@@ -2,8 +2,8 @@ const TicketModel = require('../../models/TicketModel');
 
 const createTicket = async (req, res) => {
   try {
-    const { title, description, priority, assignee_id } = req.body;
-    const project_id = req.params.projectId;
+    const { title, description, priority, assigneeId } = req.body;
+    const projectId = req.params.projectId;
 
     // Basic validation
     if (!title || !description) {
@@ -14,8 +14,8 @@ const createTicket = async (req, res) => {
       title,
       description,
       priority,
-      project_id,
-      assignee_id,
+      projectId,
+      assigneeId,
     });
     await newTicket.save();
     res.status(201).json(newTicket);
@@ -26,8 +26,8 @@ const createTicket = async (req, res) => {
 
 const getAllTickets = async (req, res) => {
   try {
-    const project_id = req.params.projectId;
-    const tickets = await TicketModel.find({ project_id }).populate('assignee_id', 'username email');
+    const projectId = req.params.projectId;
+    const tickets = await TicketModel.find({ projectId }).populate('assigneeId', 'username email');
 
     res.json(tickets);
   } catch (error) {
@@ -39,7 +39,7 @@ const getTicketById = async (req, res) => {
   try {
     const ticketId = req.params.ticketId;
 
-    const ticket = await TicketModel.findById(ticketId).populate('assignee_id', 'username email');
+    const ticket = await TicketModel.findById(ticketId).populate('assigneeId', 'username email');
     if (ticket) {
       res.json(ticket);
     } else {
@@ -83,12 +83,12 @@ const deleteTicket = async (req, res) => {
 
 const assignTicket = async (req, res) => {
   try {
-    const { assignee_id } = req.body;
+    const { assigneeId } = req.body;
 
     const findTicket = await TicketModel.findById(req.params.ticketId);
 
     if (findTicket) {
-      findTicket.assignee_id = assignee_id;
+      findTicket.assigneeId = assigneeId;
       await findTicket.save();
       res.json(findTicket);
     } else {

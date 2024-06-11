@@ -2,7 +2,7 @@ const UserModel = require('../../models/UserModel');
 const jwt = require('jsonwebtoken');
 
 const handleRegistration = async (req, res) => {
-  const { username, first_name, last_name, email, password } = req.body;
+  const { username, firstName, lastName, email, password } = req.body;
   try {
     // Check if user with the same username or email already exists
     const existingUser = await UserModel.findOne({ $or: [{ username }, { email }] });
@@ -13,8 +13,8 @@ const handleRegistration = async (req, res) => {
     // Create a new user
     const newUser = new UserModel({
       username,
-      first_name,
-      last_name,
+      firstName,
+      lastName,
       email,
       password,
     });
@@ -27,8 +27,8 @@ const handleRegistration = async (req, res) => {
       user: {
         _id: newUser._id,
         username: newUser.username,
-        first_name: newUser.first_name,
-        last_name: newUser.last_name,
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
         email: newUser.email,
       },
     });
@@ -65,7 +65,7 @@ const handleLogin = async (req, res) => {
     const refreshToken = jwt.sign({ userInfo }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
 
     // Store refresh token in the database
-    user.refresh_token = refreshToken;
+    user.refreshToken = refreshToken;
     await user.save();
 
     // Set refresh token in cookie
@@ -95,7 +95,7 @@ const handleLogout = async (req, res) => {
   const refreshToken = cookies.refreshToken;
   try {
     // Find the user by refresh token
-    const user = await UserModel.findOne({ refresh_token: refreshToken });
+    const user = await UserModel.findOne({ refreshToken });
 
     if (!user) {
       res.clearCookie('refreshToken', { httpOnly: true, sameSite: 'None', secure: true });
@@ -103,7 +103,7 @@ const handleLogout = async (req, res) => {
     }
 
     // Delete the refresh token from the database
-    user.refresh_token = null;
+    user.refreshToken = null;
     await user.save();
 
     // Clear the refresh token cookie
