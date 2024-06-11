@@ -3,22 +3,9 @@ import Header from '../header/Header';
 import TicketSubmission from '../tickets/TicketSubmission';
 import TicketStats from '../tickets/TicketStats';
 import Footer from '../footer/Footer';
+import { headerLinks, footerLinks } from '@/data/Links';
 
 const Home = () => {
-  const headerLinks = [
-    { text: 'Home', url: '/' },
-    { text: 'Create', url: '#' },
-    { text: 'Notifications', url: '#' },
-  ];
-  
-  const footerLinks = [
-    { text: 'Submit a Ticket', url: '#' },
-    { text: 'Track Ticket', url: '#' },
-    { text: 'Receive', url: '#' },
-    { text: 'Troubleshooting', url: '#' },
-    { text: 'Contact Support', url: '#' },
-  ];
-
   return (
     <div>
       <Header links={headerLinks} signInText="Sign In" />

@@ -19,10 +19,8 @@ const Header = ({ links, signInText }) => {
       <div>Tickets</div>
       <nav>
         {links.map((link, index) => (
-          <Link key={index} href={link.url} legacyBehavior>
-            <a className="mr-4 text-gray-700 hover:text-gray-900">
+          <Link key={index} href={link.url} className="mr-4 text-gray-700 hover:text-gray-900">
               {link.text}
-            </a>
           </Link>
         ))}
         <button onClick={openModal}>Search tickets</button>

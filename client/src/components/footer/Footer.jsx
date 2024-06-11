@@ -16,8 +16,8 @@ const Footer = ({ companyName, footerText, links }) => (
 
     <nav className="flex flex-col text-right">
       {links.map((link, index) => (
-        <Link href={link.url} legacyBehavior>
-          <a key={index}>{link.text}</a>
+        <Link href={link.url} key={index}>
+          {link.text}
         </Link>
       ))}
     </nav>
