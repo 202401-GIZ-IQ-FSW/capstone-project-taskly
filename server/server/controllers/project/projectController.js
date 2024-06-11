@@ -57,9 +57,10 @@ const updateProject = async (req, res) => {
   const projectId = req.params.projectId;
   const { name, description } = req.body;
 
-  // Check if there is info provided or not
   if (!name && !description) {
-    return res.status(400).json({ message: 'At least one field is required to update the project' });
+    return res
+      .status(400)
+      .json({ message: 'please provide a new name or description to update the project' });
   }
 
   try {
@@ -80,10 +81,10 @@ const deleteProject = async (req, res) => {
     const deletedProject = await ProjectModel.findByIdAndDelete(projectId);
 
     if (!deletedProject) {
-      return res.status(404).json({ message: 'project does not exist' });
+      return res.status(404).json({ message: 'Project does not exist' });
     }
 
-    res.status(204).json();
+    res.status(200).json({ message: 'Project deleted successfully' });
   } catch (error) {
     res.status(500).json({ error: 'An error occurred while deleting the project', message: error.message });
   }
