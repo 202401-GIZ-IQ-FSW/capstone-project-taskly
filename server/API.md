@@ -106,15 +106,6 @@
 - created_at
 - updated_at
 
-### ProjectMember
-
-- id (unique identifier)
-- project_id (ID of the project)
-- user_id (ID of the user)
-- role (owner, member)
-- created_at
-- updated_at
-
 #### Ticket
 
 - id (unique identifier)
