@@ -5,6 +5,7 @@ const projectSchema = new mongoose.Schema(
     name: { type: String, required: true },
     description: { type: String, required: true },
     ownerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   },
   { timestamps: true }
 );
