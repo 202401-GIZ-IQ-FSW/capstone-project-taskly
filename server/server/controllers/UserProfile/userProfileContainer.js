@@ -67,7 +67,7 @@ const uploadProfilePicture = async (req, res) => {
     user.profilePicture = imagePath;
     await user.save();
 
-    res.status(200).json({ message: 'Image updated successfully' });
+    res.status(200).json({ message: 'Image uploaded successfully' });
   } catch (error) {
     // Handle any errors that might occur during upload
     console.error('Error uploading image:', error);

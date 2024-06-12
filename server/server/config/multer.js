@@ -1,12 +1,16 @@
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 
 // Configure disk storage for uploaded files
 const storage = multer.diskStorage({
   // Set the destination directory for uploaded files
   destination: function (req, file, cb) {
-    // Save files in the 'images' directory relative to the project's root
-    cb(null, path.join(__dirname, '../images'));
+    // Create a new folder with the username if it doesn't exist
+    const username = req.user.username;
+    const userFolder = path.join(__dirname, `../images/${username}`);
+    fs.mkdirSync(userFolder, { recursive: true }); // Create folder recursively
+    cb(null, userFolder);
   },
   // Set the filename for uploaded files
   filename: function (req, file, cb) {
