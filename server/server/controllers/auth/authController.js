@@ -82,6 +82,7 @@ const handleLogin = async (req, res) => {
     res.status(200).json({
       message: 'Login successful',
       accessToken,
+      refreshToken,
       user: userData,
     });
   } catch (error) {
