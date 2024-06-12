@@ -11,4 +11,7 @@ router.put('/profile', userController.updateUserProfile);
 // - POST /api/v1/user/profile-picture - Upload a new profile picture
 router.post('/profile-picture', userController.upload.single('image'), userController.uploadProfilePicture);
 
+// - POST /api/v1/user/change-password - Change user password
+router.put('/profile/change-password', userController.changePassword);
+
 module.exports = router;
