@@ -8,7 +8,7 @@
 	},
 	"item": [
 		{
-			"name": "User Management",
+			"name": "Auth",
 			"item": [
 				{
 					"name": "Register a new user",
@@ -87,22 +87,26 @@
 						}
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "User Profile",
+			"item": [
 				{
 					"name": "Get user profile information",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/v1/users/{{userId}}/profile",
+							"raw": "{{base_url}}/api/v1/user/profile",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"users",
-								"{{userId}}",
+								"user",
 								"profile"
 							]
 						}
@@ -114,17 +118,55 @@
 					"request": {
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lastName\": \"Dinkha\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{base_url}}/api/v1/users/{{userId}}/profile",
+							"raw": "{{base_url}}/api/v1/user/profile",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"users",
-								"{{userId}}",
+								"user",
 								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change password",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPassword\":\"Password123!2\",\r\n     \"newPassword\": \"Password123!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/user/profile/change-password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"profile",
+								"change-password"
 							]
 						}
 					},
@@ -135,16 +177,26 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/Ninos/Downloads/pics/IMG_3295.jpg"
+								}
+							]
+						},
 						"url": {
-							"raw": "{{base_url}}/api/v1/users/{{userId}}/profile-picture",
+							"raw": "{{base_url}}/api/v1/user/profile/profile-picture",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"users",
-								"{{userId}}",
+								"user",
+								"profile",
 								"profile-picture"
 							]
 						}
@@ -154,7 +206,7 @@
 			]
 		},
 		{
-			"name": "Admin Action",
+			"name": "Admin",
 			"item": [
 				{
 					"name": "Delete a user by ID (Admin access only) Copy",
@@ -1069,7 +1121,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6IjY2NjhhZGUzOGJlNTFiNjAxMTRhYjQ0YSIsInJvbGUiOiIzMDEifSwiaWF0IjoxNzE4MTM2Nzc3LCJleHAiOjE3MTgxNDAzNzd9.x-x7ff6NfAjPuRH9vFqfTz9bRrYYxZH_u48KLkL2ri0",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6IjY2NjhhZGUzOGJlNTFiNjAxMTRhYjQ0YSIsInJvbGUiOiIzMDEiLCJ1c2VybmFtZSI6Im5pbm9zZGlua2hhIn0sImlhdCI6MTcxODIyNTQwNCwiZXhwIjoxNzE4MjI5MDA0fQ.NoKkBQMeRAXqoCX_DpinLET16s_sxZWNB-hSNBq-Gb4",
 				"type": "string"
 			}
 		]
