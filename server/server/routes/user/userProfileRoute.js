@@ -10,7 +10,7 @@ router.get('/profile', userController.getUserProfile);
 router.put('/profile', userController.updateUserProfile);
 
 // - POST /api/v1/user/profile-picture - Upload a new profile picture
-router.post('/profile-picture', upload.single('image'), userController.uploadProfilePicture);
+router.post('/profile/profile-picture', upload.single('image'), userController.uploadProfilePicture);
 
 // - POST /api/v1/user/profile/change-password - Change user password
 router.put('/profile/change-password', userController.changePassword);

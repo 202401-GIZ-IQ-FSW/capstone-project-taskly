@@ -6,7 +6,7 @@ const storage = multer.diskStorage({
   // Set the destination directory for uploaded files
   destination: function (req, file, cb) {
     // Save files in the 'images' directory relative to the project's root
-    cb(null, path.join(__dirname, '../../images'));
+    cb(null, path.join(__dirname, '../images'));
   },
   // Set the filename for uploaded files
   filename: function (req, file, cb) {
