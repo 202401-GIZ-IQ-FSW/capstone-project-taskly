@@ -3,7 +3,6 @@ const cors = require('cors');
 const projectRoutes = require('./routes/project/project');
 const userRoutes = require('./routes/userProfile/userProfileRoute');
 
-
 require('dotenv').config();
 
 const connectToMongo = require('./db/connection');
@@ -29,9 +28,7 @@ app.use(verifyJWT); // everything below this line will use verifyJWT
 app.use('/api/v1/projects', projectRoutes);
 
 app.use('/api/v1/users', userRoutes);
-=======
 app.use('/api/v1/projects/:projectId/tickets', ticketRoutes);
-
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
