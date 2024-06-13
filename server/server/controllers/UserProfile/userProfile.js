@@ -4,7 +4,9 @@ const { passwordValidation } = require('../../util/passwordValidation');
 const getUserProfile = async (req, res) => {
   const userId = req.user.id;
   try {
-    const getInfo = await UserModel.findById(userId);
+    const getInfo = await UserModel.findById(userId).select(
+      '-password -refreshToken -role -createdAt -updatedAt'
+    );
     if (!getInfo) {
       return res.status(404).json({ message: 'User information not found' });
     }
