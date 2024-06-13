@@ -60,7 +60,7 @@ const handleLogin = async (req, res) => {
     }
 
     // If password matches, create JWT tokens
-    const userInfo = { id: user._id, role: user.role };
+    const userInfo = { id: user._id, role: user.role, username: user.username };
     const accessToken = jwt.sign({ userInfo }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
     const refreshToken = jwt.sign({ userInfo }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
 

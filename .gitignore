@@ -9,6 +9,9 @@ node_modules
 # testing
 /coverage
 
+# images
+/server/server/images
+
 # next.js
 client/.next/
 /out/
