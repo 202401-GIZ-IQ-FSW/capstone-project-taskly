@@ -1,6 +1,9 @@
 {
   "name": "capstone-cerver-taskly",
   "scripts": {
+    "build": "cd server && docker-compose build",
+    "start-docker":"cd client && docker-compose up -d && cd ../server && docker-compose up -d",
+    "stop": "cd server && docker-compose down && cd .. && cd client && docker-compose down  ",
     "preinstall": "echo Install is not allowed here. cd to server or client to install && exit 1",
     "test": "cd server && npm run test && cd.. && cd client && npm run test"
   },
