@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const projectRoutes = require('./routes/project/project');
 const userRoutes = require('./routes/user/userProfileRoute');
+const {printallroutesintheconsole} = require("./util/devHelpers");
 
 require('dotenv').config();
 
@@ -33,6 +34,7 @@ app.use('/api/v1/projects', projectRoutes);
 app.use('/api/v1/projects/:projectId/tickets', ticketRoutes);
 
 app.listen(port, () => {
+  printallroutesintheconsole(app);
   console.log(`Server listening on port ${port}`);
   connectToMongo();
 });
