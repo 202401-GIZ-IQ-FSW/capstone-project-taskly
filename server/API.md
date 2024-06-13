@@ -7,9 +7,9 @@
   - POST /api/v1/auth/login - Login an existing user
   - POST /api/v1/auth/logout - Logout the currently logged-in user
 - **User Profile**
-  - GET /api/v1/users/{userId}/profile - Get user profile information
-  - PUT /api/v1/users/{userId}/profile - Update user profile information
-  - POST /api/v1/users/{userId}/profile-picture - Upload a new profile picture
+  - GET /api/v1/users/profile - Get user profile information
+  - PUT /api/v1/users/profile - Update user profile information
+  - POST /api/v1/users/profile-picture - Upload a new profile picture
 - **Admin Action**
   - DELETE /api/users/{userId} - Delete a user by ID (Admin access only)
 
@@ -42,6 +42,7 @@
   - DELETE /api/v1/projects/{projectId}/tickets/{ticketId} - Delete a ticket by ID
 - **Assign Ticket**
   - POST /api/v1/projects/{projectId}/tickets/{ticketId}/assign - Assign a ticket to a user
+  - POST /api/v1/projects/{projectId}/tickets/{ticketId}/assign - Unassign a ticket from a user
 
 #### Comment Management
 
@@ -88,14 +89,13 @@
 
 - id (unique identifier)
 - username
-- first_name
-- last_name
+- firstName
+- lastName
 - email
 - password
 - profile picture
 - role (admin, user)
-- created_at
-- updated_at
+
 
 #### Project
 
@@ -103,45 +103,38 @@
 - name
 - description
 - owner_id (user ID of the project owner)
-- created_at
-- updated_at
+- members
 
 #### Ticket
 
 - id (unique identifier)
-- project_id (ID of the project the ticket belongs to)
+- projectId (ID of the project the ticket belongs to)
 - title
 - description
 - status (open, in progress, resolved, closed)
 - priority (low, medium, high)
-- assignee_id (user ID of the user assigned to the ticket)
-- created_at
-- updated_at
+- assignees (user ID of the user assigned to the ticket)
 
 #### Comment
 
 - id (unique identifier)
-- ticket_id (ID of the ticket the comment belongs to)
-- user_id (ID of the user who posted the comment)
+- ticketId (ID of the ticket the comment belongs to)
+- userId (ID of the user who posted the comment)
 - content
-- created_at
-- updated_at
 
 #### Notification
 
 - id (unique identifier)
-- user_id (ID of the user the notification is for)
+- userId (ID of the user the notification is for)
 - content
 - read (boolean indicating if the notification has been read)
-- created_at
-- updated_at
 
 #### Analytics
 
 - id (unique identifier)
-- user_id (optional, ID of the user the analytics are for)
-- project_id (optional, ID of the project the analytics are for)
-- ticket_id (optional, ID of the ticket the analytics are for)
-- resolved_tickets_count
-- most_assigned_people (array of user IDs)
-- other_relevant_statistics (any other relevant statistics)
+- userId (optional, ID of the user the analytics are for)
+- projectId (optional, ID of the project the analytics are for)
+- ticketId (optional, ID of the ticket the analytics are for)
+- resolvedTicketsCount
+- mostAssignedPeople (array of user IDs)
+- otherRelevantStatistics (any other relevant statistics)
