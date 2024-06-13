@@ -183,7 +183,7 @@
 								{
 									"key": "image",
 									"type": "file",
-									"src": "/C:/Users/Ninos/Downloads/pics/IMG_3295.jpg"
+									"src": "/C:/Users/Ninos/Downloads/pics/PXL_20210905_075458079.jpg"
 								}
 							]
 						},
@@ -271,7 +271,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"name\": \"New Project\",\r\n  \"description\": \"This is a new project description.\"\r\n}\r\n",
+									"raw": "{\r\n  \"name\": \"Capstone Project\",\r\n  \"description\": \"This is our ticket management system capstone project\"\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -391,7 +391,7 @@
 									"variable": [
 										{
 											"key": "projectId",
-											"value": "6668b192b92bfd0b1e76b9e7"
+											"value": "6668b11e6e8ebb3c570f6be1"
 										}
 									]
 								}
@@ -524,140 +524,266 @@
 			"name": "Ticket Management",
 			"item": [
 				{
-					"name": "Create a new ticket within a project",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/api/v1/projects/{{projectId}}/tickets",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"projects",
-								"{{projectId}}",
-								"tickets"
-							]
+					"name": "Ticket CRUD",
+					"item": [
+						{
+							"name": "Create a new ticket within a project",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"My first ticket\",\r\n    \"description\": \"Testing the ticket endpoint\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/v1/projects/:projectId/tickets",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"projects",
+										":projectId",
+										"tickets"
+									],
+									"variable": [
+										{
+											"key": "projectId",
+											"value": "666b4b62338b9c745da261d8"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all tickets for a project",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/v1/projects/:projectId/tickets",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"projects",
+										":projectId",
+										"tickets"
+									],
+									"variable": [
+										{
+											"key": "projectId",
+											"value": "666b4b62338b9c745da261d8"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get a specific ticket by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/v1/projects/:projectId/tickets/:ticketId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"projects",
+										":projectId",
+										"tickets",
+										":ticketId"
+									],
+									"variable": [
+										{
+											"key": "projectId",
+											"value": "666b4b62338b9c745da261d8"
+										},
+										{
+											"key": "ticketId",
+											"value": "666b5675ce6cc9aa0626b69e"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a ticket by ID",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"priority\": \"high\",\r\n    \"status\": \"in progress\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/v1/projects/:projectId/tickets/:ticketId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"projects",
+										":projectId",
+										"tickets",
+										":ticketId"
+									],
+									"variable": [
+										{
+											"key": "projectId",
+											"value": "666b4b62338b9c745da261d8"
+										},
+										{
+											"key": "ticketId",
+											"value": "666b4da7e15de45a942398ef"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a ticket by ID",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/v1/projects/:projectId/tickets/:ticketId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"projects",
+										":projectId",
+										"tickets",
+										":ticketId"
+									],
+									"variable": [
+										{
+											"key": "projectId",
+											"value": "666b4b62338b9c745da261d8"
+										},
+										{
+											"key": "ticketId",
+											"value": "666b53ff04419db68cfaba6f"
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Get all tickets for a project",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/api/v1/projects/{{projectId}}/tickets",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"projects",
-								"{{projectId}}",
-								"tickets"
-							]
+					"name": "Assign Ticket",
+					"item": [
+						{
+							"name": "Assign a ticket to a user",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"assigneeId\": \"6668ade38be51b60114ab44a\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/v1/projects/:projectId/tickets/:ticketId/assign",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"projects",
+										":projectId",
+										"tickets",
+										":ticketId",
+										"assign"
+									],
+									"variable": [
+										{
+											"key": "projectId",
+											"value": "666b4b62338b9c745da261d8"
+										},
+										{
+											"key": "ticketId",
+											"value": "666b5675ce6cc9aa0626b69e"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Unassign a ticket to a user",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"assigneeId\": \"6668ade38be51b60114ab44a\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/v1/projects/:projectId/tickets/:ticketId/unassign",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"projects",
+										":projectId",
+										"tickets",
+										":ticketId",
+										"unassign"
+									],
+									"variable": [
+										{
+											"key": "projectId",
+											"value": "666b4b62338b9c745da261d8"
+										},
+										{
+											"key": "ticketId",
+											"value": "666b5675ce6cc9aa0626b69e"
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get a specific ticket by ID",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/api/v1/projects/{{projectId}}/tickets/{{ticketId}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"projects",
-								"{{projectId}}",
-								"tickets",
-								"{{ticketId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update a ticket by ID",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/api/v1/projects/{{projectId}}/tickets/{{ticketId}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"projects",
-								"{{projectId}}",
-								"tickets",
-								"{{ticketId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete a ticket by ID",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/api/v1/projects/{{projectId}}/tickets/{{ticketId}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"projects",
-								"{{projectId}}",
-								"tickets",
-								"{{ticketId}}"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Assign Ticket",
-			"item": [
-				{
-					"name": "Assign a ticket to a user",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/api/v1/projects/{{projectId}}/tickets/{{ticketId}}/assign",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"projects",
-								"{{projectId}}",
-								"tickets",
-								"{{ticketId}}",
-								"assign"
-							]
-						}
-					},
-					"response": []
+					]
 				}
 			]
 		},
@@ -793,7 +919,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/v1/projects/{{projectId}}/tickets/search?q={query}",
+							"raw": "{{base_url}}/api/v1/projects/:projectId/tickets/search?q={query}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -801,7 +927,7 @@
 								"api",
 								"v1",
 								"projects",
-								"{{projectId}}",
+								":projectId",
 								"tickets",
 								"search"
 							],
@@ -810,6 +936,12 @@
 									"key": "q",
 									"value": "{query}",
 									"description": "Search query"
+								}
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": ""
 								}
 							]
 						}
@@ -822,7 +954,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/v1/projects/{{projectId}}/tickets/filter?status={status}&priority={priority}",
+							"raw": "{{base_url}}/api/v1/projects/:projectId/tickets/filter?status={status}&priority={priority}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -830,7 +962,7 @@
 								"api",
 								"v1",
 								"projects",
-								"{{projectId}}",
+								":projectId",
 								"tickets",
 								"filter"
 							],
@@ -844,6 +976,12 @@
 									"key": "priority",
 									"value": "{priority}",
 									"description": "Ticket priority"
+								}
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": ""
 								}
 							]
 						}
@@ -1121,7 +1259,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6IjY2NjhhZGUzOGJlNTFiNjAxMTRhYjQ0YSIsInJvbGUiOiIzMDEiLCJ1c2VybmFtZSI6Im5pbm9zZGlua2hhIn0sImlhdCI6MTcxODIyNTQwNCwiZXhwIjoxNzE4MjI5MDA0fQ.NoKkBQMeRAXqoCX_DpinLET16s_sxZWNB-hSNBq-Gb4",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6IjY2NjhhZGUzOGJlNTFiNjAxMTRhYjQ0YSIsInJvbGUiOiIzMDEiLCJ1c2VybmFtZSI6Im5pbm9zZGlua2hhIn0sImlhdCI6MTcxODMwOTU4MCwiZXhwIjoxNzE4MzEzMTgwfQ.WZ5nQAysP5o6tXGhpT9JHK_iKQyc17xKSpW-e_9qa28",
 				"type": "string"
 			}
 		]
