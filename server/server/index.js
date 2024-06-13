@@ -21,6 +21,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
 
+app.get('/test', (req, res) => {
+  res.json('Server connection to client works!!  Good Luck with your capstones :D');
+});
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/admin', adminRoutes); // temporary admin routes
 
@@ -34,8 +37,5 @@ app.listen(port, () => {
   connectToMongo();
 });
 
-app.get('/test', (req, res) => {
-  res.json('Server connection to client works!!  Good Luck with your capstones :D');
-});
 
 module.exports = app;
