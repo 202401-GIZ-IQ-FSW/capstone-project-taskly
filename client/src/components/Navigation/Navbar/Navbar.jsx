@@ -1,15 +1,15 @@
 'use client';
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import SearchTickets from '../../SearchTicket/SearchTickets';
-import { navLinks } from '@/data/Links';
 import UserLoggedIn from '@/components/UserStatus/UserLoggedIn';
 import UserLoggedOut from '@/components/UserStatus/UserLoggedOut';
+import { navLinks } from '@/data/Links';
+import { useUser } from '@/hooks/useUser';
+import Link from 'next/link';
+import { useState } from 'react';
+import SearchTickets from '../../SearchTicket/SearchTickets';
 
 const Navbar = () => {
+  const { user, handleLogout, accesToken } = useUser();
   const [isModalOpen, setModalOpen] = useState(false);
-  const [user, setUser] = useState(null);
-  const [accessToken, setAccessToken] = useState(null);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const openModal = () => {
@@ -19,34 +19,7 @@ const Navbar = () => {
   const closeModal = () => {
     setModalOpen(false);
   };
-
-  useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem('user'));
-    if (storedData) {
-      setUser(storedData.user);
-      setAccessToken(storedData.accessToken);
-    }
-  }, []);
-
-  const handleLogout = async () => {
-    const response = await fetch('http://localhost:3001/api/v1/auth/logout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      credentials: 'include',
-    });
-
-    if (response.ok) {
-      localStorage.removeItem('user');
-      setUser(null);
-      window.location.href = 'http://localhost:3000/';
-    } else {
-      console.error('Logout failed');
-    }
-  };
-
+  console.log(user);
   return (
     <header className="bg-white shadow-md py-4 px-6 flex justify-between items-center">
       <Link href={'/'}>Tickets</Link>

@@ -1,8 +1,10 @@
-'use client'
-import { useState } from 'react';
+'use client';
 import fetcher from '@/_utils/fetcher';
+import { useUser } from '@/hooks/useUser';
+import { useState } from 'react';
 
 export default function Register() {
+  const { handleSetAccessToken, handleSetRefreshToken, setUser } = useUser();
   const [userData, setUserData] = useState({
     username: '',
     firstName: '',
@@ -23,19 +25,19 @@ export default function Register() {
     event.preventDefault();
 
     try {
-      const response = await fetcher('/auth/register', {
+      const res = await fetcher('/auth/register', {
         method: 'POST',
         body: JSON.stringify(userData),
       });
 
-      const data = await response.json();
-
-      if (data.user) {
-        localStorage.setItem('user', JSON.stringify(data));
-        window.location.href = '/'; // Redirect to home page
+      if (res) {
+        handleSetAccessToken(res.accessToken);
+        handleSetRefreshToken(res.refreshToken);
+        window.dispatchEvent(new Event('storage')); // Trigger storage event
+        setUser(res.user);
+        window.location.href = '/';
       } else {
-        // handle error
-        console.error(data.message);
+        console.error(res.message);
       }
     } catch (error) {
       console.error('Registration failed', error);

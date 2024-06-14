@@ -1,8 +1,10 @@
 'use client';
-import { useState } from 'react';
 import fetcher from '@/_utils/fetcher';
+import { useUser } from '@/hooks/useUser';
+import { useState } from 'react';
 
 export default function Login() {
+  const { handleSetAccessToken, handleSetRefreshToken, setUser } = useUser();
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -22,10 +24,11 @@ export default function Login() {
       });
 
       if (res.user) {
-        localStorage.setItem('user', JSON.stringify(res));
-        window.location.href = '/'; // Adjust the URL as needed
-      } else {
-        alert(JSON.stringify(res.message));
+        handleSetAccessToken(res.accessToken);
+        handleSetRefreshToken(res.refreshToken);
+        window.dispatchEvent(new Event('storage')); // Trigger storage event
+        setUser(res.user);
+        window.location.href = '/';
       }
     } catch (error) {
       console.error('Login failed', error);
@@ -48,6 +51,7 @@ export default function Login() {
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="usernameOrEmail"
+            required
             type="text"
             placeholder="Username or Email"
             value={usernameOrEmail}
@@ -63,6 +67,7 @@ export default function Login() {
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             id="password"
+            required
             type="password"
             placeholder="Password"
             value={password}

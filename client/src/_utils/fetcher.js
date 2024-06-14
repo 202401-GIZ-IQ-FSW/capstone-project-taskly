@@ -1,7 +1,7 @@
 import api from './getServer';
 
 const fetcher = async (url, options = {}) => {
-  const accessToken = typeof window !== 'undefined' ? window.sessionStorage.getItem('access_token') : null;
+  const accessToken = typeof window !== 'undefined' ? window.localStorage.getItem('access_token') : null;
   const authHeader = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
 
   // don't attempt the fetch the user profile if they aren't logged in (no token)
