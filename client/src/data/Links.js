@@ -1,4 +1,4 @@
-export const headerLinks = [
+export const navLinks = [
   { text: "Home", url: "/" },
   { text: "Create", url: "#" },
   { text: "Notifications", url: "#" },

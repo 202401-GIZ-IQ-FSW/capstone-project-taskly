@@ -2,10 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 
-
-footer {
-  padding: 20px;
-  background-color: #e9ecef;
-  text-align: center;
-}
-

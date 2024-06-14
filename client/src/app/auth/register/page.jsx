@@ -1,21 +1,21 @@
-"use client";
-import React, { useState } from "react";
-import Header from "@/components/header/Header";
-import Footer from "@/components/footer/Footer";
-import { headerLinks, footerLinks } from "@/data/Links";
+'use client';
+import React, { useState } from 'react';
+import Header from '@/components/Navigation/Navbar/Navbar';
+import Footer from '@/components/Navigation/Footer/Footer';
+import { headerLinks, footerLinks } from '@/data/Links';
 export default function page() {
-  const [username, setUsername] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const response = await fetch("http://localhost:3001/api/v1/auth/register", {
-      method: "POST",
+    const response = await fetch('http://localhost:3001/api/v1/auth/register', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams({
         username,
@@ -29,21 +29,23 @@ export default function page() {
     const data = await response.json();
 
     if (data.user) {
-      localStorage.setItem("user", JSON.stringify(data));
-      window.location.href = "http://localhost:3000/";
+      localStorage.setItem('user', JSON.stringify(data));
+      window.location.href = 'http://localhost:3000/';
     } else {
       // handle error
     }
   };
   return (
-    <> 
-      <Header links={headerLinks} signInText="Sign In" />
+    <>
+      <Header
+        links={headerLinks}
+        signInText="Sign In"
+      />
       <div className="m-4 flex flex-col justify-center h-full items-center">
         <h1 className="mb-4">Sign Up</h1>
         <form
           onSubmit={handleSubmit}
-          className="mx-auto bg-white border p-6 rounded w-1/3"
-        >
+          className="mx-auto bg-white border p-6 rounded w-1/3">
           <div className=" mb-3">
             <label>Username</label>
             <div className="">
@@ -112,8 +114,7 @@ export default function page() {
 
           <button
             type="submit"
-            className="bg-gray-500 text-white px-4 py-2 rounded mx-4 w-100 border"
-          >
+            className="bg-gray-500 text-white px-4 py-2 rounded mx-4 w-100 border">
             Register
           </button>
         </form>

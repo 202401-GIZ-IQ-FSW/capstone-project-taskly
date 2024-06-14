@@ -1,9 +1,10 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import SearchTickets from "../searchTicket/SearchTickets";
+'use client';
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import SearchTickets from '../../SearchTicket/SearchTickets';
+import { navLinks } from '@/data/Links';
 
-const Header = ({ links, signInText }) => {
+const Navbar = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
@@ -16,40 +17,39 @@ const Header = ({ links, signInText }) => {
     setModalOpen(false);
   };
   useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem("user"));
+    const storedData = JSON.parse(localStorage.getItem('user'));
     if (storedData) {
       setUser(storedData.user);
       setAccessToken(storedData.accessToken);
     }
   }, []);
   const handleLogout = async () => {
-    const response = await fetch("http://localhost:3001/api/v1/auth/logout", {
-      method: "POST",
+    const response = await fetch('http://localhost:3001/api/v1/auth/logout', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
       },
-      credentials: "include",
+      credentials: 'include',
     });
 
     if (response.ok) {
-      localStorage.removeItem("user");
+      localStorage.removeItem('user');
       setUser(null);
-      window.location.href = "http://localhost:3000/";
+      window.location.href = 'http://localhost:3000/';
     } else {
-      console.error("Logout failed");
+      console.error('Logout failed');
     }
   };
   return (
     <header className="bg-white shadow-md py-4 px-6 flex justify-between items-center">
       <div>Tickets</div>
       <nav>
-        {links.map((link, index) => (
+        {navLinks.map((link, index) => (
           <Link
             key={index}
             href={link.url}
-            className="mr-4 text-gray-700 hover:text-gray-900"
-          >
+            className="mr-4 text-gray-700 hover:text-gray-900">
             {link.text}
           </Link>
         ))}
@@ -61,23 +61,18 @@ const Header = ({ links, signInText }) => {
             welcome {user.firstName}
             <button
               onClick={handleLogout}
-              className="bg-gray-500 text-white px-4 py-2 rounded mx-4"
-            >
+              className="bg-gray-500 text-white px-4 py-2 rounded mx-4">
               Sign out
             </button>
           </>
         ) : (
           <>
             <Link href="/auth/signin">
-              <button className="bg-gray-500 text-white px-4 py-2 rounded mx-4">
-                {signInText}
-              </button>
+              <button className="bg-gray-500 text-white px-4 py-2 rounded mx-4">Sign In</button>
             </Link>
             <Link href="/auth/register">
-              <button className="bg-gray-500 text-white px-4 py-2 rounded">
-                Register
-              </button>
-            </Link>{" "}
+              <button className="bg-gray-500 text-white px-4 py-2 rounded">Register</button>
+            </Link>{' '}
           </>
         )}
       </div>
@@ -87,4 +82,4 @@ const Header = ({ links, signInText }) => {
   );
 };
 
-export default Header;
+export default Navbar;

@@ -1,14 +1,20 @@
+import Footer from '@/components/Navigation/Footer/Footer';
+import Navbar from '@/components/Navigation/Navbar/Navbar';
 import './globals.css';
 
 export const metadata = {
   title: 'Taskly',
-  description: 'Your favorite task management app',
+  description: 'Your favorite ticket management app',
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Navbar />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
