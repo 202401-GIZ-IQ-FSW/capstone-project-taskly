@@ -2,7 +2,7 @@
 import fetcher from '@/_utils/fetcher';
 import { useState } from 'react';
 
-export default function SignInPage() {
+export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 

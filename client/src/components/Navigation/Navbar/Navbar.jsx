@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import SearchTickets from '../../SearchTicket/SearchTickets';
 import { navLinks } from '@/data/Links';
-import fetcher from '@/_utils/fetcher'; // Adjust the path according to your project structure
+import fetcher from '@/_utils/fetcher'; 
 
 const Navbar = () => {
   const [isModalOpen, setModalOpen] = useState(false);

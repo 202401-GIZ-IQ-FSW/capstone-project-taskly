@@ -1,117 +1,139 @@
-'use client';
+'use client'
 import { useState } from 'react';
-export default function page() {
-  const [username, setUsername] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+import fetcher from '@/_utils/fetcher';
+
+export default function Register() {
+  const [userData, setUserData] = useState({
+    username: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      [name]: value,
+    }));
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const response = await fetch('http://localhost:3001/api/v1/auth/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        username,
-        firstName,
-        lastName,
-        email,
-        password,
-      }),
-    });
+    try {
+      const response = await fetcher('/auth/register', {
+        method: 'POST',
+        body: JSON.stringify(userData),
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (data.user) {
-      localStorage.setItem('user', JSON.stringify(data));
-      window.location.href = 'http://localhost:3000/';
-    } else {
-      // handle error
+      if (data.user) {
+        localStorage.setItem('user', JSON.stringify(data));
+        window.location.href = '/'; // Redirect to home page
+      } else {
+        // handle error
+        console.error(data.message);
+      }
+    } catch (error) {
+      console.error('Registration failed', error);
     }
   };
-  return (
-    <>
-      <div className="m-4 flex flex-col justify-center h-full items-center">
-        <h1 className="mb-4">Sign Up</h1>
-        <form
-          onSubmit={handleSubmit}
-          className="mx-auto bg-white border p-6 rounded w-1/3">
-          <div className=" mb-3">
-            <label>Username</label>
-            <div className="">
-              <input
-                type="text"
-                className=" border"
-                id="username"
-                placeholder="Username"
-                name="username"
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className=" mb-3">
-            <label>firstName</label>
-            <div className="">
-              <input
-                type="text"
-                className=" border"
-                id="firstName"
-                placeholder="firstName"
-                name="firstName"
-                onChange={(e) => setFirstName(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className=" mb-3">
-            <label>lastName</label>
-            <div className="">
-              <input
-                type="text"
-                className=" border"
-                id="lastName"
-                placeholder="lastName"
-                name="lastName"
-                onChange={(e) => setLastName(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className=" mb-3">
-            <label>email</label>
-            <div className="">
-              <input
-                type="text"
-                className=" border"
-                id="email"
-                placeholder="email"
-                name="email"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className=" mb-3">
-            <label>Password</label>
-            <div className="">
-              <input
-                type="password"
-                className=" border"
-                id="password"
-                placeholder="Password"
-                name="password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-          </div>
 
+  return (
+    <div className="flex justify-center items-center h-screen">
+      <div className="bg-white p-8 rounded shadow-md w-96">
+        <h1 className="text-2xl font-bold mb-4">Sign Up</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label
+              htmlFor="username"
+              className="block text-gray-700">
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={userData.username}
+              onChange={handleChange}
+              className="w-full border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              placeholder="Username"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="firstName"
+              className="block text-gray-700">
+              First Name
+            </label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              value={userData.firstName}
+              onChange={handleChange}
+              className="w-full border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              placeholder="First Name"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="lastName"
+              className="block text-gray-700">
+              Last Name
+            </label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              value={userData.lastName}
+              onChange={handleChange}
+              className="w-full border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              placeholder="Last Name"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="email"
+              className="block text-gray-700">
+              Email
+            </label>
+            <input
+              type="text"
+              id="email"
+              name="email"
+              value={userData.email}
+              onChange={handleChange}
+              className="w-full border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              placeholder="Email"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="password"
+              className="block text-gray-700">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={userData.password}
+              onChange={handleChange}
+              className="w-full border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              placeholder="Password"
+            />
+          </div>
           <button
             type="submit"
-            className="bg-gray-500 text-white px-4 py-2 rounded mx-4 w-100 border">
+            className="bg-gray-500 text-white py-2 px-4 rounded-md w-full hover:bg-gray-600">
             Register
           </button>
         </form>
       </div>
-    </>
+    </div>
   );
 }
