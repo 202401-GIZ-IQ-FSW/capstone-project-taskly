@@ -14,9 +14,20 @@ const storage = multer.diskStorage({
   },
   // Set the filename for uploaded files
   filename: function (req, file, cb) {
-    // Generate a unique filename using the current date and original filename
-    // Replace colons (:) in the timestamp to avoid issues in file names
-    cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);
+    // Always name the file as 'profile' followed by the file extension
+    const extension = path.extname(file.originalname);
+    const filename = `profile${extension}`;
+    const username = req.user.username;
+    const userFolder = path.join(__dirname, `../images/${username}`);
+    const filePath = path.join(userFolder, filename);
+
+    // Check if the file already exists
+    if (fs.existsSync(filePath)) {
+      // If the file exists, delete it
+      fs.unlinkSync(filePath);
+    }
+
+    cb(null, filename);
   },
 });
 
