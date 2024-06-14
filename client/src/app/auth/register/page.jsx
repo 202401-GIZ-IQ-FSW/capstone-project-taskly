@@ -26,6 +26,8 @@ export default function page() {
       }),
     });
 
+    const data = await response.json();
+
     if (data.user) {
       localStorage.setItem("user", JSON.stringify(data));
       window.location.href = "http://localhost:3000/";
