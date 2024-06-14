@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import SearchTickets from '../../SearchTicket/SearchTickets';
 import { navLinks } from '@/data/Links';
+import fetcher from '@/_utils/fetcher'; // Adjust the path according to your project structure
 
 const Navbar = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -16,6 +17,7 @@ const Navbar = () => {
   const closeModal = () => {
     setModalOpen(false);
   };
+
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('user'));
     if (storedData) {
@@ -23,24 +25,30 @@ const Navbar = () => {
       setAccessToken(storedData.accessToken);
     }
   }, []);
-  const handleLogout = async () => {
-    const response = await fetch('http://localhost:3001/api/v1/auth/logout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      credentials: 'include',
-    });
 
-    if (response.ok) {
-      localStorage.removeItem('user');
-      setUser(null);
-      window.location.href = 'http://localhost:3000/';
-    } else {
-      console.error('Logout failed');
+  const handleLogout = async () => {
+    try {
+      const response = await fetcher('/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+        credentials: 'include',
+      });
+
+      if (response) {
+        localStorage.removeItem('user');
+        setUser(null);
+        window.location.href = 'http://localhost:3000/'; // Adjust the URL as needed
+      } else {
+        console.error('Logout failed');
+      }
+    } catch (error) {
+      console.error('Logout failed', error);
     }
   };
+
   return (
     <header className="bg-white shadow-md py-4 px-6 flex justify-between items-center">
       <div>Tickets</div>
@@ -58,7 +66,7 @@ const Navbar = () => {
       <div>
         {user ? (
           <>
-            welcome {user.firstName}
+            Welcome {user.firstName}
             <button
               onClick={handleLogout}
               className="bg-gray-500 text-white px-4 py-2 rounded mx-4">

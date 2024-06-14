@@ -1,4 +1,5 @@
 'use client';
+import fetcher from '@/_utils/fetcher';
 import { useState } from 'react';
 
 export default function SignInPage() {
@@ -8,27 +9,28 @@ export default function SignInPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const response = await fetch('http://localhost:3001/api/v1/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        username,
-        password,
-      }),
-    });
+    try {
+      const res = await fetcher('/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      });
 
-    const data = await response.json();
-
-    if (data.user) {
-      localStorage.setItem('user', JSON.stringify(data));
-      window.location.href = 'http://localhost:3000/';
-    } else {
-      // handle error
-      alert(JSON.stringify(data.message));
+      if (res.user) {
+        localStorage.setItem('user', JSON.stringify(res));
+        window.location.href = '/'; // Adjust the URL as needed
+      } else {
+        // handle error
+        alert(JSON.stringify(res.message));
+      }
+    } catch (error) {
+      console.error('Login failed', error);
+      alert('Login failed');
     }
   };
+
   return (
     <>
       <div className="m-4 flex flex-col justify-center h-full items-center">
@@ -36,12 +38,11 @@ export default function SignInPage() {
         <form
           onSubmit={handleSubmit}
           className="mx-auto bg-white border py-4 rounded">
-          <div className=" mb-3">
+          <div className="mb-3">
             <label>Username</label>
-            <div className="">
+            <div>
               <input
                 type="text"
-                className=""
                 id="username"
                 placeholder="Username"
                 name="username"
@@ -50,12 +51,11 @@ export default function SignInPage() {
               />
             </div>
           </div>
-          <div className=" mb-3">
+          <div className="mb-3">
             <label>Password</label>
-            <div className="">
+            <div>
               <input
                 type="password"
-                className=""
                 id="password"
                 placeholder="Password"
                 name="password"
@@ -67,11 +67,10 @@ export default function SignInPage() {
           <div className="form-check my-5">
             <input
               type="checkbox"
-              className=""
               id="rememberMe"
               name="rememberMe"
             />
-            <label className="">Keep me signed in</label>
+            <label>Keep me signed in</label>
           </div>
           <button
             type="submit"

@@ -1,8 +1,5 @@
 'use client';
-import React, { useState } from 'react';
-import Header from '@/components/Navigation/Navbar/Navbar';
-import Footer from '@/components/Navigation/Footer/Footer';
-import { headerLinks, footerLinks } from '@/data/Links';
+import { useState } from 'react';
 export default function page() {
   const [username, setUsername] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -37,10 +34,6 @@ export default function page() {
   };
   return (
     <>
-      <Header
-        links={headerLinks}
-        signInText="Sign In"
-      />
       <div className="m-4 flex flex-col justify-center h-full items-center">
         <h1 className="mb-4">Sign Up</h1>
         <form
@@ -119,11 +112,6 @@ export default function page() {
           </button>
         </form>
       </div>
-      <Footer
-        companyName="TicketMaster"
-        footerText="Your ultimate ticket support solution!"
-        links={footerLinks}
-      />
     </>
   );
 }
