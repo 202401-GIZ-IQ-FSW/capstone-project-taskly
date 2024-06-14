@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 const UserLoggedIn = ({ user, handleLogout, isDropdownOpen, setDropdownOpen }) => (
   <div className="flex items-center">
@@ -30,7 +30,7 @@ const UserLoggedIn = ({ user, handleLogout, isDropdownOpen, setDropdownOpen }) =
           <button
             onClick={handleLogout}
             className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200">
-            Sign Out
+            Log Out
           </button>
         </div>
       )}

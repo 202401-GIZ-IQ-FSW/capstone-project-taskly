@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import SearchTickets from '../../SearchTicket/SearchTickets';
@@ -49,7 +49,7 @@ const Navbar = () => {
 
   return (
     <header className="bg-white shadow-md py-4 px-6 flex justify-between items-center">
-      <div>Tickets</div>
+      <Link href={'/'}>Tickets</Link>
       <nav>
         {navLinks.map((link, index) => (
           <Link
