@@ -16,10 +16,14 @@ const Header = ({ links, signInText }) => {
     setModalOpen(false);
   };
   useEffect(() => {
+    const cookies = document.cookie.split('; ');
+    const usernameCookie = cookies.find(cookie => cookie.startsWith('accessToken='));
+
     const storedData = JSON.parse(localStorage.getItem("user"));
     if (storedData) {
       setUser(storedData.user);
       setAccessToken(storedData.accessToken);
+      // document.cookie= await `accessToken=${accessToken}`
     }
   }, []);
   const handleLogout = async () => {

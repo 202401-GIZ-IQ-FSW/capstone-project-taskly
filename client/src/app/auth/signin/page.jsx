@@ -26,6 +26,8 @@ export default function SignInPage() {
 
     if (data.user) {
       localStorage.setItem("user", JSON.stringify(data));
+      const accessToken =  data.accessToken 
+      document.cookie= `accessToken=${accessToken}`
       window.location.href = "http://localhost:3000/";
     } else {
       // handle error
@@ -39,14 +41,14 @@ export default function SignInPage() {
         <h1 className="mb-4">Sign in to your account</h1>
         <form
           onSubmit={handleSubmit}
-          className="mx-auto bg-white border py-4 rounded"
+          className="mx-auto bg-white border  p-6 rounded w-1/3"
         >
           <div className=" mb-3">
             <label>Username</label>
             <div className="">
               <input
                 type="text"
-                className=""
+                className="border"
                 id="username"
                 placeholder="Username"
                 name="username"
@@ -60,7 +62,7 @@ export default function SignInPage() {
             <div className="">
               <input
                 type="password"
-                className=""
+                className="border"
                 id="password"
                 placeholder="Password"
                 name="password"
@@ -78,7 +80,7 @@ export default function SignInPage() {
             />
             <label className="">Keep me signed in</label>
           </div>
-          <button type="submit" className="w-100">
+          <button type="submit" className="bg-gray-500 text-white px-4 py-2 rounded mx-4 w-100 border">
             Sign in
           </button>
         </form>

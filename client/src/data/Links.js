@@ -1,6 +1,6 @@
 export const headerLinks = [
   { text: "Home", url: "/" },
-  { text: "Create", url: "#" },
+  { text: "Create", url: "/create" },
   { text: "Notifications", url: "#" },
 ];
 

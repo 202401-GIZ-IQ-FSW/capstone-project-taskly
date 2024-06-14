@@ -33,10 +33,11 @@ export default function page() {
       window.location.href = "http://localhost:3000/";
     } else {
       // handle error
+      alert(JSON.stringify(data.message));
     }
   };
   return (
-    <> 
+    <>
       <Header links={headerLinks} signInText="Sign In" />
       <div className="m-4 flex flex-col justify-center h-full items-center">
         <h1 className="mb-4">Sign Up</h1>
@@ -44,12 +45,12 @@ export default function page() {
           onSubmit={handleSubmit}
           className="mx-auto bg-white border p-6 rounded w-1/3"
         >
-          <div className=" mb-3">
+          <div className="mb-3">
             <label>Username</label>
             <div className="">
               <input
                 type="text"
-                className=" border"
+                className="border"
                 id="username"
                 placeholder="Username"
                 name="username"
@@ -57,12 +58,12 @@ export default function page() {
               />
             </div>
           </div>
-          <div className=" mb-3">
+          <div className="mb-3">
             <label>firstName</label>
             <div className="">
               <input
                 type="text"
-                className=" border"
+                className="border"
                 id="firstName"
                 placeholder="firstName"
                 name="firstName"
@@ -70,12 +71,12 @@ export default function page() {
               />
             </div>
           </div>
-          <div className=" mb-3">
+          <div className="mb-3">
             <label>lastName</label>
             <div className="">
               <input
                 type="text"
-                className=" border"
+                className="border"
                 id="lastName"
                 placeholder="lastName"
                 name="lastName"
@@ -83,12 +84,12 @@ export default function page() {
               />
             </div>
           </div>
-          <div className=" mb-3">
+          <div className="mb-3">
             <label>email</label>
             <div className="">
               <input
                 type="text"
-                className=" border"
+                className="border"
                 id="email"
                 placeholder="email"
                 name="email"
@@ -96,12 +97,12 @@ export default function page() {
               />
             </div>
           </div>
-          <div className=" mb-3">
+          <div className="mb-3">
             <label>Password</label>
             <div className="">
               <input
                 type="password"
-                className=" border"
+                className="border"
                 id="password"
                 placeholder="Password"
                 name="password"
