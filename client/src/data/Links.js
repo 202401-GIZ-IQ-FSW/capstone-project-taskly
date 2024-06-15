@@ -4,6 +4,9 @@ export const headerLinks = [
   { text: "Notifications", url: "#" },
 ];
 
+export const signUpLink = [
+  { text: "Sign in", url: "/signup"},
+]
 export const footerLinks = [
   { text: "Submit a Ticket", url: "#" },
   { text: "Track Ticket", url: "#" },
