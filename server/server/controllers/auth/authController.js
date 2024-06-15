@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const handleRegistration = async (req, res) => {
   const { username, firstName, lastName, email, password } = req.body;
-  console.log(req.body)
+
   try {
     // Check if user with the same username or email already exists
     const existingUser = await UserModel.findOne({ $or: [{ username }, { email }] });
@@ -48,7 +48,7 @@ const handleRegistration = async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 };
