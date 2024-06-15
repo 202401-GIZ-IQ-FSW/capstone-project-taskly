@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const projectRoutes = require('./routes/project/project');
 const userRoutes = require('./routes/user/userProfileRoute');
+const commentsRouter = require('./routes/comment/commentRoute');  
 
 require('dotenv').config();
 
@@ -28,6 +29,7 @@ app.use(verifyJWT); // everything below this line will use verifyJWT
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/projects', projectRoutes);
 app.use('/api/v1/projects/:projectId/tickets', ticketRoutes);
+app.use('/api/v1/projects/:projectId/tickets/:ticketId/comments', commentsRouter);
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);

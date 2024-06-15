@@ -1,15 +1,14 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router({ mergeParams: true }); // Merge params to access parent route params
 
-const ticketController = require('../../controllers/Tickets/ticketCrudController');
+const commentController = require('../../controllers/comment/commentController');
 
-router.post('/', ticketController.createTicket);
-router.get('/', ticketController.getAllTickets);
-router.get('/:ticketId', ticketController.getTicketById);
-router.put('/:ticketId', ticketController.updateTicket);
-router.delete('/:ticketId', ticketController.deleteTicket);
+// Base path: /api/v1/projects/:projectId/tickets/:ticketId/comments
 
-// Assign ticket route
-router.post('/:ticketId/assign', ticketController.assignTicket);
+router.post('/', commentController.createComment);  
+router.get('/', commentController.getAllComments);  
+router.get('/:commentId', commentController.getCommentById);  
+router.put('/:commentId', commentController.updateCommentById);  
+router.delete('/:commentId', commentController.deleteCommentById);  
 
 module.exports = router;
