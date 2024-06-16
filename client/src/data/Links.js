@@ -12,5 +12,5 @@ export const footerLinks = [
   { text: "Track Ticket", url: "#" },
   { text: "Receive", url: "#" },
   { text: "Troubleshooting", url: "#" },
-  { text: "Contact Support", url: "#" },
+  { text: "Contact Support", url: "/contact" },
 ];
