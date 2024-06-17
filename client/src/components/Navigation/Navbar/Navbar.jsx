@@ -8,7 +8,7 @@ import { useState } from 'react';
 import SearchTickets from '../../SearchTicket/SearchTickets';
 
 const Navbar = () => {
-  const { user, handleLogout, accesToken } = useUser();
+  const { user, handleLogout } = useUser();
   const [isModalOpen, setModalOpen] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
