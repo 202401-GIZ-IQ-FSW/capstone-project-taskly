@@ -25,7 +25,7 @@ export default function Register() {
     event.preventDefault();
 
     try {
-      const res = await fetcher('/auth/register', {
+      const res = await fetcher('/v1/auth/register', {
         method: 'POST',
         body: JSON.stringify(userData),
       });

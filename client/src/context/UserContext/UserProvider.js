@@ -58,7 +58,7 @@ export const UserProvider = ({ children }) => {
   const fetchUserProfile = async () => {
     if (accessToken) {
       try {
-        const userAccount = await fetcher('/user/profile');
+        const userAccount = await fetcher('/v1/user/profile');
 
         if (userAccount) {
           setUser(userAccount);
@@ -77,32 +77,33 @@ export const UserProvider = ({ children }) => {
     fetchUserProfile();
   }, [accessToken]);
 
-  useEffect(() => {
-    const handleRefreshToken = async () => {
-      if (!refreshToken) return;
+  // refresh token logic
+  // useEffect(() => {
+  //   const handleRefreshToken = async () => {
+  //     if (!refreshToken) return;
 
-      try {
-        const res = await fetcher('/v1/app/token-refresh', {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${refreshToken}` },
-        });
-        if (res) {
-          handleSetAccessToken(res.access_token);
-          handleSetRefreshToken(res.refresh_token);
-          console.log('Token refreshed');
-        } else {
-          console.error('Failed to refresh token');
-        }
-      } catch (error) {
-        console.error('Error while refreshing token:', error);
-      }
-    };
+  //     try {
+  //       const res = await fetcher('/v1/token-refresh', {
+  //         method: 'POST',
+  //         headers: { Authorization: `Bearer ${refreshToken}` },
+  //       });
+  //       if (res) {
+  //         handleSetAccessToken(res.access_token);
+  //         handleSetRefreshToken(res.refresh_token);
+  //         console.log('Token refreshed');
+  //       } else {
+  //         console.error('Failed to refresh token');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error while refreshing token:', error);
+  //     }
+  //   };
 
-    const refreshInterval = parseInt(process.env.NEXT_PUBLIC_JWT_REFRESH_INTERVAL, 10);
-    const tokenRefreshInterval = setInterval(handleRefreshToken, refreshInterval);
+  //   const refreshInterval = parseInt(process.env.NEXT_PUBLIC_JWT_REFRESH_INTERVAL, 10);
+  //   const tokenRefreshInterval = setInterval(handleRefreshToken, refreshInterval);
 
-    return () => clearInterval(tokenRefreshInterval);
-  }, [refreshToken, handleSetAccessToken, handleSetRefreshToken]);
+  //   return () => clearInterval(tokenRefreshInterval);
+  // }, [refreshToken, handleSetAccessToken, handleSetRefreshToken]);
 
   const handleLogout = async () => {
     const response = await fetch('http://localhost:3001/api/v1/auth/logout', {
@@ -119,7 +120,7 @@ export const UserProvider = ({ children }) => {
       window.localStorage.removeItem('refresh_token');
       setUser(null);
       setLoggedIn(false);
-      window.location.href = 'http://localhost:3000/';
+      window.location.href = '/';
     } else {
       console.error('Logout failed');
     }

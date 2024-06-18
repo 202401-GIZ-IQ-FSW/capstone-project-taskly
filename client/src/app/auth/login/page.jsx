@@ -15,7 +15,7 @@ export default function Login() {
       const isEmail = usernameOrEmail.includes('@');
       const key = isEmail ? 'email' : 'username';
 
-      const res = await fetcher('/auth/login', {
+      const res = await fetcher('/v1/auth/login', {
         method: 'POST',
         body: JSON.stringify({
           [key]: usernameOrEmail,
