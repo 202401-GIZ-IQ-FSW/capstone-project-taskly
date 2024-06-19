@@ -27,7 +27,6 @@ export default function Login() {
         handleSetAccessToken(res.accessToken);
         handleSetRefreshToken(res.refreshToken);
         window.dispatchEvent(new Event('storage')); // Trigger storage event
-        setUser(res.user);
         window.location.href = '/';
       }
     } catch (error) {
