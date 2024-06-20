@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Transition, Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react';
 import {
@@ -17,11 +17,20 @@ import {
 } from 'react-icons/fa';
 import { useUser } from '@/hooks/useUser';
 import MobileSidebar from '@/components/Navigation/MobileSidebar/MobileSidebar';
+import { useRouter } from 'next/navigation';
 
 const ProfileLayout = ({ children }) => {
   const pathname = usePathname();
+  const router = useRouter();
+
   const { handleLogout, user } = useUser();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    if (!user) {
+      router.push('/auth/login');
+    }
+  }, [user, router]);
 
   const navigation = [
     { name: 'Dashboard', href: '/account/dashboard', icon: FaHome },
