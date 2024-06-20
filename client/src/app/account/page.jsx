@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import fetcher from '@/_utils/fetcher';
 import { useEffect, useState } from 'react';
 
@@ -25,17 +25,23 @@ const Profile = () => {
 
   return (
     <div className="bg-white shadow-md rounded-md p-4">
-      <div className="flex items-center gap-4">
-        <div className="h-16 w-16 rounded-full bg-gray-200"></div>
-        <div>
-          <h2 className="text-xl font-semibold">{`${profile.firstName} ${profile.lastName}`}</h2>
-          <p className="text-gray-600">{profile.email}</p>
+      {profile && (
+        <div className="flex items-center gap-4">
+          <div className="h-16 w-16 rounded-full bg-gray-200"></div>
+          <div>
+            <h2 className="text-xl font-semibold">{`${profile.firstName || ''} ${
+              profile.lastName || ''
+            }`}</h2>
+            <p className="text-gray-600">{profile.email || ''}</p>
+          </div>
         </div>
-      </div>
-      <div className="mt-4">
-        <h3 className="text-lg font-semibold">Username</h3>
-        <p className="text-gray-600">{profile.username}</p>
-      </div>
+      )}
+      {profile && (
+        <div className="mt-4">
+          <h3 className="text-lg font-semibold">Username</h3>
+          <p className="text-gray-600">{profile.username || ''}</p>
+        </div>
+      )}
     </div>
   );
 };

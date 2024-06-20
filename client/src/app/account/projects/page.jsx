@@ -10,7 +10,7 @@ const Projects = () => {
     const fetchProjects = async () => {
       try {
         const data = await fetcher('/v1/projects');
-        setProjects(data);
+        setProjects(data || []);
       } catch (err) {
         setError(err.message);
       }
@@ -32,8 +32,8 @@ const Projects = () => {
           <div
             key={project._id}
             className="bg-white shadow-md rounded-md p-4">
-            <h3 className="text-lg font-semibold">{project.name}</h3>
-            <p className="text-gray-600">{project.description}</p>
+            <h3 className="text-lg font-semibold">{project.name || ''}</h3>
+            <p className="text-gray-600">{project.description || ''}</p>
           </div>
         ))
       )}
