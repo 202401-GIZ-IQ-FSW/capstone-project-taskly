@@ -10,7 +10,6 @@ import SearchTickets from '../../SearchTicket/SearchTickets';
 const Navbar = () => {
   const { user, handleLogout } = useUser();
   const [isModalOpen, setModalOpen] = useState(false);
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const openModal = () => {
     setModalOpen(true);
@@ -39,8 +38,6 @@ const Navbar = () => {
           <UserLoggedIn
             user={user}
             handleLogout={handleLogout}
-            isDropdownOpen={isDropdownOpen}
-            setDropdownOpen={setDropdownOpen}
           />
         ) : (
           <UserLoggedOut />

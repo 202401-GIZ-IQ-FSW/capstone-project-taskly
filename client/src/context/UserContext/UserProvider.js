@@ -10,48 +10,56 @@ export const UserProvider = ({ children }) => {
   const [refreshToken, setRefreshToken] = useState(null);
 
   const loadTokensFromStorage = () => {
-    try {
-      const storedAccessToken = window.localStorage.getItem('access_token');
-      const storedRefreshToken = window.localStorage.getItem('refresh_token');
+    if (typeof window !== 'undefined') {
+      try {
+        const storedAccessToken = window.localStorage.getItem('access_token');
+        const storedRefreshToken = window.localStorage.getItem('refresh_token');
 
-      if (storedAccessToken) setAccessToken(storedAccessToken);
-      if (storedRefreshToken) setRefreshToken(storedRefreshToken);
-    } catch (error) {
-      console.error('Error loading tokens from storage:', error);
+        if (storedAccessToken) setAccessToken(storedAccessToken);
+        if (storedRefreshToken) setRefreshToken(storedRefreshToken);
+      } catch (error) {
+        console.error('Error loading tokens from storage:', error);
+      }
     }
   };
 
   useEffect(() => {
-    loadTokensFromStorage();
-
-    const handleStorageChange = () => {
+    if (typeof window !== 'undefined') {
       loadTokensFromStorage();
-    };
 
-    window.addEventListener('storage', handleStorageChange);
+      const handleStorageChange = () => {
+        loadTokensFromStorage();
+      };
 
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
+      window.addEventListener('storage', handleStorageChange);
+
+      return () => {
+        window.removeEventListener('storage', handleStorageChange);
+      };
+    }
   }, []);
 
   const handleSetAccessToken = useCallback((token) => {
-    try {
-      window.localStorage.setItem('access_token', token);
-      setAccessToken(token);
-      console.log('Access token set:', token);
-    } catch (error) {
-      console.error('Error setting access token:', error);
+    if (typeof window !== 'undefined') {
+      try {
+        window.localStorage.setItem('access_token', token);
+        setAccessToken(token);
+        console.log('Access token set:', token);
+      } catch (error) {
+        console.error('Error setting access token:', error);
+      }
     }
   }, []);
 
   const handleSetRefreshToken = useCallback((token) => {
-    try {
-      window.localStorage.setItem('refresh_token', token);
-      setRefreshToken(token);
-      console.log('Refresh token set:', token);
-    } catch (error) {
-      console.error('Error setting refresh token:', error);
+    if (typeof window !== 'undefined') {
+      try {
+        window.localStorage.setItem('refresh_token', token);
+        setRefreshToken(token);
+        console.log('Refresh token set:', token);
+      } catch (error) {
+        console.error('Error setting refresh token:', error);
+      }
     }
   }, []);
 
@@ -74,55 +82,61 @@ export const UserProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    fetchUserProfile();
+    if (accessToken) {
+      fetchUserProfile();
+    }
   }, [accessToken]);
 
-  // refresh token logic
+  // Refresh token logic
   // useEffect(() => {
-  //   const handleRefreshToken = async () => {
-  //     if (!refreshToken) return;
+  //   if (typeof window !== 'undefined') {
+  //     const handleRefreshToken = async () => {
+  //       if (!refreshToken) return;
 
-  //     try {
-  //       const res = await fetcher('/v1/token-refresh', {
-  //         method: 'POST',
-  //         headers: { Authorization: `Bearer ${refreshToken}` },
-  //       });
-  //       if (res) {
-  //         handleSetAccessToken(res.access_token);
-  //         handleSetRefreshToken(res.refresh_token);
-  //         console.log('Token refreshed');
-  //       } else {
-  //         console.error('Failed to refresh token');
+  //       try {
+  //         const res = await fetcher('/v1/token-refresh', {
+  //           method: 'POST',
+  //           headers: { Authorization: `Bearer ${refreshToken}` },
+  //         });
+  //         if (res) {
+  //           handleSetAccessToken(res.access_token);
+  //           handleSetRefreshToken(res.refresh_token);
+  //           console.log('Token refreshed');
+  //         } else {
+  //           console.error('Failed to refresh token');
+  //         }
+  //       } catch (error) {
+  //         console.error('Error while refreshing token:', error);
   //       }
-  //     } catch (error) {
-  //       console.error('Error while refreshing token:', error);
-  //     }
-  //   };
+  //     };
 
-  //   const refreshInterval = parseInt(process.env.NEXT_PUBLIC_JWT_REFRESH_INTERVAL, 10);
-  //   const tokenRefreshInterval = setInterval(handleRefreshToken, refreshInterval);
+  //     const refreshInterval = parseInt(process.env.NEXT_PUBLIC_JWT_REFRESH_INTERVAL, 10);
+  //     const tokenRefreshInterval = setInterval(handleRefreshToken, refreshInterval);
 
-  //   return () => clearInterval(tokenRefreshInterval);
+  //     return () => clearInterval(tokenRefreshInterval);
+  //   }
   // }, [refreshToken, handleSetAccessToken, handleSetRefreshToken]);
 
   const handleLogout = async () => {
-    const response = await fetch('http://localhost:3001/api/v1/auth/logout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      credentials: 'include',
-    });
+    if (typeof window !== 'undefined') {
+      const response = await fetch('http://localhost:3001/api/v1/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+        credentials: 'include',
+      });
 
-    if (response.ok) {
-      window.localStorage.removeItem('access_token');
-      window.localStorage.removeItem('refresh_token');
-      setUser(null);
-      setLoggedIn(false);
-      window.location.href = '/';
-    } else {
-      console.error('Logout failed');
+      if (response.ok) {
+        window.localStorage.removeItem('access_token');
+        window.localStorage.removeItem('refresh_token');
+        setUser(null);
+        setLoggedIn(false);
+        window.location.href = '/';
+      } else {
+        console.error('Logout failed');
+      }
     }
   };
 

@@ -28,10 +28,10 @@ const UserLoggedIn = ({ user, handleLogout }) => (
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <Link href="/profile">Profile</Link>
+            <Link href="/account">Profile</Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Link href="/settings">Settings</Link>
+            <Link href="/account/settings">Settings</Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <button onClick={handleLogout}>Log Out</button>

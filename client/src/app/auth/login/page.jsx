@@ -27,7 +27,6 @@ export default function Login() {
         handleSetAccessToken(res.accessToken);
         handleSetRefreshToken(res.refreshToken);
         window.dispatchEvent(new Event('storage')); // Trigger storage event
-        setUser(res.user);
         window.location.href = '/';
       }
     } catch (error) {
@@ -37,7 +36,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-full">
+    <div className="flex flex-col justify-center items-center h-full py-20">
       <h1 className="mb-4 text-2xl font-bold">Sign in to your account</h1>
       <form
         onSubmit={handleSubmit}
