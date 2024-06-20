@@ -27,7 +27,7 @@ export default function Login() {
         handleSetAccessToken(res.accessToken);
         handleSetRefreshToken(res.refreshToken);
         window.dispatchEvent(new Event('storage')); // Trigger storage event
-        window.location.href = '/';
+        window.location.href = '/account/dashboard';
       }
     } catch (error) {
       console.error('Login failed', error);
