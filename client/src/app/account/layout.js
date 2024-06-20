@@ -24,10 +24,10 @@ const ProfileLayout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const navigation = [
-    { name: 'Dashboard', href: '/account/dashboard', icon: FaHome, current: true },
-    { name: 'Projects', href: '/account/projects', icon: FaFolder, current: false },
-    { name: 'Tickets', href: '/account/tickets', icon: FaCalendar, current: false },
-    { name: 'Analytics', href: '/account/analytics', icon: FaChartPie, current: false },
+    { name: 'Dashboard', href: '/account/dashboard', icon: FaHome },
+    { name: 'Projects', href: '/account/projects', icon: FaFolder },
+    { name: 'Tickets', href: '/account/tickets', icon: FaCalendar },
+    { name: 'Analytics', href: '/account/analytics', icon: FaChartPie },
   ];
 
   const userNavigation = [
@@ -161,7 +161,10 @@ const ProfileLayout = ({ children }) => {
                     <span className="sr-only">Open user menu</span>
                     <img
                       className="h-8 w-8 rounded-full bg-gray-50"
-                      src={user?.avatarUrl || 'https://images.unsplash.com/photo-1494790108377-be9c29b29330'}
+                      src={
+                        user?.profilePicture ||
+                        'https://as1.ftcdn.net/v2/jpg/03/39/45/96/1000_F_339459697_XAFacNQmwnvJRqe1Fe9VOptPWMUxlZP8.jpg'
+                      }
                       alt=""
                     />
                     <span className="hidden lg:flex lg:items-center">
