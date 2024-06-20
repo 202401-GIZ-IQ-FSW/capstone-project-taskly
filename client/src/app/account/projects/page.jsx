@@ -1,4 +1,5 @@
-'use client'
+'use client';
+import Link from 'next/link';
 import fetcher from '@/_utils/fetcher';
 import { useEffect, useState } from 'react';
 
@@ -29,12 +30,14 @@ const Projects = () => {
         <div className="text-center">You don't have any projects. Start by creating one.</div>
       ) : (
         projects.map((project) => (
-          <div
+          <Link
             key={project._id}
-            className="bg-white shadow-md rounded-md p-4">
-            <h3 className="text-lg font-semibold">{project.name || ''}</h3>
-            <p className="text-gray-600">{project.description || ''}</p>
-          </div>
+            href={`/account/projects/${project._id}/tickets`}>
+            <div className="bg-white shadow-md rounded-md p-4">
+              <h3 className="text-lg font-semibold">{project.name || ''}</h3>
+              <p className="text-gray-600">{project.description || ''}</p>
+            </div>
+          </Link>
         ))
       )}
     </div>

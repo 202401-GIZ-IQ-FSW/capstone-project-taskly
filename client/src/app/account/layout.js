@@ -23,14 +23,14 @@ const ProfileLayout = ({ children }) => {
   const pathname = usePathname();
   const router = useRouter();
 
-  const { handleLogout, user } = useUser();
+  const { handleLogout, user, loggedIn } = useUser();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  useEffect(() => {
-    if (!user) {
-      router.push('/auth/login');
-    }
-  }, [user, router]);
+  // useEffect(() => {
+  //   if (!loggedIn) {
+  //     router.push('/auth/login');
+  //   }
+  // }, [user]);
 
   const navigation = [
     { name: 'Dashboard', href: '/account/dashboard', icon: FaHome },
