@@ -25,7 +25,8 @@ const fetcher = async (url, options = {}) => {
   const response = await api(url, mergedOptions);
 
   if (!response.ok) {
-    throw new Error(`Error fetching data from ${API_URL}${url}: ${response.status} - ${response.statusText}`);
+    const errorMessage = await response.json();
+    throw new Error(`Error fetching data from ${API_URL}${url}: ${response.status} - ${errorMessage.message || response.statusText}`);
   }
 
   return await response.json();
