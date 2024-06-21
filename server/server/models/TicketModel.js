@@ -27,6 +27,11 @@ const ticketSchema = new mongoose.Schema(
         default: null,
       },
     ],
+    projectId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Project',
+      required: true,
+    },
   },
   { timestamps: true }
 );
