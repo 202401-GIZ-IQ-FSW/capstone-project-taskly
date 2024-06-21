@@ -1,5 +1,4 @@
-import api from './getServer';
-
+import api,{ API_URL }  from './getServer'; 
 const fetcher = async (url, options = {}) => {
   const accessToken = typeof window !== 'undefined' ? window.localStorage.getItem('access_token') : null;
   const authHeader = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
