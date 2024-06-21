@@ -38,7 +38,7 @@ app.use('/api/v1/admin', adminRoutes); // temporary admin routes
 app.use(verifyJWT); // everything below this line will use verifyJWT
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/projects', projectRoutes);
-app.use('/api/v1/projects/:projectId/tickets', ticketRoutes);
+app.use('/api/v1/projects', ticketRoutes);
 
 app.listen(port, () => {
   printAllRoutes(app);
