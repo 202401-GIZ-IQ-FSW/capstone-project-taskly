@@ -86,11 +86,11 @@ export default function Login() {
             Keep me signed in
           </label>
         </div>
-        <button
+        <input
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-          Sign In
-        </button>
+          value="Sign In"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        />
       </form>
     </div>
   );
