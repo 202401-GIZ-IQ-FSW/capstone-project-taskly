@@ -49,7 +49,7 @@ const ProjectDetailsPage = (params) => {
             </h1>
           </div>
         )}
-        {tickets && <h1 className="font-bold text-3xl">project Tickets</h1>}
+        {tickets && (<h1 className="font-bold text-3xl">project Tickets</h1>) &&( console.log(tickets))}
         {tickets &&
           tickets.map((ticket) => (
             <li key={ticket._id}>

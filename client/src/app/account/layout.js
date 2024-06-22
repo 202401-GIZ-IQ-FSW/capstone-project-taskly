@@ -3,7 +3,13 @@
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Transition, Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react';
+import {
+  Transition,
+  Menu,
+  MenuButton,
+  MenuItems,
+  MenuItem,
+} from '@headlessui/react';
 import {
   FaBars,
   FaCalendar,
@@ -40,6 +46,7 @@ const ProfileLayout = ({ children }) => {
   ];
 
   const userNavigation = [
+    { name: 'Home Page', href: '/' },
     { name: 'Your profile', href: '/account' },
     { name: 'Sign out', href: '/', onClick: handleLogout },
   ];
@@ -56,20 +63,18 @@ const ProfileLayout = ({ children }) => {
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
           <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
             <div className="flex h-16 shrink-0 items-center">
-              <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=black&shade=600"
-                alt="Your Company"
-              />
+              <Link href="/">
+                <img
+                  className="h-8 w-auto"
+                  src="https://tailwindui.com/img/logos/mark.svg?color=black&shade=600"
+                  alt="Your Company"
+                />
+              </Link>
             </div>
             <nav className="flex flex-1 flex-col">
-              <ul
-                role="list"
-                className="flex flex-1 flex-col gap-y-7">
+              <ul role="list" className="flex flex-1 flex-col gap-y-7">
                 <li>
-                  <ul
-                    role="list"
-                    className="-mx-2 space-y-1">
+                  <ul role="list" className="-mx-2 space-y-1">
                     {navigation.map((item) => (
                       <li key={item.name}>
                         <Link
@@ -81,7 +86,9 @@ const ProfileLayout = ({ children }) => {
                           }`}>
                           <item.icon
                             className={`h-6 w-6 shrink-0 ${
-                              pathname === item.href ? 'text-black' : 'text-gray-400 group-hover:text-black'
+                              pathname === item.href
+                                ? 'text-black'
+                                : 'text-gray-400 group-hover:text-black'
                             }`}
                             aria-hidden="true"
                           />
@@ -114,10 +121,7 @@ const ProfileLayout = ({ children }) => {
               className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
               onClick={() => setSidebarOpen(true)}>
               <span className="sr-only">Open sidebar</span>
-              <FaBars
-                className="h-6 w-6"
-                aria-hidden="true"
-              />
+              <FaBars className="h-6 w-6" aria-hidden="true" />
             </button>
 
             <div
@@ -126,13 +130,8 @@ const ProfileLayout = ({ children }) => {
             />
 
             <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-              <form
-                className="relative flex flex-1"
-                action="#"
-                method="GET">
-                <label
-                  htmlFor="search-field"
-                  className="sr-only">
+              <form className="relative flex flex-1" action="#" method="GET">
+                <label htmlFor="search-field" className="sr-only">
                   Search
                 </label>
                 <FaSearch
@@ -152,10 +151,7 @@ const ProfileLayout = ({ children }) => {
                   type="button"
                   className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
                   <span className="sr-only">View notifications</span>
-                  <FaBell
-                    className="h-6 w-6"
-                    aria-hidden="true"
-                  />
+                  <FaBell className="h-6 w-6" aria-hidden="true" />
                 </button>
 
                 <div
@@ -163,9 +159,7 @@ const ProfileLayout = ({ children }) => {
                   aria-hidden="true"
                 />
 
-                <Menu
-                  as="div"
-                  className="relative">
+                <Menu as="div" className="relative">
                   <MenuButton className="-m-1.5 flex items-center p-1.5">
                     <span className="sr-only">Open user menu</span>
                     <img

@@ -34,12 +34,20 @@ export default function CreateTicket() {
   const handleCreate = async (event) => {
     event.preventDefault();
     try {
+      if (!projectId) {
+        setNotificationMessage('Please select a Project first');
+        setNotificationType('error');
+        setTitle('');
+        setDescription('');
+        setPriority('medium');
+        return;
+      }
       const res = await fetcher(`/v1/projects/${projectId}/tickets`, {
         method: 'POST',
         body: JSON.stringify({ title, description, priority }),
       });
 
-      if (res.ticket??_id) {
+      if (res.ticket ?? _id) {
         setNotificationMessage('Ticket added successfully.');
         setNotificationType('success');
         setTitle('');
