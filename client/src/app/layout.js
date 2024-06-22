@@ -1,7 +1,6 @@
-import Footer from '@/components/Navigation/Footer/Footer';
-import Navbar from '@/components/Navigation/Navbar/Navbar';
-import './globals.css';
+import ConditionalLayout from '@/components/Navigation/ConditionalLayout';
 import { UserProvider } from '@/context/UserContext/UserProvider';
+import './globals.css';
 
 export const metadata = {
   title: 'Taskly',
@@ -13,9 +12,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <UserProvider>
-          <Navbar />
-          {children}
-          <Footer />
+          <ConditionalLayout>{children}</ConditionalLayout>
         </UserProvider>
       </body>
     </html>

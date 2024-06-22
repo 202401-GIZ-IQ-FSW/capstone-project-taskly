@@ -34,7 +34,6 @@ export default function Register() {
         handleSetAccessToken(res.accessToken);
         handleSetRefreshToken(res.refreshToken);
         window.dispatchEvent(new Event('storage')); // Trigger storage event
-        setUser(res.user);
         window.location.href = '/';
       } else {
         console.error(res.message);
