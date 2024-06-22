@@ -20,13 +20,16 @@ const UserLoggedIn = ({ user, handleLogout }) => (
     <div className="relative">
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded">
+          {/* <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded"> */}
             {user.firstName} <span className="ml-1">&#x25BE;</span>
-          </button>
+          {/* </button> */}
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <Link href="/account/dashboard">Dashboard</Link>
+          </DropdownMenuItem>
           <DropdownMenuItem>
             <Link href="/account">Profile</Link>
           </DropdownMenuItem>

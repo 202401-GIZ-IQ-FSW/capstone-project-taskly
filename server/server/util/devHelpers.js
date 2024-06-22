@@ -1,16 +1,25 @@
 // a function to print all the app routes in the console
 const printAllRoutes = (app) => {
+  const visitedRoutes = new Set();
+
   function print(path, layer) {
     if (layer.route) {
-      layer.route.stack.forEach(print.bind(null, path.concat(split(layer.route.path))));
-    } else if (layer.name === 'router' && layer.handle.stack) {
-      layer.handle.stack.forEach(print.bind(null, path.concat(split(layer.regexp))));
-    } else if (layer.method) {
-      console.log(
-        '%s /%s',
-        layer.method.toUpperCase(),
-        path.concat(split(layer.regexp)).filter(Boolean).join('/')
+      layer.route.stack.forEach(
+        print.bind(null, path.concat(split(layer.route.path)))
       );
+    } else if (layer.name === 'router' && layer.handle.stack) {
+      layer.handle.stack.forEach(
+        print.bind(null, path.concat(split(layer.regexp)))
+      );
+    } else if (layer.method) {
+      const routeKey = `${layer.method.toUpperCase()} /${path
+        .concat(split(layer.regexp))
+        .filter(Boolean)
+        .join('/')}`;
+      if (!visitedRoutes.has(routeKey)) {
+        console.log(routeKey);
+        visitedRoutes.add(routeKey);
+      }
     }
   }
 
@@ -34,8 +43,7 @@ const printAllRoutes = (app) => {
         return thing
           .toString()
           .replace(/(^\/\^|\$\|i$)/g, '')
-          .replace(/\(\?:\(\[\^\\\/]\+\?\)\)/g, ':param')
-          .replace(/\(\[\^\\\/]\+\?\)/g, ':param')
+          .replace(/\(\?:\(\[\^\\\/]\+\?\)\)/g, ':projectId')
           .replace(/\\(.)/g, '$1')
           .replace(/\?\(\?=\/|\$\)\//g, '')
           .replace(/\|i$/g, '')

@@ -11,7 +11,7 @@ const ProjectTickets = ({ params }) => {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const data = await fetcher(`/v1/projects/:${projectId}/tickets`);
+        const data = await fetcher(`/v1/projects/${projectId}/tickets`);
         setTickets(data.tickets || []);
       } catch (err) {
         setError(err.message);
