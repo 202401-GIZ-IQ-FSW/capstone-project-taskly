@@ -1,14 +1,17 @@
 const express = require('express');
-const router = express.Router({ mergeParams: true }); // Merge params to access parent route params
+const router = express.Router();
 
-const commentController = require('../../controllers/comment/commentController');
+const ticketController = require('../../controllers/Tickets/ticketCrudController');
+const { validateObjectId } = require('../../middleware/validateObjectId');
 
-// Base path: /api/v1/projects/:projectId/tickets/:ticketId/comments
+router.post('/', ticketController.createTicket);
+router.get('/', ticketController.getAllTickets);
+router.get('/:ticketId', validateObjectId('ticketId'), ticketController.getTicketById);
+router.put('/:ticketId', validateObjectId('ticketId'), ticketController.updateTicket);
+router.delete('/:ticketId', validateObjectId('ticketId'), ticketController.deleteTicket);
 
-router.post('/', commentController.createComment);  
-router.get('/', commentController.getAllComments);  
-router.get('/:commentId', commentController.getCommentById);  
-router.put('/:commentId', commentController.updateCommentById);  
-router.delete('/:commentId', commentController.deleteCommentById);  
+// Assign and unassign ticket routes
+router.post('/:ticketId/assign', validateObjectId('ticketId'), ticketController.assignTicket);
+router.post('/:ticketId/unassign', validateObjectId('ticketId'), ticketController.unassignTicket);
 
 module.exports = router;
