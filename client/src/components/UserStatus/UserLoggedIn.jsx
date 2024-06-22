@@ -28,6 +28,9 @@ const UserLoggedIn = ({ user, handleLogout }) => (
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
+            <Link href="/account/dashboard">Dashboard</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
             <Link href="/account">Profile</Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
