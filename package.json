@@ -1,8 +1,12 @@
 {
-  "name": "capstone-cerver-taskly",
+  "name": "capstone-server-taskly",
   "scripts": {
+    "build": "cd server && docker-compose build",
+    "start": "cd client && docker-compose up -d && cd ../server && npm run start",
+    "start-docker": "cd client && docker-compose up -d && cd ../server && docker-compose up -d",
+    "stop": "cd server && docker-compose down && cd .. && cd client && docker-compose down  ",
     "preinstall": "echo Install is not allowed here. cd to server or client to install && exit 1",
-    "test": "cd server && npm run test && cd.. && cd client && npm run test"
+    "test": "cd server && npm run test"
   },
   "author": "Ninos,Ali,Elaf,Merah,Ahmed AL-Essam"
 }

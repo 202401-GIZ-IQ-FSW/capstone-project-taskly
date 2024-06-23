@@ -2,11 +2,6 @@ const mongoose = require('mongoose');
 
 const ticketSchema = new mongoose.Schema(
   {
-    project_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Project',
-      required: true,
-    },
     title: {
       type: String,
       required: true,
@@ -25,10 +20,17 @@ const ticketSchema = new mongoose.Schema(
       enum: ['low', 'medium', 'high'],
       default: 'medium',
     },
-    assignee_id: {
+    assignees: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: null,
+      },
+    ],
+    projectId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      default: null,
+      ref: 'Project',
+      required: true,
     },
   },
   { timestamps: true }
