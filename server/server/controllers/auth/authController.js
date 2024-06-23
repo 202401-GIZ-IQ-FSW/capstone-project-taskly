@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const handleRegistration = async (req, res) => {
   const { username, firstName, lastName, email, password } = req.body;
+
   try {
     // Check if user with the same username or email already exists
     const existingUser = await UserModel.findOne({ $or: [{ username }, { email }] });
@@ -18,12 +19,26 @@ const handleRegistration = async (req, res) => {
       email,
       password,
     });
+    await newUser.save();
+    const userInfo = { id: newUser._id, role: newUser.role, username: newUser.username };
+    const accessToken = jwt.sign({ userInfo }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+    const refreshToken = jwt.sign({ userInfo }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
 
+    // Store refresh token in the database
+    newUser.refreshToken = refreshToken;
     // Save the user to the database
     await newUser.save();
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      sameSite: 'None',
+      secure: true,
+      maxAge: 24 * 60 * 60 * 1000, // one day
+    });
     // Return the registered user details
     res.status(201).json({
       message: 'User registered successfully',
+      accessToken,
+      refreshToken,
       user: {
         _id: newUser._id,
         username: newUser.username,
@@ -33,6 +48,7 @@ const handleRegistration = async (req, res) => {
       },
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 };

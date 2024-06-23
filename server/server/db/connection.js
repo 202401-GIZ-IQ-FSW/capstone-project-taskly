@@ -7,7 +7,9 @@ const DB_URI = `mongodb://${DB_USER}:${DB_PASSWORD}@${
   process.env.NODE_ENV === "test" ? TEST_DB_HOST : DB_HOST
 }:${DB_PORT}/${DB_NAME}?authSource=admin`;
 
-const url = DB_URI;
+let url = DB_URI;
+// uncomment this line if you are using `nodemon server/index.js` command
+// url = 'mongodb://localhost:27017/tickets-db';
 mongoose.set("strictQuery", true);
 const connectToMongo = () => {
   mongoose.connect(url, { useNewUrlParser: true });

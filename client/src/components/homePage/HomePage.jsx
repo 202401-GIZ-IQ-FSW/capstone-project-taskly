@@ -3,12 +3,12 @@ import Header from '../header/Header';
 import TicketSubmission from '../tickets/TicketSubmission';
 import TicketStats from '../tickets/TicketStats';
 import Footer from '../footer/Footer';
-import { headerLinks, footerLinks } from '@/data/Links';
+import { headerLinks, footerLinks, signUpLink } from '@/data/Links';
 
 const Home = () => {
   return (
     <div>
-      <Header links={headerLinks} signInText="Sign In" />
+      <Header links={headerLinks} authentication={signUpLink} />
       <TicketSubmission 
         title="Submit your technical issues and queries easily!"
         subtitle="Securely submit and manage support tickets for technical issues"
@@ -31,3 +31,4 @@ const Home = () => {
 };
 
 export default Home;
+

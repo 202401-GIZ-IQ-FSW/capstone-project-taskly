@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../../controllers/UserProfile/userProfileContainer');
+const userController = require('../../controllers/UserProfile/userProfile');
 const { upload } = require('../../config/multer');
 
 // - GET /api/v1/user/profile - Get user profile information

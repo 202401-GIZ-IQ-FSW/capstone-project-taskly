@@ -1,0 +1,50 @@
+# .github\workflows\main.yml
+name: Run tests
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v1
+
+      - name: Build Docker container
+        run: npm run build
+
+      - name: Stop Docker containers
+        run: npm run stop
+
+      - name: Start Docker containers
+        run: npm run start-docker
+
+      - name: Wait for containers to start
+        run: sleep 10s
+
+      - name: List running Docker containers
+        run: cd server && docker ps
+
+      # - name: Debug Docker environment
+      #   run: docker info
+
+      - name: Run tests
+        run: npm run test
+      
+      - name: Stop Docker
+        run: npm run stop
+
+
