@@ -1,67 +1,104 @@
-const Contact = () => {
+'use client';
+
+import { useState } from 'react';
+import { FaFacebook, FaTwitter, FaInstagram, FaEnvelope } from 'react-icons/fa';
+
+const ContactForm = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [termsAccepted, setTermsAccepted] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission logic here
+  };
+
   return (
-    <>
-      <div className="min-h-screen flex flex-col">
-        <nav className="flex justify-between items-center p-3">
-          <button className="border border-black px-4 py-2">Get Help</button>
-        </nav>
-
-        <div className="flex flex-col items-center justify-center p-8">
-          <div className="w-full max-w-4xl flex flex-col space-y-8">
-            <h1 className="text-4xl font-bold mb-8">Get in touch</h1>
-            <div className="w-full max-w-4xl flex flex-row gap-10">
-              <form className="flex flex-col space-y-4 w-full md:w-1/2">
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  className="p-4 border border-gray-300 rounded"
-                  required
-                />
-                <input
-                  type="email"
-                  placeholder="Your Email Address"
-                  className="p-4 border border-gray-300 rounded"
-                  required
-                />
-                <textarea
-                  placeholder="Describe your issue"
-                  className="p-4 border border-gray-300 rounded h-32"
-                  required
-                ></textarea>
-                <button
-                  type="submit"
-                  className="p-4 text-black border border-black rounded"
-                >
-                  Submit
-                </button>
-              </form>
-              <h1 className="flex flex-col text-ellipsis "></h1>
-              <div className="w-full md:w-1/2 space-y-4 bg-gray-200 p-10">
-                <h2 className="text-2xl font-bold">Contact details</h2>
-                <p className="text-gray-700">Office Address</p>
-                <p>123 Tech Street San Francisco, CA 94103</p>
-                <p className="text-gray-700">Support Hotline</p>
-                <p>+1 (800) 123-4567</p>
-                <p className="text-gray-700">
-                  Email Support
-                </p>
-                <a
-                    href="mailto:support@techapp.com"
-                    className="text-blue-600"
-                  >
-                    support@techapp.com
-                  </a>
-              </div>
-            </div>
+    <div className="flex flex-col md:flex-row justify-between items-center p-12 bg-gray-100">
+      <div className="flex flex-col md:flex-row items-start md:gap-10 gap-0">
+        <div className="md:w-1/2 mb-8 md:mb-0">
+          <h2 className="text-5xl font-bold mb-4">GET IN TOUCH</h2>
+          <p className="mb-4">
+            Hey! We are looking forward to start a project with you!
+          </p>
+          <p className="mb-4 text-gray-600">
+            Etiam sit amet convallis erat - class aptent taciti sociosqu ad
+            litora torquent per conubia! Maecenas gravida lacus. Lorem etiam sit
+            litora torquent per conubia! Maecenas gravida lacus. Lorem etiam sit
+            litora torquent per conubia! Maecenas gravida lacus. Lorem etiam sit
+            litora torquent per conubia! Maecenas gravida lacus. Lorem etiam sit
+            amet convallis erat.
+          </p>
+          <div className="flex space-x-4">
+            <a href="#" className="text-gray-600 hover:text-gray-800">
+              <FaFacebook className="w-6 h-6" />
+            </a>
+            <a href="#" className="text-gray-600 hover:text-gray-800">
+              <FaTwitter className="w-6 h-6" />
+            </a>
+            <a href="#" className="text-gray-600 hover:text-gray-800">
+              <FaInstagram className="w-6 h-6" />
+            </a>
+            <a href="#" className="text-gray-600 hover:text-gray-800">
+              <FaEnvelope className="w-6 h-6" />
+            </a>
           </div>
-
-         
         </div>
-
-        
+        <form onSubmit={handleSubmit} className="md:w-1/2 w-full">
+          <div className="mb-4">
+            <input
+              type="text"
+              placeholder="Enter your Name"
+              value={name}
+              required
+              onChange={(e) => setName(e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded"
+            />
+          </div>
+          <div className="mb-4">
+            <input
+              type="email"
+              placeholder="Enter a valid email address"
+              value={email}
+              required
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded"
+            />
+          </div>
+          <div className="mb-4">
+            <textarea
+              placeholder="Enter your message"
+              value={message}
+              required
+              onChange={(e) => setMessage(e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded"
+              rows="4"></textarea>
+          </div>
+          <div className="mb-4 flex items-center">
+            <input
+              type="checkbox"
+              required
+              checked={termsAccepted}
+              onChange={(e) => setTermsAccepted(e.target.checked)}
+              className="mr-2"
+            />
+            <label>
+              I accept the{' '}
+              <a href="#" className="text-blue-600">
+                Terms of Service
+              </a>
+            </label>
+          </div>
+          <button
+            type="submit"
+            className="w-full p-3 bg-gray-600 text-white rounded hover:bg-gray-700">
+            Submit
+          </button>
+        </form>
       </div>
-    </>
+    </div>
   );
 };
 
-export default Contact;
+export default ContactForm;
