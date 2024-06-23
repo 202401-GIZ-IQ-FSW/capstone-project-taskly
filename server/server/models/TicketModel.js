@@ -20,15 +20,17 @@ const ticketSchema = new mongoose.Schema(
       enum: ['low', 'medium', 'high'],
       default: 'medium',
     },
+    assignees: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: null,
+      },
+    ],
     projectId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Project',
       required: true,
-    },
-    assigneeId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      default: null,
     },
   },
   { timestamps: true }
