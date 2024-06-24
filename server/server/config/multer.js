@@ -1,3 +1,4 @@
+// server\server\config\multer.js
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
@@ -7,8 +8,8 @@ const storage = multer.diskStorage({
   // Set the destination directory for uploaded files
   destination: function (req, file, cb) {
     // Create a new folder with the username if it doesn't exist
-    const username = req.user.username;
-    const userFolder = path.join(__dirname, `../images/${username}`);
+    const username = req.body.username // changed see even not loggedin user can upload image
+    const userFolder = path.join(__dirname, `../public/uploads/${username}`);
     fs.mkdirSync(userFolder, { recursive: true }); // Create folder recursively
     cb(null, userFolder);
   },
@@ -17,8 +18,8 @@ const storage = multer.diskStorage({
     // Always name the file as 'profile' followed by the file extension
     const extension = path.extname(file.originalname);
     const filename = `profile${extension}`;
-    const username = req.user.username;
-    const userFolder = path.join(__dirname, `../images/${username}`);
+    const username = req.body.username;
+    const userFolder = path.join(__dirname, `../public/uploads/${username}`);
     const filePath = path.join(userFolder, filename);
 
     // Check if the file already exists

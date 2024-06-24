@@ -1,51 +1,64 @@
+// server\server\controllers\auth\authController.js
 const UserModel = require('../../models/UserModel');
 const jwt = require('jsonwebtoken');
+const { upload } = require('../../config/multer');
 
 const handleRegistration = async (req, res) => {
-  const { username, firstName, lastName, email, password } = req.body;
-
   try {
-    // Check if user with the same username or email already exists
-    const existingUser = await UserModel.findOne({ $or: [{ username }, { email }] });
-    if (existingUser) {
-      return res.status(400).json({ message: 'User already exists' });
-    }
+    upload.single('profilePicture')(req, res, async (err) => {
+      if (err) {
+        return res.status(400).send({ message: err.message });
+      }
+      const { username, firstName, lastName, email, password } = req.body;
+      const profilePicturePath = req.file? `uploads/${username}/${req.file.filename}`: 'uploads/default/avatar.jpg';
+     // Check if user with the same username or email already exists
+      const existingUser = await UserModel.findOne({ $or: [{ username }, { email }] });
+      if (existingUser) {
+        return res.status(400).json({ message: 'User already exists' });
+      }
 
-    // Create a new user
-    const newUser = new UserModel({
-      username,
-      firstName,
-      lastName,
-      email,
-      password,
-    });
-    await newUser.save();
-    const userInfo = { id: newUser._id, role: newUser.role, username: newUser.username };
-    const accessToken = jwt.sign({ userInfo }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
-    const refreshToken = jwt.sign({ userInfo }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
+      // Create a new user
+      const newUser = new UserModel({
+        username,
+        firstName,
+        lastName,
+        email,
+        password,
+        profilePicture: profilePicturePath,
+      });
+      try {
+        await newUser.save();
+      } catch(err) {
+        res.status(500).json({ message: err.message });
+      }
+      const userInfo = { id: newUser._id, role: newUser.role, username: newUser.username };
+      const accessToken = jwt.sign({ userInfo }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+      const refreshToken = jwt.sign({ userInfo }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
 
-    // Store refresh token in the database
-    newUser.refreshToken = refreshToken;
-    // Save the user to the database
-    await newUser.save();
-    res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      sameSite: 'None',
-      secure: true,
-      maxAge: 24 * 60 * 60 * 1000, // one day
-    });
-    // Return the registered user details
-    res.status(201).json({
-      message: 'User registered successfully',
-      accessToken,
-      refreshToken,
-      user: {
-        _id: newUser._id,
-        username: newUser.username,
-        firstName: newUser.firstName,
-        lastName: newUser.lastName,
-        email: newUser.email,
-      },
+      // Store refresh token in the database
+      newUser.refreshToken = refreshToken;
+      // Save the user to the database
+      await newUser.save();
+      res.cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        sameSite: 'None',
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000, // one day
+      });
+      // Return the registered user details
+      res.status(201).json({
+        message: 'User registered successfully',
+        accessToken,
+        refreshToken,
+        user: {
+          _id: newUser._id,
+          username: newUser.username,
+          firstName: newUser.firstName,
+          lastName: newUser.lastName,
+          email: newUser.email,
+          profilePicture: newUser.profilePicture,
+        },
+      });
     });
   } catch (error) {
     console.log(error);

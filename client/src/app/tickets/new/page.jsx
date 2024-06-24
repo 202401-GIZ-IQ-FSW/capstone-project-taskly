@@ -14,7 +14,9 @@ export default function CreateTicket() {
   const [notificationMessage, setNotificationMessage] = useState('');
   const [notificationType, setNotificationType] = useState('');
   const router = useRouter();
-
+  const generateRandomNumber = () => {
+    return Math.floor(100 + Math.random() * 900); // Generates a random number 
+  };
   useEffect(() => {
     const fetchProjects = async () => {
       try {
@@ -35,7 +37,7 @@ export default function CreateTicket() {
     event.preventDefault();
     try {
       if (!projectId) {
-        setNotificationMessage('Please select a Project first');
+        setNotificationMessage(`Please select a Project first<span hidden>${generateRandomNumber()}</span>`);
         setNotificationType('error');
         setTitle('');
         setDescription('');
@@ -48,17 +50,17 @@ export default function CreateTicket() {
       });
 
       if (res.ticket ?? _id) {
-        setNotificationMessage('Ticket added successfully.');
+        setNotificationMessage(`Ticket added successfully.<span hidden>${generateRandomNumber()}</span>`);
         setNotificationType('success');
         setTitle('');
         setDescription('');
         setPriority('medium');
       } else {
-        setNotificationMessage(`Failed to add ticket, MSG: ${res.message}`);
+        setNotificationMessage(`Failed to add ticket, MSG: ${res.message}<span hidden>${generateRandomNumber()}</span>`);
         setNotificationType('error');
       }
     } catch (error) {
-      setNotificationMessage(`Failed to add ticket, MSG: ${error.message}`);
+      setNotificationMessage(`Failed to add ticket, MSG: ${error.message}<span hidden>${generateRandomNumber()}</span>`);
       setNotificationType('error');
     }
   };
@@ -153,7 +155,7 @@ export default function CreateTicket() {
       <Notification
         message={notificationMessage}
         type={notificationType}
-        duration={30000}
+        duration={3000}
       />
     </>
   );

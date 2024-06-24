@@ -1,5 +1,5 @@
+// client\src\app\account\layout.js
 'use client';
-
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
@@ -164,7 +164,7 @@ const ProfileLayout = ({ children }) => {
                     <span className="sr-only">Open user menu</span>
                     <img
                       className="h-8 w-8 rounded-full bg-gray-50"
-                      src={
+                      src={`http://localhost:3001/`+
                         user?.profilePicture ||
                         'https://as1.ftcdn.net/v2/jpg/03/39/45/96/1000_F_339459697_XAFacNQmwnvJRqe1Fe9VOptPWMUxlZP8.jpg'
                       }
