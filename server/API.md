@@ -53,7 +53,7 @@
   - PUT /api/v1/projects/{projectId}/tickets/{ticketId}/comments/{commentId} - Update a comment by ID
   - DELETE /api/v1/projects/{projectId}/tickets/{ticketId}/comments/{commentId} - Delete a comment by ID
 
-#### Ticket Search and Filtering
+#### Ticket Search and Filtering 
 
 - **Filter Tickets**
   - GET /api/v1/projects/{projectId}/tickets/search?q={query} - Search tickets within a project
