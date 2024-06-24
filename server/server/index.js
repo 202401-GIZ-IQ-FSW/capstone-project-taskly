@@ -1,3 +1,4 @@
+// server\server\index.js
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -27,6 +28,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(express.static('server/public'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());

@@ -6,7 +6,7 @@ const Notification = ({ message, type, duration }) => {
   const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
-    type == 'error' && !duration ? (duration = 5000) : (duration = 20000);
+    !duration ? (duration = 5000):'';
     if (message) {
       setVisible(true);
       setTimeout(() => setAnimate(true), 100);

@@ -1,3 +1,4 @@
+// client\src\components\UserStatus\UserLoggedIn.jsx
 import Link from 'next/link';
 import {
   DropdownMenu,
@@ -7,12 +8,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-
+const backendUrl = process.env.NEXT_PUBLIC_DEV_API;// need to be change
 const UserLoggedIn = ({ user, handleLogout }) => (
   <div className="flex items-center">
     <div className="mr-4">
       <img
-        src={user.profilePicture}
+        src={'http://localhost:3001/' + user.profilePicture}
         alt="User Avatar"
         className="w-10 h-10 rounded-full"
       />

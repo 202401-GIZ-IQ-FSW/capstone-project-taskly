@@ -11,6 +11,8 @@ node_modules
 
 # images
 /server/server/images
+server/server/public/uploads/*
+!server/server/public/uploads/default 
 
 # next.js
 client/.next/
@@ -37,3 +39,4 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
