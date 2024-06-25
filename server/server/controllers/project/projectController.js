@@ -1,5 +1,6 @@
 const ProjectModel = require('../../models/ProjectModel');
 const UserModel = require('../../models/UserModel');
+const TicketModel = require('../../models/TicketModel');
 
 const createProject = async (req, res) => {
   const { name, description } = req.body;
@@ -90,10 +91,72 @@ const deleteProject = async (req, res) => {
   }
 };
 
-module.exports = {
+
+// - GET /api/v1/projects/{projectId}/tickets/search?q={query} - Search tickets within a project
+const searchTicket = async (req, res) => {
+  try {
+    const query = req.query.q;
+    if (!query) {
+      return res.status(400).json({ message: 'Query parameter q is required' });
+    }
+
+    const regex = new RegExp(query, 'i');  
+    const result = await TicketModel.find({
+      $or: [
+        { name: regex },
+        { description: regex },  
+      ],
+    });
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: 'No tickets found' });
+    }
+
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while searching for tickets', message: error.message });
+  }
+};
+
+// - GET /api/v1/projects/{projectId}/tickets/filter?status={status}&priority={priority} - Filter tickets within a project by status and priority
+const filterTicket = async(req, res) => {
+  try{
+     const projectId = req.params;
+     const {status, priority} = req.query;
+
+     if(!projectId){
+      res.status(400).json({message: 'No Project provided!'});
+     }
+      const filter = {projectId};
+      if(status){
+        filter.status = status;
+      }
+      if(priority){
+        filter.priority = priority;
+      }
+      const data = await TicketModel.find(filter);
+
+      if(data.length === 0){
+      return res.status(404).json({message:'no Ticket found'});
+
+      }
+
+      res.status(200).json(data);
+  }
+  catch (error) {
+    res.status(500).json({ error: 'An error occurred while filtering tickets', message: error.message });
+  }
+};
+
+
+
+
+ module.exports = {
   createProject,
   getAllProjects,
   getSingleProject,
   updateProject,
   deleteProject,
+  searchTicket,
+  filterTicket,
 };
