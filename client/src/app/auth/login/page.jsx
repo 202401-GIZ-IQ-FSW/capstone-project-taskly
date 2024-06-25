@@ -13,7 +13,7 @@ export default function Login() {
   const [notificationType, setNotificationType] = useState('');
 
   const generateRandomNumber = () => {
-    return Math.floor(100 + Math.random() * 900); // Generates a random number 
+    return Math.floor(100 + Math.random() * 900); 
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -99,9 +99,19 @@ export default function Login() {
         <input
           type="submit"
           value="Sign In"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="bg-gray-500 text-white py-2 px-4 rounded-md w-full hover:bg-gray-600"
         />
       </form>
+      <hr className="w-48"/>
+      or
+      <button
+        onClick={() => {
+          window.location.href = 'http://localhost:3001/api/v1/auth/google';
+        }}
+        className="bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow hover:bg-gray-100 flex items-center">
+        <img src="/ic_google.svg" alt="Google Icon" className="w-5 h-5 mr-2" />
+        Sign in with Google
+      </button>
       <Notification message={notificationMessage} type={notificationType} />
       </div>
   );

@@ -144,4 +144,14 @@ const handleLogout = async (req, res) => {
   }
 };
 
-module.exports = { handleRegistration, handleLogin, handleLogout };
+const handleGoogleCallback = async (req, res) => {
+  try {
+    const user = req.user;
+      res.redirect(`http://localhost:3000/auth?accessToken=${user.accessToken}&refreshToken=${user.refreshToken}`);
+ 
+  } catch (error) {
+    return res.status(500).json({ message: 'An error occurred during logout', error: error.message });
+  }
+};
+
+module.exports = { handleRegistration, handleLogin, handleLogout,handleGoogleCallback };
