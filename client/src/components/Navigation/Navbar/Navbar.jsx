@@ -18,7 +18,6 @@ const Navbar = () => {
   const closeModal = () => {
     setModalOpen(false);
   };
-  // console.log(user);
   return (
     <header className="bg-white shadow-md py-4 px-6 flex justify-between items-center">
       <Link href={'/'}>Tickets</Link>

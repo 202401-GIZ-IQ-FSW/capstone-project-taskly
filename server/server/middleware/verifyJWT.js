@@ -1,3 +1,4 @@
+// server\server\middleware\verifyJWT.js
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 

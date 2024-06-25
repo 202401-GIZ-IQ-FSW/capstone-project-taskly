@@ -6,7 +6,7 @@ import { useState } from 'react';
 import Notification from '@/components/Notification';
 
 export default function Login() {
-  const { handleSetAccessToken, handleSetRefreshToken, setUser } = useUser();
+  const { handleSetAccessToken, handleSetRefreshToken } = useUser();
   const [usernameOrEmail, setUsernameOrEmail] = useState('a');
   const [password, setPassword] = useState('11111aA@');
   const [notificationMessage, setNotificationMessage] = useState('');
