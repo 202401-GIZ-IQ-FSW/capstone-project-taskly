@@ -18,7 +18,7 @@ export default function Register() {
     profilePicture: null,
   });
   const generateRandomNumber = () => {
-    return Math.floor(100 + Math.random() * 900); // Generates a random number 
+    return Math.floor(100 + Math.random() * 900); 
   };
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -60,7 +60,7 @@ export default function Register() {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="bg-white p-8 rounded shadow-md w-96">
+      <div className="flex flex-col bg-white p-8 rounded shadow-md w-96 items-center">
         <h1 className="text-2xl font-bold mb-4">Sign Up</h1>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="mb-4">
@@ -151,6 +151,20 @@ export default function Register() {
             Register
           </button>
         </form>
+        <hr className="mt-4 w-48" />
+        or
+        <button
+          onClick={() => {
+            window.location.href = 'http://localhost:3001/api/v1/auth/google';
+          }}
+          className="bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow hover:bg-gray-100 flex items-center">
+          <img
+            src="/ic_google.svg"
+            alt="Google Icon"
+            className="w-5 h-5 mr-2"
+          />
+          Sign up with Google
+        </button>
         <Notification message={notificationMessage} type={notificationType} />
       </div>
     </div>

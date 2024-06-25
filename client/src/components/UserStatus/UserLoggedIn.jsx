@@ -13,7 +13,7 @@ const UserLoggedIn = ({ user, handleLogout }) => (
   <div className="flex items-center">
     <div className="mr-4">
       <img
-        src={'http://localhost:3001/' + user.profilePicture}
+        src={user.profilePicture.startsWith('http') ? user.profilePicture : `http://localhost:3001/${user.profilePicture}`}
         alt="User Avatar"
         className="w-10 h-10 rounded-full"
       />
