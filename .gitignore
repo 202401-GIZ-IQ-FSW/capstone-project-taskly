@@ -39,6 +39,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-#package-lock
+#package-lock && yarn.lock
 server/package-lock.json
 client/package-lock.json
+server/yarn.lock

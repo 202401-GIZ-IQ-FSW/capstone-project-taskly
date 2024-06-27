@@ -1,5 +1,5 @@
 // client\src\app\auth\page.jsx
-// this file saves the tokens to localstorage and redirects to homPage
+// this file saves the tokens to localstorage and redirects to HomePage
 'use client';
 import { useEffect } from 'react';
 import { useUser } from '@/hooks/useUser';
@@ -18,7 +18,7 @@ export default function RedirectToHom() {
           window.dispatchEvent(new Event('storage'));
           window.location.href = '/';
         } else {
-          console.log('Error: Tokens Missing');
+          console.log('Error: Tokens are Missing');
         }
       } catch (error) {
         console.log(error);

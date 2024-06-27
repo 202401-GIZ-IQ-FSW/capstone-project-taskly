@@ -164,9 +164,9 @@ const ProfileLayout = ({ children }) => {
                     <span className="sr-only">Open user menu</span>
                     <img
                       className="h-8 w-8 rounded-full bg-gray-50"
-                      src={user.profilePicture.startsWith('http') ? user.profilePicture : `http://localhost:3001/${user.profilePicture}`}
+                      src={user?(user.profilePicture.startsWith('http') ? user.profilePicture : `http://localhost:3001/${user.profilePicture}`):''}
 
-                      alt=""
+                      alt="profilePicture"
                     />
                     <span className="hidden lg:flex lg:items-center">
                       <span
