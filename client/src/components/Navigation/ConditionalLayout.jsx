@@ -9,7 +9,7 @@ const ConditionalLayout = ({ children }) => {
   const [showNavAndFooter, setShowNavAndFooter] = useState(true);
 
   useEffect(() => {
-    const isAuthRoute = pathname.includes('auth');
+    const isAuthRoute = pathname.includes('auth')|| pathname.includes('sign');
     const isAccountRoute = pathname.includes('account');
     setShowNavAndFooter(!(isAccountRoute || isAuthRoute));
   }, [pathname]);
