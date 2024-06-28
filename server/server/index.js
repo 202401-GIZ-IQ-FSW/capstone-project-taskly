@@ -18,6 +18,7 @@ const userRoutes = require('./routes/user/userProfileRoute');
 const ticketRoutes = require('./routes/tickets/ticket');
 const commentsRouter = require('./routes/comment/commentRoute');  
 const contactUsRoute = require('./routes/contactUs/ContactUs');
+const dashboardRoutes = require('./routes/dashboard/main');
 
 const app = express();
 const port =
@@ -51,6 +52,7 @@ app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/projects', projectRoutes);
 app.use('/api/v1/projects', ticketRoutes);
 app.use('/api/v1/projects/:projectId/tickets/:ticketId/comments', commentsRouter);
+app.use('/api/v1/dashboard', dashboardRoutes);
 
 
 
