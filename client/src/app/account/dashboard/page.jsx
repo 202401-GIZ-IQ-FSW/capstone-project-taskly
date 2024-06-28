@@ -24,13 +24,26 @@ function Dashboard() {
   return (
     <div className="flex flex-col justify-center items-left h-full">
       <ProjectList title="Projects You Own" projects={data.ownedProjects} />
-      <ProjectList title="Projects You have ViewOnly access to" projects={data.projectsCanView} />
-      <ProjectList title="Projects You have Edit role on it" projects={data.projectsCanEdite} />
-      <ProjectList title="Projects invited to Edit" projects={data.projectsEditInvited} />
-      <ProjectList title="Projects invited to View Only" projects={data.projectsViewInvited} />
+      <ProjectList
+        title="Projects You have ViewOnly access to"
+        projects={data.projectsCanView}
+      />
+      <ProjectList
+        title="Projects You have Edit role on it"
+        projects={data.projectsCanEdite}
+      />
+      <ProjectList
+        title="Projects invited to Edit"
+        projects={data.projectsEditInvited}
+      />
+      <ProjectList
+        title="Projects invited to View Only"
+        projects={data.projectsViewInvited}
+      />
       <hr className="w-full" />
       <h1 className="font-extrabold">Your Tickets</h1>
       <TicketCounts ticketCountsByStatus={data.ticketCountsByStatus} />
+      <TicketSearch />
     </div>
   );
 }
@@ -84,7 +97,7 @@ const tickets = [
   },
 ];
 
-export default function Dashboard() {
+function TicketSearch() {
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex flex-1 p-4 space-x-4">
