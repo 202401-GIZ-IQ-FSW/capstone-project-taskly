@@ -50,4 +50,25 @@ const Notifications = ({ userId }) => {
       console.error('Error marking notification as read:', error);
     }
   };
+
+  // rendering the component
+  return (
+    <div>
+      <h2>Notifications</h2>
+      <ul>
+        //Maps over the notifications state to create a list item for each notification.
+        {notifications.map((notification) => (
+          <li
+            key={notification._id}
+            //Conditionally sets the background color of the list item based on whether the notification has been read.
+            style={{ backgroundColor: notification.is_read ? 'white' : 'lightgray' }}
+            onClick={() => markAsRead(notification._id)}
+          >
+            {notification.message}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+  
 };
