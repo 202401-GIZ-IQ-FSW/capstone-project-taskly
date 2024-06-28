@@ -35,7 +35,19 @@ const Notifications = ({ userId }) => {
       socket.disconnect();
     };
   }, []);
-
-
-
-}
+ 
+  // a function to mark notification as read
+  const markAsRead = async (notificationId) => {
+    try {
+      await axios.put(`/api/v1/notifications/${notificationId}`);
+      // mapping over existing notifications and update 'is_read' field for the matched notifications
+      setNotifications((prevNotifications) =>
+        prevNotifications.map((notif) =>
+          notif._id === notificationId ? { ...notif, is_read: true } : notif
+        )
+      );
+    } catch (error) {
+      console.error('Error marking notification as read:', error);
+    }
+  };
+};
