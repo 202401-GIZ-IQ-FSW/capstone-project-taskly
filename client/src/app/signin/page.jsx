@@ -75,8 +75,8 @@ const LoginForm = () => {
       </div>
 
       <p className="mt-4 text-gray-600">
-        New user?{' '}
-        <Link href="/signin" className="text-blue-500 hover:underline">
+        New user?
+        <Link href="/signup" className="text-blue-500 hover:underline">
           Sign up now
         </Link>
       </p>

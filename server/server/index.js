@@ -44,13 +44,13 @@ app.get('/test', (req, res) => {
 
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/admin', adminRoutes); // temporary admin routes
+app.use('/api/v1', contactUsRoute);
 
 app.use(verifyJWT); // everything below this line will use verifyJWT
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/projects', projectRoutes);
 app.use('/api/v1/projects', ticketRoutes);
 app.use('/api/v1/projects/:projectId/tickets/:ticketId/comments', commentsRouter);
-app.use('/api/v1', contactUsRoute);
 
 
 
