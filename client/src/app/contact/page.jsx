@@ -2,16 +2,40 @@
 
 import { useState } from 'react';
 import { FaFacebook, FaTwitter, FaInstagram, FaEnvelope } from 'react-icons/fa';
+import fetcher from '@/_utils/fetcher';
+import Notification from '@/components/Notification';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
-
-  const handleSubmit = (e) => {
+  const [notificationMessage, setNotificationMessage] = useState('');
+  const [notificationType, setNotificationType] = useState('');
+  
+  const handleSubmit =async(e) => {
     e.preventDefault();
-    // Handle form submission logic here
+    const res = await fetcher('/v1/contact', {
+      method: 'POST',
+      body: JSON.stringify({
+        name,
+        email,
+        message
+      })
+    });
+    const generateRandomNumber = () => {
+      return Math.floor(100 + Math.random() * 900); 
+    };
+    if (res.message =='Contact form submitted successfully') {
+      setName('');
+      setEmail('');
+      setMessage(''); 
+      setNotificationMessage(` Done <span hidden>${generateRandomNumber()}</span>`);
+      setNotificationType('success');
+    } else {
+      setNotificationMessage(`Failed to Send rewuest, MSG: ${res.message} <span hidden>${generateRandomNumber()}</span>`);
+      setNotificationType('error');
+    }
   };
 
   return (
@@ -95,7 +119,8 @@ const ContactForm = () => {
             className="w-full p-3 bg-gray-600 text-white rounded hover:bg-gray-700">
             Submit
           </button>
-        </form>
+        </form>      <Notification message={notificationMessage} type={notificationType} />
+
       </div>
     </div>
   );
