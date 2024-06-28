@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useState } from 'react';
 import TicketStats from '../../components/Tickets/TicketStats';
 import TicketSubmission from '../../components/Tickets/TicketSubmission';
