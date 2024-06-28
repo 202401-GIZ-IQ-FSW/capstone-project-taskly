@@ -45,7 +45,6 @@ export default function Register() {
       });
       if (res.user) {
         handleSetAccessToken(res.accessToken);
-        handleSetRefreshToken(res.refreshToken);
         window.dispatchEvent(new Event('storage')); // Trigger storage event
         window.location.href = '/';
       } else {

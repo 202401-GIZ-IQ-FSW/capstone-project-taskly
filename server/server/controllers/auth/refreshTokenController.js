@@ -10,23 +10,38 @@ const handleRefreshToken = async (req, res) => {
   const refreshToken = cookies.refreshToken;
 
   try {
-    const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    const user = await UserModel.findOne({ refreshToken });
 
-    const user = await UserModel.findById(decoded.userInfo.id);
+    if (!user) {
+      return res.sendStatus(403); // Forbidden
+    }
 
-    if (!user || user.refreshToken !== refreshToken) return res.sendStatus(403); // Forbidden
-    const userInfo = { id: user._id, role: user.role, username: user.username };
-    const accessToken = jwt.sign(
-      {
-        userInfo,
-      },
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '1h' }
+    jwt.verify(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SECRET,
+      (err, decoded) => {
+        if (err || user._id.toString() !== decoded.userInfo.id) {
+          return res.sendStatus(403); // Forbidden
+        }
+
+        const userInfo = {
+          id: user._id,
+          role: user.role,
+          username: user.username,
+        };
+        const accessToken = jwt.sign(
+          { userInfo },
+          process.env.ACCESS_TOKEN_SECRET,
+          { expiresIn: '3h' }
+        );
+
+        res.status(200).json({ accessToken });
+      }
     );
-
-    res.json({ accessToken });
-  } catch (err) {
-    res.sendStatus(403); // Forbidden
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: 'Something went wrong', error: error.message });
   }
 };
 
