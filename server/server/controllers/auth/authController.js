@@ -43,7 +43,7 @@ const handleRegistration = async (req, res) => {
       const accessToken = jwt.sign(
         { userInfo },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '1h' }
+        { expiresIn: '3h' }
       );
       const refreshToken = jwt.sign(
         { userInfo },
@@ -61,14 +61,13 @@ const handleRegistration = async (req, res) => {
         httpOnly: true,
         sameSite: 'None',
         secure: true,
-        maxAge: 24 * 60 * 60 * 1000, // one day
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       });
 
       // Return the registered user details
       res.status(201).json({
         message: 'User registered successfully',
         accessToken,
-        refreshToken,
         user: {
           _id: newUser._id,
           username: newUser.username,
@@ -120,7 +119,7 @@ const handleLogin = async (req, res) => {
     const accessToken = jwt.sign(
       { userInfo },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '1h' }
+      { expiresIn: '3h' }
     );
     const refreshToken = jwt.sign(
       { userInfo },
@@ -137,7 +136,7 @@ const handleLogin = async (req, res) => {
       httpOnly: true,
       sameSite: 'None',
       secure: true,
-      maxAge: 24 * 60 * 60 * 1000, // one day
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
     // Return the access token and user info
     const {
