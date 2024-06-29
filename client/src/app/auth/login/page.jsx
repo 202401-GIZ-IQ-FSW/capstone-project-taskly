@@ -4,6 +4,7 @@ import Link from 'next/link';
 import fetcher from '@/_utils/fetcher';
 import Notification from '@/components/Notification';
 import { useUser } from '@/hooks/useUser';
+import { FcGoogle } from 'react-icons/fc';
 
 export default function Login() {
   const { handleSetAccessToken, handleSetRefreshToken } = useUser();
@@ -53,7 +54,7 @@ export default function Login() {
     handleSetAccessToken(accessToken);
     handleSetRefreshToken(refreshToken);
     window.dispatchEvent(new Event('storage')); // Trigger storage event
-    window.location.href = '/'; // Redirect to homepage or desired route
+    window.location.href = '/'; // Redirect to homepage
   };
 
   return (
@@ -123,11 +124,7 @@ export default function Login() {
             window.location.href = 'http://localhost:3001/api/v1/auth/google';
           }}
           className="bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow hover:bg-gray-100 flex items-center">
-          <img
-            src="/ic_google.svg"
-            alt="Google Icon"
-            className="w-5 h-5 mr-2"
-          />
+          <FcGoogle className="h-5 w-5 mr-3" />
           Sign in with Google
         </button>
       </div>
