@@ -19,6 +19,7 @@ const userRoutes = require('./routes/user/userProfileRoute');
 const ticketRoutes = require('./routes/tickets/ticket');
 const commentsRouter = require('./routes/comment/commentRoute');
 const contactUsRoute = require('./routes/contactUs/ContactUs');
+const dashboardRoutes = require('./routes/dashboard/main');
 
 const app = express();
 const port =
