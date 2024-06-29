@@ -1,13 +1,15 @@
 const jwt = require('jsonwebtoken');
 const UserModel = require('../../models/UserModel');
+const { generateTokens } = require('../../util/generateTokens');
 require('dotenv').config();
 
 const handleRefreshToken = async (req, res) => {
-  const cookies = req.cookies;
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.sendStatus(401); // Unauthorized
+  }
 
-  if (!cookies?.refreshToken) return res.sendStatus(401); // Unauthorized
-
-  const refreshToken = cookies.refreshToken;
+  const refreshToken = authHeader.split(' ')[1];
 
   try {
     const user = await UserModel.findOne({ refreshToken });
@@ -19,7 +21,7 @@ const handleRefreshToken = async (req, res) => {
     jwt.verify(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET,
-      (err, decoded) => {
+      async (err, decoded) => {
         if (err || user._id.toString() !== decoded.userInfo.id) {
           return res.sendStatus(403); // Forbidden
         }
@@ -29,13 +31,14 @@ const handleRefreshToken = async (req, res) => {
           role: user.role,
           username: user.username,
         };
-        const accessToken = jwt.sign(
-          { userInfo },
-          process.env.ACCESS_TOKEN_SECRET,
-          { expiresIn: '3h' }
-        );
+        const { accessToken, refreshToken: newRefreshToken } =
+          generateTokens(userInfo);
 
-        res.status(200).json({ accessToken });
+        // Update user's refresh token in the database
+        user.refreshToken = newRefreshToken;
+        await user.save();
+
+        res.status(200).json({ accessToken, refreshToken: newRefreshToken });
       }
     );
   } catch (error) {

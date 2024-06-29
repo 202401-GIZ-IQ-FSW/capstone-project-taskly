@@ -2,6 +2,7 @@
 const UserModel = require('../../models/UserModel');
 const jwt = require('jsonwebtoken');
 const { upload } = require('../../config/multer');
+const { generateTokens } = require('../../util/generateTokens');
 
 const handleRegistration = async (req, res) => {
   try {
@@ -40,34 +41,17 @@ const handleRegistration = async (req, res) => {
         role: newUser.role,
         username: newUser.username,
       };
-      const accessToken = jwt.sign(
-        { userInfo },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '3h' }
-      );
-      const refreshToken = jwt.sign(
-        { userInfo },
-        process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: '1d' }
-      );
+      const { accessToken, refreshToken } = generateTokens(userInfo);
 
       // Store refresh token in the database
       newUser.refreshToken = refreshToken;
       // Save the user to the database
       await newUser.save();
 
-      // Set refresh token in cookie
-      res.cookie('refreshToken', refreshToken, {
-        httpOnly: true,
-        sameSite: 'None',
-        secure: true,
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      });
-
-      // Return the registered user details
       res.status(201).json({
         message: 'User registered successfully',
         accessToken,
+        refreshToken,
         user: {
           _id: newUser._id,
           username: newUser.username,
@@ -116,38 +100,15 @@ const handleLogin = async (req, res) => {
 
     // If password matches, create JWT tokens
     const userInfo = { id: user._id, role: user.role, username: user.username };
-    const accessToken = jwt.sign(
-      { userInfo },
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '3h' }
-    );
-    const refreshToken = jwt.sign(
-      { userInfo },
-      process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: '1d' }
-    );
-
-    // Store refresh token in the database
+    const { accessToken, refreshToken } = generateTokens(userInfo);
     user.refreshToken = refreshToken;
     await user.save();
 
-    // Set refresh token in cookie
-    res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      sameSite: 'None',
-      secure: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    });
-    // Return the access token and user info
-    const {
-      password: _password,
-      refreshToken: _refreshToken,
-      ...userData
-    } = user._doc;
-
+    const { password: _password, ...userData } = user._doc;
     res.status(200).json({
       message: 'Login successful',
       accessToken,
+      refreshToken,
       user: userData,
     });
   } catch (error) {
@@ -158,38 +119,19 @@ const handleLogin = async (req, res) => {
 };
 
 const handleLogout = async (req, res) => {
-  const cookies = req.cookies;
-  if (!cookies?.refreshToken) return res.sendStatus(204); // No content
-  const refreshToken = cookies.refreshToken;
+  if (!req.user.id) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
   try {
-    // Find the user by refresh token
-    const user = await UserModel.findOne({ refreshToken });
-
+    const user = await UserModel.findById(req.user.id);
     if (!user) {
-      res.clearCookie('refreshToken', {
-        httpOnly: true,
-        sameSite: 'None',
-        secure: true,
-      });
       return res.sendStatus(204);
     }
-
-    // Delete the refresh token from the database
     user.refreshToken = null;
     await user.save();
-
-    // Clear the refresh token cookie
-    res.clearCookie('refreshToken', {
-      httpOnly: true,
-      sameSite: 'None',
-      secure: true,
-    });
     res.status(200).json({ message: 'Logout successful' });
   } catch (error) {
-    return res.status(500).json({
-      message: 'An error occurred during logout',
-      error: error.message,
-    });
+    return res.status(500).json({ error: error.message });
   }
 };
 
