@@ -48,7 +48,7 @@ export default function Register() {
         method: 'POST',
         body: formData,
       });
-      if (res.user) {
+      if (res) {
         handleSetAccessToken(res.accessToken);
         handleSetRefreshToken(res.refreshToken);
         window.dispatchEvent(new Event('storage')); // Trigger storage event
