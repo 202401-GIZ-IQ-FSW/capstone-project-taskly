@@ -119,20 +119,16 @@ export const UserProvider = ({ children }) => {
 
   const handleLogout = async () => {
     if (typeof window !== 'undefined') {
-      const response = await fetch('http://localhost:3001/api/v1/auth/logout', {
+      const response = await fetcher('/v1/auth/logout', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-        credentials: 'include',
       });
 
-      if (response.ok) {
+      if (response.message) {
         window.localStorage.removeItem('access_token');
         window.localStorage.removeItem('refresh_token');
         setUser(null);
         setLoggedIn(false);
+        console.log(response.message)
         window.location.href = '/';
       } else {
         console.error('Logout failed');
@@ -143,7 +139,6 @@ export const UserProvider = ({ children }) => {
   const value = {
     loggedIn,
     user,
-    setUser,
     accessToken,
     handleSetAccessToken,
     refreshToken,

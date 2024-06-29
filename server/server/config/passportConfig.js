@@ -1,7 +1,9 @@
+// server\server\config\passportConfig.js
+
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const UserModel = require('../models/UserModel');
-
+const jwt = require('jsonwebtoken');
 
 // (A) Redirect the user from the browser to Google: The user presses a button in the browser
 //  and gets redirected to Google where they can grant the application access to their Google account.
@@ -18,24 +20,31 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/auth/google/tickets',
+      callbackURL: 'http://localhost:3001/api/v1/auth/google/callback',
       userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo',
     },
     async (accessToken, refreshToken, profile, cb) => {
       try {
-        let user = await UserModel.findOne({ googleId: profile.id });
+        let user = await UserModel.findOne({ $or: [{ googleId: profile.id  }, { email :profile.emails[0].value}]});
         if (!user) {
           user = new UserModel({
             googleId: profile.id,
             username: profile.displayName,
-            first_name: profile.name.givenName,
-            last_name: profile.name.familyName,
+            firstName: profile.name.givenName,
+            lastName: profile.name.familyName,
             email: profile.emails[0].value,
-            profile_picture: profile.photos[0].value,
-            password: null,
+            profilePicture: profile.photos[0].value,
+            password: generateRandomPassword(),
           });
-          await user.save();
-        }
+          await user.save();  
+        } 
+          const userInfo = { id: user._id, role: user.role, username: user.username };
+          const accessToken = jwt.sign({ userInfo }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+          const refreshToken = jwt.sign({ userInfo }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
+          user.googleId=profile.id;
+          user.refreshToken = refreshToken;
+          await user.save(); 
+          user.accessToken = accessToken; 
         return cb(null, user);
       } catch (error) {
         return cb(error, null);
@@ -57,4 +66,36 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
+
+function generateRandomPassword() {
+  const length = 10;
+  const charset =
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=';
+  let password = '';
+
+  // Ensure at least one lowercase letter, one uppercase letter, one digit, and one special character
+  const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+  const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const digits = '0123456789';
+  const specialChars = '!@#$%^&*()_+~`|}{[]:;?><,./-=';
+
+  password += lowercase[Math.floor(Math.random() * lowercase.length)];
+  password += uppercase[Math.floor(Math.random() * uppercase.length)];
+  password += digits[Math.floor(Math.random() * digits.length)];
+  password += specialChars[Math.floor(Math.random() * specialChars.length)];
+
+  // Generate the remaining characters randomly
+  for (let i = password.length; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * charset.length);
+    password += charset[randomIndex];
+  }
+
+  // Shuffle the generated password to ensure randomness
+  password = password
+    .split('')
+    .sort(() => 0.5 - Math.random())
+    .join('');
+
+  return password;
+}
 module.exports = passport;

@@ -25,17 +25,17 @@ export default function CreateProject() {
 
       if (res._id) {
         setNotificationMessage(
-          `Project added successfully. Add a new project or go to <a href="/projects/all" class="text-blue-600 underline">All Projects</a> or <a href="/tickets/new" class="text-blue-600 underline">Add New Ticket</a> - ${generateRandomNumber()}`
+          `Project added successfully. Add a new project or go to <a href="/projects/all" class="text-blue-600 underline">All Projects</a> or <a href="/tickets/new" class="text-blue-600 underline">Add New Ticket</a><span hidden>${generateRandomNumber()}</span>`
         );
         setNotificationType('success');
         setName('');
         setDescription('');
       } else {
-        setNotificationMessage(`Failed to add project, MSG: ${res.message} -  ${generateRandomNumber()}`);
+        setNotificationMessage(`Failed to add project, MSG: ${res.message}<span hidden>${generateRandomNumber()}</span>`);
         setNotificationType('error');
       }
     } catch (error) {
-      setNotificationMessage(`Failed to add project, MSG: ${error.message} - ${generateRandomNumber()}`);
+      setNotificationMessage(`Failed to add project, MSG: ${error.message}<span hidden>${generateRandomNumber()}</span>`);
       setNotificationType('error');
     }
   };

@@ -1,8 +1,11 @@
+// server\server\index.js
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const http = require('http');
 const socketIo = require('socket.io');
+const passport = require('passport');
+
 require('dotenv').config();
 
 // middleware and utils
@@ -18,6 +21,9 @@ const userRoutes = require('./routes/user/userProfileRoute');
 const ticketRoutes = require('./routes/tickets/ticket');
 //importing the notification routes
 const notificationRoutes = require('./routes/notification/notification');
+const commentsRouter = require('./routes/comment/commentRoute');  
+const contactUsRoute = require('./routes/contactUs/ContactUs');
+const dashboardRoutes = require('./routes/dashboard/main');
 
 const app = express();
 
@@ -36,9 +42,10 @@ app.use(
     credentials: true,
   })
 );
+app.use(express.static('server/public'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cookieParser());
+app.use(passport.initialize());
 
 app.get('/test', (req, res) => {
   res.json(
@@ -48,6 +55,7 @@ app.get('/test', (req, res) => {
 
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/admin', adminRoutes); // temporary admin routes
+app.use('/api/v1', contactUsRoute);
 
 app.use(verifyJWT); // everything below this line will use verifyJWT
 app.use('/api/v1/user', userRoutes);
@@ -63,6 +71,10 @@ io.on('connection', (socket) => {
     console.log('user disconnected');
   });
 });
+app.use('/api/v1/projects/:projectId/tickets/:ticketId/comments', commentsRouter);
+app.use('/api/v1/dashboard', dashboardRoutes);
+
+
 
 app.listen(port, () => {
   // this line for dev, uncomment it if you want to log all working routes

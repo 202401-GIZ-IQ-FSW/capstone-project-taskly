@@ -1,13 +1,20 @@
+// client\src\app\auth\login\page.jsx
 'use client';
 import fetcher from '@/_utils/fetcher';
 import { useUser } from '@/hooks/useUser';
 import { useState } from 'react';
+import Notification from '@/components/Notification';
 
 export default function Login() {
-  const { handleSetAccessToken, handleSetRefreshToken, setUser } = useUser();
-  const [usernameOrEmail, setUsernameOrEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { handleSetAccessToken, handleSetRefreshToken } = useUser();
+  const [usernameOrEmail, setUsernameOrEmail] = useState('a');
+  const [password, setPassword] = useState('11111aA@');
+  const [notificationMessage, setNotificationMessage] = useState('');
+  const [notificationType, setNotificationType] = useState('');
 
+  const generateRandomNumber = () => {
+    return Math.floor(100 + Math.random() * 900); 
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -28,10 +35,13 @@ export default function Login() {
         handleSetRefreshToken(res.refreshToken);
         window.dispatchEvent(new Event('storage')); // Trigger storage event
         window.location.href = '/';
+      } else {
+        setNotificationMessage(`Failed to Login, MSG: ${res.message} <span hidden>${generateRandomNumber()}</span>`);
+        setNotificationType('error');
       }
     } catch (error) {
-      console.error('Login failed', error);
-      alert('Login failed');
+      setNotificationMessage(`Failed to Login, MSG: ${error.message} <span hidden>${generateRandomNumber()}</span>`);
+      setNotificationType('error');
     }
   };
 
@@ -89,9 +99,20 @@ export default function Login() {
         <input
           type="submit"
           value="Sign In"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="bg-gray-500 text-white py-2 px-4 rounded-md w-full hover:bg-gray-600"
         />
       </form>
-    </div>
+      <hr className="w-48"/>
+      or
+      <button
+        onClick={() => {
+          window.location.href = 'http://localhost:3001/api/v1/auth/google';
+        }}
+        className="bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow hover:bg-gray-100 flex items-center">
+        <img src="/ic_google.svg" alt="Google Icon" className="w-5 h-5 mr-2" />
+        Sign in with Google
+      </button>
+      <Notification message={notificationMessage} type={notificationType} />
+      </div>
   );
 }

@@ -10,7 +10,8 @@ node_modules
 /coverage
 
 # images
-/server/server/images
+server/server/public/uploads/*
+!server/server/public/uploads/default 
 
 # next.js
 client/.next/
@@ -37,3 +38,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+#package-lock && yarn.lock
+server/package-lock.json
+client/package-lock.json
+server/yarn.lock

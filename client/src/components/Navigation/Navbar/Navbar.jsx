@@ -4,21 +4,20 @@ import UserLoggedOut from '@/components/UserStatus/UserLoggedOut';
 import { navLinks } from '@/data/Links';
 import { useUser } from '@/hooks/useUser';
 import Link from 'next/link';
-import { useState } from 'react';
-import SearchTickets from '../../SearchTicket/SearchTickets';
+// import { useState } from 'react';
+// import SearchTickets from '../../SearchTicket/SearchTickets';
 
 const Navbar = () => {
   const { user, handleLogout } = useUser();
-  const [isModalOpen, setModalOpen] = useState(false);
+  // const [isModalOpen, setModalOpen] = useState(false);
 
-  const openModal = () => {
-    setModalOpen(true);
-  };
+  // const openModal = () => {
+  //   setModalOpen(true);
+  // };
 
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-  // console.log(user);
+  // const closeModal = () => {
+  //   setModalOpen(false);
+  // };
   return (
     <header className="bg-white shadow-md py-4 px-6 flex justify-between items-center">
       <Link href={'/'}>Tickets</Link>
@@ -31,7 +30,7 @@ const Navbar = () => {
             {link.text}
           </Link>
         ))}
-        <button onClick={openModal}>Search tickets</button>
+        {/* <button onClick={openModal}>Search tickets</button> */}
       </nav>
       <div>
         {user ? (
@@ -44,7 +43,7 @@ const Navbar = () => {
         )}
       </div>
 
-      {isModalOpen && <SearchTickets onClose={closeModal} />}
+      {/* {isModalOpen && <SearchTickets onClose={closeModal} />} */}
     </header>
   );
 };
