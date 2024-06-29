@@ -48,7 +48,6 @@ const handleRegistration = async (req, res) => {
       await newUser.save();
 
       res.status(201).json({
-        message: 'User registered successfully',
         accessToken,
         refreshToken,
         user: {
@@ -103,9 +102,12 @@ const handleLogin = async (req, res) => {
     user.refreshToken = refreshToken;
     await user.save();
 
-    const { password: _password, ...userData } = user._doc;
+    const {
+      password: _password,
+      refreshToken: _refreshToken,
+      ...userData
+    } = user._doc;
     res.status(200).json({
-      message: 'Login successful',
       accessToken,
       refreshToken,
       user: userData,

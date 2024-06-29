@@ -18,11 +18,17 @@ const Navbar = () => {
   // const closeModal = () => {
   //   setModalOpen(false);
   // };
+
+  const filteredLinks = user
+    ? navLinks.filter(
+        (link) => link.text !== 'Signin' && link.text !== 'Signup'
+      )
+    : navLinks;
   return (
     <header className="bg-white shadow-md py-4 px-6 flex justify-between items-center">
       <Link href={'/'}>Tickets</Link>
       <nav>
-        {navLinks.map((link, index) => (
+        {filteredLinks.map((link, index) => (
           <Link
             key={index}
             href={link.url}
@@ -34,10 +40,7 @@ const Navbar = () => {
       </nav>
       <div>
         {user ? (
-          <UserLoggedIn
-            user={user}
-            handleLogout={handleLogout}
-          />
+          <UserLoggedIn user={user} handleLogout={handleLogout} />
         ) : (
           <UserLoggedOut />
         )}
