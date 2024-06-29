@@ -1,48 +1,54 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 
-const useTokenRefresh = (handleSetAccessToken) => {
-  const refreshInterval = parseInt(
-    process.env.NEXT_PUBLIC_JWT_REFRESH_INTERVAL,
-    10
+const useRefreshToken = (
+  initialRefreshToken,
+  handleSetAccessToken,
+  handleSetRefreshToken
+) => {
+  const [refreshToken, setRefreshToken] = useState(
+    initialRefreshToken || window.localStorage.getItem('refreshToken')
   );
 
-  const refreshTokens = useCallback(async () => {
+  const refreshAccessToken = useCallback(async () => {
+    if (!refreshToken) return;
+
     try {
-      const response = await fetch(
+      const res = await fetch(
         'http://localhost:3001/api/v1/auth/refresh-token',
         {
           method: 'POST',
-          credentials: 'include',
+          headers: { Authorization: `Bearer ${refreshToken}` },
         }
       );
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(errorText || 'Failed to refresh access token');
-      }
-
-      const data = await response.json();
-
-      if (data.accessToken) {
+      if (res.ok) {
+        const data = await res.json();
         handleSetAccessToken(data.accessToken);
+        handleSetRefreshToken(data.refreshToken);
+        setRefreshToken(data.refreshToken);
         console.log('Token was refreshed');
       } else {
-        console.error('Failed to refresh access token');
+        console.error('Failed to refresh token');
       }
     } catch (error) {
-      console.error('Error refreshing tokens:', error.message);
+      console.error('Error while refreshing token:', error);
     }
-  }, [handleSetAccessToken]);
+  }, [refreshToken, handleSetAccessToken, handleSetRefreshToken]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      refreshTokens();
-    }, refreshInterval);
+    const refreshInterval = parseInt(
+      process.env.NEXT_PUBLIC_JWT_REFRESH_INTERVAL,
+      10
+    );
+    const tokenRefreshInterval = setInterval(
+      refreshAccessToken,
+      refreshInterval
+    );
 
-    return () => clearInterval(interval);
-  }, [refreshInterval]);
+    return () => clearInterval(tokenRefreshInterval);
+  }, [refreshAccessToken]);
 
-  return refreshTokens;
+  return { refreshToken, setRefreshToken };
 };
 
-export default useTokenRefresh;
+export default useRefreshToken;

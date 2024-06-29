@@ -10,7 +10,7 @@ const connectToMongo = require('./db/connection');
 const { printAllRoutes } = require('./util/devHelpers');
 const verifyJWT = require('./middleware/verifyJWT');
 
-// routes
+// routes.
 const authRoutes = require('./routes/auth/auth');
 const adminRoutes = require('./routes/admin/admin');
 const projectRoutes = require('./routes/project/project');

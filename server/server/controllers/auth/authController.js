@@ -1,6 +1,5 @@
 // server\server\controllers\auth\authController.js
 const UserModel = require('../../models/UserModel');
-const jwt = require('jsonwebtoken');
 const { upload } = require('../../config/multer');
 const { generateTokens } = require('../../util/generateTokens');
 

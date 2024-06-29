@@ -13,7 +13,7 @@ export default function Login() {
   const [notificationType, setNotificationType] = useState('');
 
   const generateRandomNumber = () => {
-    return Math.floor(100 + Math.random() * 900); 
+    return Math.floor(100 + Math.random() * 900);
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -32,14 +32,23 @@ export default function Login() {
 
       if (res.user) {
         handleSetAccessToken(res.accessToken);
+        handleSetRefreshToken(res.refreshToken);
         window.dispatchEvent(new Event('storage')); // Trigger storage event
         window.location.href = '/';
       } else {
-        setNotificationMessage(`Failed to Login, MSG: ${res.message} <span hidden>${generateRandomNumber()}</span>`);
+        setNotificationMessage(
+          `Failed to Login, MSG: ${
+            res.message
+          } <span hidden>${generateRandomNumber()}</span>`
+        );
         setNotificationType('error');
       }
     } catch (error) {
-      setNotificationMessage(`Failed to Login, MSG: ${error.message} <span hidden>${generateRandomNumber()}</span>`);
+      setNotificationMessage(
+        `Failed to Login, MSG: ${
+          error.message
+        } <span hidden>${generateRandomNumber()}</span>`
+      );
       setNotificationType('error');
     }
   };
@@ -89,9 +98,7 @@ export default function Login() {
             id="rememberMe"
             name="rememberMe"
           />
-          <label
-            className="text-sm"
-            htmlFor="rememberMe">
+          <label className="text-sm" htmlFor="rememberMe">
             Keep me signed in
           </label>
         </div>
@@ -101,7 +108,7 @@ export default function Login() {
           className="bg-gray-500 text-white py-2 px-4 rounded-md w-full hover:bg-gray-600"
         />
       </form>
-      <hr className="w-48"/>
+      <hr className="w-48" />
       or
       <button
         onClick={() => {
@@ -112,6 +119,6 @@ export default function Login() {
         Sign in with Google
       </button>
       <Notification message={notificationMessage} type={notificationType} />
-      </div>
+    </div>
   );
 }

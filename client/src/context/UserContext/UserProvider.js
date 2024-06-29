@@ -2,18 +2,21 @@
 import { useEffect, useState, useCallback } from 'react';
 import fetcher from '@/_utils/fetcher';
 import { UserContext } from './UserContext';
-import useTokenRefresh from '@/hooks/useTokenRefresh';
+import useRefreshToken from '@/hooks/useTokenRefresh';
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [accessToken, setAccessToken] = useState(null);
+  const [refreshToken, setRefreshToken] = useState(null);
 
   const loadTokensFromStorage = () => {
     if (typeof window !== 'undefined') {
       try {
-        const storedAccessToken = window.localStorage.getItem('access_token');
+        const storedAccessToken = window.localStorage.getItem('accessToken');
+        const storedRefreshToken = window.localStorage.getItem('refreshToken');
         if (storedAccessToken) setAccessToken(storedAccessToken);
+        if (storedRefreshToken) setRefreshToken(storedRefreshToken);
       } catch (error) {
         console.error('Error loading tokens from storage:', error);
       }
@@ -39,7 +42,7 @@ export const UserProvider = ({ children }) => {
   const handleSetAccessToken = useCallback((token) => {
     if (typeof window !== 'undefined') {
       try {
-        window.localStorage.setItem('access_token', token);
+        window.localStorage.setItem('accessToken', token);
         setAccessToken(token);
         console.log('Access token set:', token);
       } catch (error) {
@@ -48,10 +51,26 @@ export const UserProvider = ({ children }) => {
     }
   }, []);
 
+  const handleSetRefreshToken = useCallback((token) => {
+    if (typeof window !== 'undefined') {
+      try {
+        window.localStorage.setItem('refreshToken', token);
+        setRefreshToken(token);
+        console.log('Refresh token set:', token);
+      } catch (error) {
+        console.error('Error setting refresh token:', error);
+      }
+    }
+  }, []);
+
   const fetchUserProfile = async () => {
     if (accessToken) {
       try {
-        const userAccount = await fetcher('/v1/user/profile');
+        const userAccount = await fetcher('/v1/user/profile', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
 
         if (userAccount) {
           setUser(userAccount);
@@ -72,7 +91,6 @@ export const UserProvider = ({ children }) => {
     }
   }, [accessToken]);
 
-  // fetcher is not working properly with logout so using normal fetch for now
   const handleLogout = async () => {
     if (typeof window !== 'undefined') {
       const response = await fetch('http://localhost:3001/api/v1/auth/logout', {
@@ -81,12 +99,12 @@ export const UserProvider = ({ children }) => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${accessToken}`,
         },
-        credentials: 'include',
+        // credentials: 'include',
       });
 
       if (response.ok) {
-        window.localStorage.removeItem('access_token');
-        window.localStorage.removeItem('refresh_token');
+        window.localStorage.removeItem('accessToken');
+        window.localStorage.removeItem('refreshToken');
         setUser(null);
         setLoggedIn(false);
         window.location.href = '/';
@@ -96,13 +114,14 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-  useTokenRefresh(handleSetAccessToken);
+  useRefreshToken(refreshToken, handleSetAccessToken, handleSetRefreshToken);
 
   const value = {
     loggedIn,
     user,
     accessToken,
     handleSetAccessToken,
+    handleSetRefreshToken,
     handleLogout,
   };
 
