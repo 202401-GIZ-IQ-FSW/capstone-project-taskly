@@ -1,13 +1,26 @@
-// client\src\_utils\fetcher.js
-import api,{ API_URL }  from './getServer'; 
-const fetcher = async (url, options = {}) => {
-  const accessToken = typeof window !== 'undefined' ? window.localStorage.getItem('access_token') : null;
-  const authHeader = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
+import api from './getServer';
 
-  // don't attempt the fetch the user profile if they aren't logged in (no token)
-  if (url && url.includes('/user/profile') && !accessToken) {
+const fetcher = async (url, options = {}) => {
+  const accessToken =
+    typeof window !== 'undefined'
+      ? window.localStorage.getItem('accessToken')
+      : null;
+  const refreshToken =
+    typeof window !== 'undefined'
+      ? window.localStorage.getItem('refreshToken')
+      : null;
+
+  const authHeader = accessToken
+    ? { Authorization: `Bearer ${accessToken}` }
+    : refreshToken
+    ? { Authorization: `Bearer ${refreshToken}` }
+    : {};
+
+  // Don't attempt to fetch the user profile if they aren't logged in (no token)
+  if (url && url.includes('/account') && !accessToken) {
     return null;
   }
+
   // Check if FormData is used
   const isFormData = options.body instanceof FormData;
 
@@ -15,10 +28,13 @@ const fetcher = async (url, options = {}) => {
     ...authHeader,
     ...options.headers,
   };
+
   // Set Content-Type based on FormData or JSON
   if (isFormData) {
     delete headers['Content-Type']; // Let browser set Content-Type for FormData
-  } else {headers['Content-Type'] = 'application/json';}
+  } else {
+    headers['Content-Type'] = 'application/json';
+  }
 
   const mergedOptions = {
     ...options,
@@ -30,7 +46,7 @@ const fetcher = async (url, options = {}) => {
 
   if (!response.ok) {
     const errorMessage = await response.json();
-    throw new Error(` ${errorMessage.message || response.statusText}`);//Error fetching data from ${API_URL}${url}: ${response.status} -
+    throw new Error(` ${errorMessage.message || response.statusText}`); //Error fetching data from ${API_URL}${url}: ${response.status} -
   }
 
   return await response.json();

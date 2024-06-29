@@ -18,12 +18,15 @@ export default function Register() {
     profilePicture: null,
   });
   const generateRandomNumber = () => {
-    return Math.floor(100 + Math.random() * 900); 
+    return Math.floor(100 + Math.random() * 900);
   };
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === 'profilePicture') {
-      setUserData((prevUserData) => ({...prevUserData, profilePicture: files[0]}));
+      setUserData((prevUserData) => ({
+        ...prevUserData,
+        profilePicture: files[0],
+      }));
     } else {
       setUserData((prevUserData) => ({
         ...prevUserData,
@@ -36,24 +39,34 @@ export default function Register() {
     event.preventDefault();
 
     const formData = new FormData();
-    for (const key in userData) {formData.append(key, userData[key]);}
+    for (const key in userData) {
+      formData.append(key, userData[key]);
+    }
 
     try {
       const res = await fetcher('/v1/auth/register', {
         method: 'POST',
         body: formData,
       });
-      if (res.user) {
+      if (res) {
         handleSetAccessToken(res.accessToken);
         handleSetRefreshToken(res.refreshToken);
         window.dispatchEvent(new Event('storage')); // Trigger storage event
         window.location.href = '/';
       } else {
-        setNotificationMessage(`Failed to Register, MSG: ${res.message} <span hidden>${generateRandomNumber()}</span>`);
+        setNotificationMessage(
+          `Failed to Register, MSG: ${
+            res.message
+          } <span hidden>${generateRandomNumber()}</span>`
+        );
         setNotificationType('error');
       }
     } catch (error) {
-      setNotificationMessage(`Failed to Register, MSG: ${error.message} <span hidden>${generateRandomNumber()}</span>`);
+      setNotificationMessage(
+        `Failed to Register, MSG: ${
+          error.message
+        } <span hidden>${generateRandomNumber()}</span>`
+      );
       setNotificationType('error');
     }
   };
