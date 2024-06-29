@@ -54,7 +54,7 @@ export default function Login() {
     handleSetAccessToken(accessToken);
     handleSetRefreshToken(refreshToken);
     window.dispatchEvent(new Event('storage')); // Trigger storage event
-    window.location.href = '/'; // Redirect to homepage
+    window.location.href = '/account/dashboard'; // Redirect to homepage
   };
 
   return (

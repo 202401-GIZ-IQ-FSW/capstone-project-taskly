@@ -48,19 +48,19 @@ const Register = () => {
 
     const formDataToSend = new FormData();
     for (const key in formData) {
-      formDataToSend.append(key, formData[key]); // Use formData, not formDataToSend
+      formDataToSend.append(key, formData[key]);
     }
 
     try {
       const res = await fetcher('/v1/auth/register', {
         method: 'POST',
-        body: formDataToSend, // Use formDataToSend here
+        body: formDataToSend,
       });
       if (res) {
         handleSetAccessToken(res.accessToken);
         handleSetRefreshToken(res.refreshToken);
         window.dispatchEvent(new Event('storage')); // Trigger storage event
-        window.location.href = '/';
+        window.location.href = '/account/dashboard';
       } else {
         setNotificationMessage(
           `Failed to Register, MSG: ${
