@@ -2,7 +2,6 @@
 const express = require('express');
 const cors = require('cors');
 const passport = require('passport');
-const cookieParser = require('cookie-parser');
 
 require('dotenv').config();
 
@@ -36,7 +35,6 @@ app.use(
 app.use(express.static('server/public'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cookieParser());
 app.use(passport.initialize());
 
 app.get('/test', (req, res) => {
