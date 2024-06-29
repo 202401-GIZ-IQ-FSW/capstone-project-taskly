@@ -3,6 +3,9 @@
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Notifications from '../../components/Notifications/notification';
+import { fetcher } from '../../_utils/fetcher';
+
 import {
   Transition,
   Menu,
@@ -31,12 +34,6 @@ const ProfileLayout = ({ children }) => {
 
   const { handleLogout, user, loggedIn } = useUser();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  // useEffect(() => {
-  //   if (!loggedIn) {
-  //     router.push('/auth/login');
-  //   }
-  // }, [user]);
 
   const navigation = [
     { name: 'Dashboard', href: '/account/dashboard', icon: FaHome },
@@ -153,7 +150,8 @@ const ProfileLayout = ({ children }) => {
                   <span className="sr-only">View notifications</span>
                   <FaBell className="h-6 w-6" aria-hidden="true" />
                 </button>
-
+                {user && <Notifications userId={user.id} />}
+                
                 <div
                   className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10"
                   aria-hidden="true"
@@ -164,8 +162,7 @@ const ProfileLayout = ({ children }) => {
                     <span className="sr-only">Open user menu</span>
                     <img
                       className="h-8 w-8 rounded-full bg-gray-50"
-                      src={user?(user.profilePicture.startsWith('http') ? user.profilePicture : `http://localhost:3001/${user.profilePicture}`):''}
-
+                      src={user ? (user.profilePicture.startsWith('http') ? user.profilePicture : `http://localhost:3001/${user.profilePicture}`) : ''}
                       alt="profilePicture"
                     />
                     <span className="hidden lg:flex lg:items-center">
