@@ -7,7 +7,7 @@ const EditProfileForm = ({ user, onSubmit }) => {
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
     username: user?.username || '',
-    emailAddress: user?.emailAddress || '',
+    email: user?.email || '',
     password: '',
     profilePhoto: user?.profilePhoto || '',
     // Add other fields as needed
@@ -101,15 +101,15 @@ const EditProfileForm = ({ user, onSubmit }) => {
         {/* Email Address */}
         <div className="my-8">
           <label
-            htmlFor="emailAddress"
+            htmlFor="email"
             className="text-start block text-sm font-medium text-gray-900 mb-1">
             Email Address
           </label>
           <input
             type="email"
-            id="emailAddress"
-            name="emailAddress"
-            value={formData.emailAddress}
+            id="email"
+            name="email"
+            value={formData.email}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-primary-dark focus:ring focus:ring-primary-dark focus:ring-opacity-50"
           />
