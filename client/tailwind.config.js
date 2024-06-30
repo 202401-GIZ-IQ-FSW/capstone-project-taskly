@@ -33,6 +33,12 @@ module.exports = {
       },
       colors: {
         'primary-blue': '#1B93FF',
+        primary: '#9CCBBB',
+        'primary-light': '#B8E3D2',
+        'primary-dark': '#7DAE9C',
+        'accent-light': '#F4DDBC',
+        'accent-dark': '#5E8D7A',
+        'custom-black': '#333333',
       },
     },
   },
