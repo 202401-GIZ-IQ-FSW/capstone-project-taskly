@@ -3,7 +3,7 @@ import { Transition } from '@headlessui/react';
 import { AiOutlineClose } from 'react-icons/ai'; // Import close icon from react-icons
 import { handleOutsideClick } from '@/_utils/handleOutsideClick';
 
-const SideNavigation = ({ isOpen, onClose, children }) => {
+const SideNavigation = ({ isOpen, onClose, children, title }) => {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -50,13 +50,17 @@ const SideNavigation = ({ isOpen, onClose, children }) => {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
             ref={ref}
-            className="fixed right-0 top-0 h-full w-80 bg-white shadow-lg"
+            className="fixed right-0 top-0 h-full w-full md:w-96 bg-white shadow-lg"
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-headline">
-            <div className="h-full flex flex-col bg-white">
+            <div className="h-full flex flex-col ">
               {/* Header */}
-              <div className="p-4 border-b border-gray-200 flex justify-end">
+              <div className="flex justify-between p-4 border-b border-gray-200 items-center">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                  {title}
+                </h3>
+
                 <button
                   type="button"
                   className="text-gray-500 hover:text-gray-700"

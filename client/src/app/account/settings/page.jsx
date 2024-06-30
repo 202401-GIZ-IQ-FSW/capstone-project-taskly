@@ -1,58 +1,95 @@
 'use client';
+import EditProfileForm from '@/components/Forms/EditProfileForm';
 import SideNavigation from '@/components/SideNav/SideNavigation';
+import { useUser } from '@/hooks/useUser';
 import { useState } from 'react';
 
 const Settings = () => {
+  const { user } = useUser();
+  console.log(user);
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
+  const [userProfile, setUserProfile] = useState(user && user);
 
   const toggleSideNav = () => {
     setIsSideNavOpen((prev) => !prev);
   };
+
+  const closeSideNav = () => {
+    setIsSideNavOpen(false);
+  };
+
+  const handleEditProfile = (formData) => {
+    // Handle saving edited profile data
+    console.log('Saving profile data:', formData);
+    // Implement logic to save the data
+    setIsSideNavOpen(false); // Close side nav after saving
+  };
+
   return (
     <main className="px-4 py-16 sm:px-6 lg:flex-auto lg:px-0 lg:py-10">
       <div className="mx-auto max-w-2xl space-y-16 sm:space-y-20 lg:mx-0 lg:max-w-none">
         <div>
-          <h2 className="text-base md:text-3xl font-semibold leading-7 text-gray-900">
-            Profile
-          </h2>
-          <p className="mt-1 text-sm leading-6 text-gray-500">
-            This information will be displayed publicly so be careful what you
-            share.
-          </p>
+          <div className="flex flex-col md:flex-row items-start justify-between md:items-center">
+            <div>
+              <h2 className="text-base md:text-3xl font-semibold leading-7 text-gray-900">
+                Profile
+              </h2>
+              <p className="mt-1 text-sm leading-6 text-gray-500">
+                This information will be displayed publicly so be careful what
+                you share.
+              </p>
+            </div>
+            {/* Edit Profile Button */}
+            <div className="pt-6 sm:flex justify-end">
+              <button
+                type="button"
+                onClick={toggleSideNav}
+                className="text-primary-dark font-semibold hover:text-darker-green">
+                Edit Profile
+              </button>
+            </div>
+          </div>
 
           <dl className="mt-6 space-y-6 divide-y divide-gray-100 border-t border-gray-200 text-sm leading-6">
-            {/* First Name */}
+            {/* Full Name */}
             <div className="pt-6 sm:flex">
               <dt className="flex-none pr-6 font-medium text-gray-900 sm:w-64">
-                First name
+                Full Name
               </dt>
               <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
-                Tom Cook
-                <button
-                  type="button"
-                  onClick={toggleSideNav}
-                  className="font-semibold text-darker-green hover:text-primary-dark">
-                  Update
-                </button>
+                {userProfile?.fullName}
               </dd>
             </div>
 
-            {/* Last Name */}
+            {/* Username */}
             <div className="pt-6 sm:flex">
               <dt className="flex-none pr-6 font-medium text-gray-900 sm:w-64">
-                Last Name
+                Username
               </dt>
               <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
-                Tom Cook
-                <button
-                  type="button"
-                  onClick={toggleSideNav}
-                  className="font-semibold text-darker-green hover:text-primary-dark">
-                  Update
-                </button>
+                {userProfile?.username}
               </dd>
             </div>
 
+            {/* Email address */}
+            <div className="pt-6 sm:flex">
+              <dt className="flex-none pr-6 font-medium text-gray-900 sm:w-64">
+                Email address
+              </dt>
+              <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
+                {userProfile?.emailAddress}
+              </dd>
+            </div>
+
+            {/* Password */}
+            <div className="pt-6 sm:flex">
+              <dt className="flex-none pr-6 font-medium text-gray-900 sm:w-64">
+                Password
+              </dt>
+              <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
+                ***********
+              </dd>
+            </div>
             {/* Profile Picture */}
             <div className="pt-6 sm:flex">
               <dt className="flex-none pr-6 font-medium text-gray-900 sm:w-64">
@@ -66,60 +103,6 @@ const Settings = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <button
-                  type="button"
-                  onClick={toggleSideNav}
-                  className="font-semibold text-darker-green hover:text-primary-dark">
-                  Update
-                </button>
-              </dd>
-            </div>
-
-            {/* Username */}
-            <div className="pt-6 sm:flex">
-              <dt className="flex-none pr-6 font-medium text-gray-900 sm:w-64">
-                Username
-              </dt>
-              <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
-                Tom Cook
-                <button
-                  type="button"
-                  onClick={toggleSideNav}
-                  className="font-semibold text-darker-green hover:text-primary-dark">
-                  Update
-                </button>
-              </dd>
-            </div>
-
-            {/* Email address */}
-            <div className="pt-6 sm:flex">
-              <dt className="flex-none pr-6 font-medium text-gray-900 sm:w-64">
-                Email address
-              </dt>
-              <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
-                tom.cook@example.com
-                <button
-                  type="button"
-                  onClick={toggleSideNav}
-                  className="font-semibold text-darker-green hover:text-primary-dark">
-                  Update
-                </button>
-              </dd>
-            </div>
-
-            {/* Password */}
-            <div className="pt-6 sm:flex">
-              <dt className="flex-none pr-6 font-medium text-gray-900 sm:w-64">
-                Password
-              </dt>
-              <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
-                ***********
-                <button
-                  type="button"
-                  onClick={toggleSideNav}
-                  className="font-semibold text-darker-green hover:text-primary-dark">
-                  Update
-                </button>
               </dd>
             </div>
           </dl>
@@ -128,15 +111,10 @@ const Settings = () => {
       {/* Side Navigation Component */}
       <SideNavigation
         isOpen={isSideNavOpen}
-        onClose={() => setIsSideNavOpen(false)}>
-        {/* Content for Side Navigation */}
-        <h3 className="text-lg font-semibold text-gray-900">
-          Update Profile Picture
-        </h3>
-        <div className="p-4">
-          {/* Placeholder for form or content to update profile picture */}
-          <p>Form or content to update profile picture...</p>
-        </div>
+        onClose={closeSideNav}
+        title={'Edit Profile'}>
+        {/* Render EditProfileForm with current user data */}
+        <EditProfileForm user={userProfile} onSubmit={handleEditProfile} />
       </SideNavigation>
     </main>
   );
