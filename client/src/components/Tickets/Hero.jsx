@@ -1,5 +1,6 @@
 'use client';
 import { useUser } from '@/hooks/useUser';
+import Button from '../../components/Button/Button';
 import Link from 'next/link';
 import { RiTicket2Line } from 'react-icons/ri';
 
@@ -22,10 +23,8 @@ const Hero = () => {
               Securely submit and manage support tickets for technical issues
             </p>
             <div className="mt-10 flex items-center gap-x-6">
-              <Link
-                href={newTicketUrl}
-                className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                New ticket
+              <Link href={newTicketUrl}>
+                <Button>New ticket</Button>
               </Link>
             </div>
           </div>
