@@ -6,9 +6,7 @@ import { useState } from 'react';
 
 const Settings = () => {
   const { user } = useUser();
-  console.log(user);
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
-  const [userProfile, setUserProfile] = useState(user && user);
 
   const toggleSideNav = () => {
     setIsSideNavOpen((prev) => !prev);
@@ -57,7 +55,7 @@ const Settings = () => {
                 Full Name
               </dt>
               <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
-                {userProfile?.fullName}
+                {user?.firstName} {user?.lastName}
               </dd>
             </div>
 
@@ -67,7 +65,7 @@ const Settings = () => {
                 Username
               </dt>
               <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
-                {userProfile?.username}
+                {user?.username}
               </dd>
             </div>
 
@@ -77,7 +75,7 @@ const Settings = () => {
                 Email address
               </dt>
               <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
-                {userProfile?.emailAddress}
+                {user?.email}
               </dd>
             </div>
 
@@ -98,7 +96,7 @@ const Settings = () => {
               <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
                 <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-200">
                   <img
-                    src={''}
+                    src={user?.profilePicture || ''}
                     alt="Current Profile"
                     className="w-full h-full object-cover"
                   />
@@ -114,7 +112,7 @@ const Settings = () => {
         onClose={closeSideNav}
         title={'Edit Profile'}>
         {/* Render EditProfileForm with current user data */}
-        <EditProfileForm user={userProfile} onSubmit={handleEditProfile} />
+        <EditProfileForm user={user} onSubmit={handleEditProfile} />
       </SideNavigation>
     </main>
   );
