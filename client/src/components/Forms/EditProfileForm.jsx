@@ -116,7 +116,7 @@ const EditProfileForm = ({ user, onSubmit }) => {
         </div>
 
         {/* Password */}
-        <div className="my-8">
+        {/* <div className="my-8">
           <label
             htmlFor="password"
             className="text-start block text-sm font-medium text-gray-900 mb-1">
@@ -130,7 +130,7 @@ const EditProfileForm = ({ user, onSubmit }) => {
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-primary-dark focus:ring focus:ring-primary-dark focus:ring-opacity-50"
           />
-        </div>
+        </div> */}
 
         {/* Profile Picture */}
         <div className="my-8">
