@@ -1,7 +1,13 @@
-import { Field, Label, Switch } from '@headlessui/react';
-import React from 'react';
+'use client';
+import SideNavigation from '@/components/SideNav/SideNavigation';
+import { useState } from 'react';
 
 const Settings = () => {
+  const [isSideNavOpen, setIsSideNavOpen] = useState(false);
+
+  const toggleSideNav = () => {
+    setIsSideNavOpen((prev) => !prev);
+  };
   return (
     <main className="px-4 py-16 sm:px-6 lg:flex-auto lg:px-0 lg:py-10">
       <div className="mx-auto max-w-2xl space-y-16 sm:space-y-20 lg:mx-0 lg:max-w-none">
@@ -15,49 +21,44 @@ const Settings = () => {
           </p>
 
           <dl className="mt-6 space-y-6 divide-y divide-gray-100 border-t border-gray-200 text-sm leading-6">
+            {/* First Name */}
             <div className="pt-6 sm:flex">
-              <Field>
-                <Label
-                  as="dt"
-                  className="flex-none pr-6 font-medium text-gray-900 sm:w-64">
-                  First name
-                </Label>
-              </Field>
-              <div className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
+              <dt className="flex-none pr-6 font-medium text-gray-900 sm:w-64">
+                First name
+              </dt>
+              <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
                 Tom Cook
                 <button
                   type="button"
+                  onClick={toggleSideNav}
                   className="font-semibold text-darker-green hover:text-primary-dark">
                   Update
                 </button>
-              </div>
+              </dd>
             </div>
+
+            {/* Last Name */}
             <div className="pt-6 sm:flex">
-              <Field>
-                <Label
-                  as="dt"
-                  className="flex-none pr-6 font-medium text-gray-900 sm:w-64">
-                  Last Name
-                </Label>
-              </Field>
-              <div className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
+              <dt className="flex-none pr-6 font-medium text-gray-900 sm:w-64">
+                Last Name
+              </dt>
+              <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
                 Tom Cook
                 <button
                   type="button"
+                  onClick={toggleSideNav}
                   className="font-semibold text-darker-green hover:text-primary-dark">
                   Update
                 </button>
-              </div>
+              </dd>
             </div>
+
+            {/* Profile Picture */}
             <div className="pt-6 sm:flex">
-              <Field>
-                <Label
-                  as="dt"
-                  className="flex-none pr-6 font-medium text-gray-900 sm:w-64">
-                  Profile Picture
-                </Label>
-              </Field>
-              <div className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
+              <dt className="flex-none pr-6 font-medium text-gray-900 sm:w-64">
+                Profile Picture
+              </dt>
+              <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
                 <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-200">
                   <img
                     src={''}
@@ -67,65 +68,76 @@ const Settings = () => {
                 </div>
                 <button
                   type="button"
+                  onClick={toggleSideNav}
                   className="font-semibold text-darker-green hover:text-primary-dark">
                   Update
                 </button>
-              </div>
+              </dd>
             </div>
+
+            {/* Username */}
             <div className="pt-6 sm:flex">
-              <Field>
-                <Label
-                  as="dt"
-                  className="flex-none pr-6 font-medium text-gray-900 sm:w-64">
-                  Username
-                </Label>
-              </Field>
-              <div className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
+              <dt className="flex-none pr-6 font-medium text-gray-900 sm:w-64">
+                Username
+              </dt>
+              <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
                 Tom Cook
                 <button
                   type="button"
+                  onClick={toggleSideNav}
                   className="font-semibold text-darker-green hover:text-primary-dark">
                   Update
                 </button>
-              </div>
+              </dd>
             </div>
+
+            {/* Email address */}
             <div className="pt-6 sm:flex">
-              <Field>
-                <Label
-                  as="dt"
-                  className="flex-none pr-6 font-medium text-gray-900 sm:w-64">
-                  Email address
-                </Label>
-              </Field>
-              <div className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
+              <dt className="flex-none pr-6 font-medium text-gray-900 sm:w-64">
+                Email address
+              </dt>
+              <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
                 tom.cook@example.com
                 <button
                   type="button"
+                  onClick={toggleSideNav}
                   className="font-semibold text-darker-green hover:text-primary-dark">
                   Update
                 </button>
-              </div>
+              </dd>
             </div>
+
+            {/* Password */}
             <div className="pt-6 sm:flex">
-              <Field>
-                <Label
-                  as="dt"
-                  className="flex-none pr-6 font-medium text-gray-900 sm:w-64">
-                  Password
-                </Label>
-              </Field>
-              <div className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
+              <dt className="flex-none pr-6 font-medium text-gray-900 sm:w-64">
+                Password
+              </dt>
+              <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto text-gray-900">
                 ***********
                 <button
                   type="button"
+                  onClick={toggleSideNav}
                   className="font-semibold text-darker-green hover:text-primary-dark">
                   Update
                 </button>
-              </div>
+              </dd>
             </div>
           </dl>
         </div>
       </div>
+      {/* Side Navigation Component */}
+      <SideNavigation
+        isOpen={isSideNavOpen}
+        onClose={() => setIsSideNavOpen(false)}>
+        {/* Content for Side Navigation */}
+        <h3 className="text-lg font-semibold text-gray-900">
+          Update Profile Picture
+        </h3>
+        <div className="p-4">
+          {/* Placeholder for form or content to update profile picture */}
+          <p>Form or content to update profile picture...</p>
+        </div>
+      </SideNavigation>
     </main>
   );
 };
