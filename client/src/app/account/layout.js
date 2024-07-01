@@ -25,10 +25,6 @@ import { useUser } from '@/hooks/useUser';
 import MobileSidebar from '@/components/Navigation/MobileSidebar/MobileSidebar';
 import { useRouter } from 'next/navigation';
 
-//import toastContainer from react-toastify
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 const ProfileLayout = ({ children }) => {
   const pathname = usePathname();
   const router = useRouter();
@@ -58,7 +54,6 @@ const ProfileLayout = ({ children }) => {
   return (
     <>
       <div>
-
         <MobileSidebar
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
@@ -218,19 +213,6 @@ const ProfileLayout = ({ children }) => {
           </main>
         </div>
       </div>
-
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
     </>
   );
 };
