@@ -3,21 +3,20 @@ import Link from 'next/link';
 import React from 'react';
 
 const Footer = () => (
-  <footer className="flex flex-row justify-between p-6 text-center bg-[#f8f9fa]">
-    <div className="flex flex-col justify-between">
-      <div>
-        <p>TicketMaster</p>
-        <p>Your ultimate ticket support solution!</p>
-      </div>
-
-      <div>TicketMaster {/** copyright icon */}</div>
+  <footer className="flex flex-col md:flex-row justify-between p-6 bg-gradient-to-r from-purple-500 to-indigo-600 text-white">
+    <div className="mb-4 md:mb-0">
+      <p className="text-lg font-semibold">TicketMaster</p>
+      <p>Your ultimate ticket support solution!</p>
+      <p className="mt-2">&copy; {new Date().getFullYear()} TicketMaster</p>
     </div>
 
-    <nav className="flex flex-col text-right">
+    <nav className="flex flex-col md:flex-row md:space-x-4">
       {footerLinks.map((link, index) => (
         <Link
           href={link.url}
-          key={index}>
+          key={index}
+          className="hover:text-gray-200"
+        >
           {link.text}
         </Link>
       ))}
