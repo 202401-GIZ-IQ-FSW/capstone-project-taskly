@@ -1,4 +1,5 @@
 const TicketModel = require('../../models/TicketModel');
+const sendEmails = require('../../config/mailer');
 
 const createTicket = async (req, res) => {
   try {
@@ -57,6 +58,12 @@ const updateTicket = async (req, res) => {
     });
 
     if (updatedTicket) {
+      // send users emails for telling them that the ticket has updated
+      const userEmail = updatedTicket.user.email;
+      const subject =  `your ticket has been updated ${ticketId}`;
+      const text = `Dear user,\n\nYour ticket with ID ${ticketId} is now ${updatedTicket.status}.\n\nThank you,\nSupport Team`;
+
+      await sendEmails(userEmail, subject, text);
       res.status(200).json({ message: 'Ticket updated successfully', ticket: updatedTicket });
     } else {
       res.status(404).json({ message: 'Ticket not found' });

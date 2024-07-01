@@ -18,3 +18,4 @@ const TicketSubmission = ({ title, subtitle, submitText, newTicketText }) => (
 );
 
 export default TicketSubmission;
+
