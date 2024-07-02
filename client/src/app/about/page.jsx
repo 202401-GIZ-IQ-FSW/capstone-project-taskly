@@ -47,7 +47,7 @@ const About = () => {
         </div>
           </section>
           <hr className="w-10/12 md:w-8/12 h-0.5 bg-gray-400 my-6" />
-          
+
           <section className="max-w-4xl w-full text-center mb-12 mt-12">
         <h2 className="text-2xl md:text-4xl font-bold mb-4">Our Mission</h2>
         <p className="text-lg md:text-xl">
@@ -59,6 +59,34 @@ const About = () => {
               </p>
       </section>
       <hr className="w-10/12 md:w-8/12 h-0.5 bg-gray-400 my-6" />
+
+      <section className="max-w-4xl w-full text-center bg-white bg-opacity-75 rounded-lg shadow-lg p-6">
+        <h2 className="text-xl md:text-3xl font-bold mb-4">Our Amazing Team</h2>
+        <div className="flex flex-wrap justify-center">
+          {teamMembers.map((member, index) => (
+            <div key={index} className="w-48 m-4">
+              <div className="relative rounded-lg overflow-hidden">
+                <img
+                  src={member.imageUrl}
+                  alt={member.name}
+                  className="w-full h-auto rounded-lg transform transition-transform duration-300 hover:scale-105"
+                />
+                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300">
+                  <a
+                    href={member.linkedinUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white font-bold text-center"
+                  >
+                    View LinkedIn
+                  </a>
+                </div>
+              </div>
+              <p className="mt-2 text-lg font-bold">{member.name}</p>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 };
