@@ -32,8 +32,22 @@ const About = () => {
     },
   ];
   return (
-    <div >
-      
+    <div className="flex flex-col items-center p-6 md:p-12 bg-gradient-to-br from-blue-200 to-green-200" >
+       <section className="max-w-4xl w-full text-center">
+        <h1 className="text-xl md:text-5xl font-bold mb-6">About Us</h1>
+        <p className="text-lg md:text-xl mb-8">
+        As a team in the Re:coded bootcamp for fullstack development, our primary objective is to create a user-friendly platform that streamlines the process of submitting, assigning, tracking, and resolving software-related tickets.</p>
+        
+        <div className="flex justify-center">
+        <img 
+          src={image} 
+          alt="Team" 
+          className="w-full max-w-md h-auto rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105" 
+        />  
+        </div>
+          </section>
+          <hr className="w-10/12 md:w-8/12 h-0.5 bg-gray-400 my-6" />
+
     </div>
   );
 };
