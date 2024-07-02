@@ -47,7 +47,18 @@ const About = () => {
         </div>
           </section>
           <hr className="w-10/12 md:w-8/12 h-0.5 bg-gray-400 my-6" />
-
+          
+          <section className="max-w-4xl w-full text-center mb-12 mt-12">
+        <h2 className="text-2xl md:text-4xl font-bold mb-4">Our Mission</h2>
+        <p className="text-lg md:text-xl">
+        Our mission is to develop a cutting-edge Ticket Management System that empowers users to effortlessly submit detailed tickets,
+         enables admins to assign tasks to the right developers, allows real-time tracking of ticket statuses,
+          facilitates seamless communication through a built-in messaging system, empowers users to set priority levels for urgent issues,
+           and provides valuable insights through an analytics dashboard showcasing ticket trends, response times, and resolution rates. 
+        
+              </p>
+      </section>
+      <hr className="w-10/12 md:w-8/12 h-0.5 bg-gray-400 my-6" />
     </div>
   );
 };
