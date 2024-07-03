@@ -1,65 +1,68 @@
 'use client';
-import React from "react";
+import React from 'react';
 
-  // team data for links and images 
+// team data for links and images
 const teamMembers = [
   {
     name: 'Ahmed Essam',
-    imageUrl: '/Ahmed.jpg',
+    imageUrl: '/assets/Ahmed.jpg',
     linkedinUrl: 'https://www.linkedin.com/in/ahmed-essam-m/',
   },
   {
     name: 'Ninos Dinkha',
-    imageUrl: '/Ninos.jpg',
+    imageUrl: '/assets/Ninos.jpg',
     linkedinUrl: 'https://www.linkedin.com/in/ninosdinkha/',
   },
   {
     name: 'Elaf Gardi',
-    imageUrl: '/Elaf.jpg',
+    imageUrl: '/assets/Elaf.jpg',
     linkedinUrl: 'https://www.linkedin.com/in/elaf-ghassan/',
   },
   {
     name: 'Meer Atta',
-    imageUrl: '/Meer.jpg',
+    imageUrl: '/assets/Meer.jpg',
     linkedinUrl: 'https://www.linkedin.com/in/meer-atta-b825b4229/',
   },
   {
     name: 'Ali Izz-aldin',
-    imageUrl: '/Ali.jpg',
+    imageUrl: '/assets/Ali.jpg',
     linkedinUrl: 'https://www.linkedin.com/in/ali-izz-aldin-406975298/',
   },
 ];
 
- 
 const About = () => {
-  // team data for links and images 
-  
   return (
-    <div className="flex flex-col items-center p-6 md:p-12 bg-gradient-to-br from-blue-200 to-green-200" >
-       <section className="max-w-4xl w-full text-center">
+    <div className="flex flex-col items-center p-6 md:p-12 bg-gradient-to-br from-blue-200 to-green-200">
+      <section className="max-w-4xl w-full text-center">
         <h1 className="text-xl md:text-5xl font-bold mb-6">About Us</h1>
         <p className="text-lg md:text-xl mb-8">
-        As a team in the Re:coded bootcamp for fullstack development, our primary objective is to create a user-friendly platform that streamlines the process of submitting, assigning, tracking, and resolving software-related tickets.</p>
-        
-        <div className="flex justify-center">
-        <img 
-          src="/recoded.png" 
-          alt="Team" 
-          className="w-full max-w-md h-auto rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105" 
-        />  
-        </div>
-          </section>
-          <hr className="w-10/12 md:w-8/12 h-0.5 bg-gray-400 my-6" />
+          As a team in the Re:coded bootcamp for fullstack development, our
+          primary objective is to create a user-friendly platform that
+          streamlines the process of submitting, assigning, tracking, and
+          resolving software-related tickets.
+        </p>
 
-          <section className="max-w-4xl w-full text-center mb-12 mt-12">
+        <div className="flex justify-center">
+          <img
+            src="/assets/recoded.png"
+            alt="Team"
+            className="w-full max-w-md h-auto rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105"
+          />
+        </div>
+      </section>
+      <hr className="w-10/12 md:w-8/12 h-0.5 bg-gray-400 my-6" />
+
+      <section className="max-w-4xl w-full text-center mb-12 mt-12">
         <h2 className="text-2xl md:text-4xl font-bold mb-4">Our Mission</h2>
         <p className="text-lg md:text-xl">
-        Our mission is to develop a cutting-edge Ticket Management System that empowers users to effortlessly submit detailed tickets,
-         enables admins to assign tasks to the right developers, allows real-time tracking of ticket statuses,
-          facilitates seamless communication through a built-in messaging system, empowers users to set priority levels for urgent issues,
-           and provides valuable insights through an analytics dashboard showcasing ticket trends, response times, and resolution rates. 
-        
-              </p>
+          Our mission is to develop a cutting-edge Ticket Management System that
+          empowers users to effortlessly submit detailed tickets, enables admins
+          to assign tasks to the right developers, allows real-time tracking of
+          ticket statuses, facilitates seamless communication through a built-in
+          messaging system, empowers users to set priority levels for urgent
+          issues, and provides valuable insights through an analytics dashboard
+          showcasing ticket trends, response times, and resolution rates.
+        </p>
       </section>
       <hr className="w-10/12 md:w-8/12 h-0.5 bg-gray-400 my-6" />
 
@@ -79,8 +82,7 @@ const About = () => {
                     href={member.linkedinUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white font-bold text-center"
-                  >
+                    className="text-white font-bold text-center">
                     View LinkedIn
                   </a>
                 </div>
