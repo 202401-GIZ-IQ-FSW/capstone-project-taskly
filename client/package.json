@@ -33,7 +33,7 @@
     "supertest": "^7.0.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "three": "^0.166.0"
+    "three": "^0.166.1"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.7",
