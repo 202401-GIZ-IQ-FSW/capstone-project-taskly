@@ -1,3 +1,4 @@
+// client\src\app\account\projects\page.jsx
 'use client';
 import Link from 'next/link';
 import fetcher from '@/_utils/fetcher';
@@ -29,7 +30,7 @@ const Projects = () => {
 
   useEffect(() => {
     if (selectedProject) {
-      console.log(selectedProject)
+      // console.log(selectedProject)
       const fetchTickets = async () => {
         try {
           const data = await fetcher(
