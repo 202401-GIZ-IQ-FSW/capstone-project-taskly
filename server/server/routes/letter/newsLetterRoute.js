@@ -5,7 +5,7 @@ const sendEmail = require('../../config/mailer');
 
 const NewsLetter = require('../../models/newsLetterModel');
 
-router.post('/api/v1/send', async(req, res) => {
+router.post('/send', async(req, res) => {
     const {email, subject, message} = req.body;
 
     try{
