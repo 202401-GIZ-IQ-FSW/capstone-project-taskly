@@ -5,6 +5,7 @@ import { FaFacebook, FaTwitter, FaInstagram, FaEnvelope } from 'react-icons/fa';
 import fetcher from '@/_utils/fetcher';
 import Notification from '@/components/Notification';
 
+
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
