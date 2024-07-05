@@ -7,7 +7,7 @@ const About = () => {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div className="text-center my-10">
-        <h3 className="font-dancing font-medium text-2xl text-custome-tail">
+        <h3 className="font-dancing font-medium text-2xl text-custom-teal">
           Our story
         </h3>
         <h1 className="font-lato font-semibold text-6xl text-custom-black">
@@ -19,7 +19,7 @@ const About = () => {
 
       <div className="mt-20">
         <div className="text-center">
-          <h3 className="font-dancing font-medium text-2xl text-custome-tail">
+          <h3 className="font-dancing font-medium text-2xl text-custom-teal">
             About
           </h3>
           <h1 className="font-lato font-semibold text-6xl text-custom-black">

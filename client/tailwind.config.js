@@ -44,8 +44,8 @@ module.exports = {
         'accent-light': '#F4DDBC',
         'accent-dark': '#5E8D7A',
         'custom-black': '#181717',
-        'custome-tail': ' #149c90',
-        'custome-gray': '#eee'
+        'custom-teal': ' #149c90',
+        'custom-gray': '#eee'
       },
     },
   },
