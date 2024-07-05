@@ -55,6 +55,7 @@ app.use(
   '/api/v1/projects/:projectId/tickets/:ticketId/comments',
   commentsRouter
 );
+app.use('/api/v1/dashboard', dashboardRoutes);
 
 app.listen(port, () => {
   // this line for dev, uncomment it if you want to log all working routes

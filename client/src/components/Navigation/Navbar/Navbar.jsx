@@ -1,24 +1,12 @@
+// client\src\components\Navigation\Navbar\Navbar.jsx
 'use client';
 import UserLoggedIn from '@/components/UserStatus/UserLoggedIn';
 import UserLoggedOut from '@/components/UserStatus/UserLoggedOut';
 import { navLinks } from '@/data/Links';
 import { useUser } from '@/hooks/useUser';
 import Link from 'next/link';
-// import { useState } from 'react';
-// import SearchTickets from '../../SearchTicket/SearchTickets';
-
 const Navbar = () => {
   const { user, handleLogout } = useUser();
-  // const [isModalOpen, setModalOpen] = useState(false);
-
-  // const openModal = () => {
-  //   setModalOpen(true);
-  // };
-
-  // const closeModal = () => {
-  //   setModalOpen(false);
-  // };
-
   const filteredLinks = user
     ? navLinks.filter(
         (link) => link.text !== 'Signin' && link.text !== 'Signup'
@@ -36,7 +24,6 @@ const Navbar = () => {
             {link.text}
           </Link>
         ))}
-        {/* <button onClick={openModal}>Search tickets</button> */}
       </nav>
       <div>
         {user ? (
@@ -45,8 +32,6 @@ const Navbar = () => {
           <UserLoggedOut />
         )}
       </div>
-
-      {/* {isModalOpen && <SearchTickets onClose={closeModal} />} */}
     </header>
   );
 };
