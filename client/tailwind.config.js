@@ -17,6 +17,11 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        roboto: ['Roboto', 'sans-serif'],
+        dancing: ['Dancing Script', 'cursive'],
+        lato: ['Lato', 'sans-serif'],
+      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
@@ -38,9 +43,15 @@ module.exports = {
         'primary-dark': '#7DAE9C',
         'accent-light': '#F4DDBC',
         'accent-dark': '#5E8D7A',
-        'custom-black': '#333333',
+        'custom-black': '#181717',
+        'custome-tail': ' #149c90',
+        'custome-gray': '#eee'
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), require('@tailwindcss/forms')],
+  plugins: [
+    require('tailwindcss-animate'),
+    require('@tailwindcss/forms'),
+    require('daisyui'),
+  ],
 };
