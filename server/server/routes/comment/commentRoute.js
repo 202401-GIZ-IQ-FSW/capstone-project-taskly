@@ -5,10 +5,10 @@ const commentController = require('../../controllers/comment/commentController')
 
 // Base path: /api/v1/projects/:projectId/tickets/:ticketId/comments
 
-router.post('/', commentController.createComment);  
-router.get('/', commentController.getAllComments);  
-router.get('/:commentId', commentController.getCommentById);  
-router.put('/:commentId', commentController.updateCommentById);  
-router.delete('/:commentId', commentController.deleteCommentById);  
+router.post('/:projectId/tickets/:ticketId/comments/', commentController.createComment);  
+router.get('/:projectId/tickets/:ticketId/comments/', commentController.getAllComments);  
+router.get('/:projectId/tickets/:ticketId/comments/:commentId', commentController.getCommentById);  
+router.put('/:projectId/tickets/:ticketId/comments/:commentId', commentController.updateCommentById);  
+router.delete('/:projectId/tickets/:ticketId/comments/:commentId', commentController.deleteCommentById);  
 
 module.exports = router;
