@@ -52,7 +52,7 @@ app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/projects', projectRoutes);
 app.use('/api/v1/projects', ticketRoutes);
 app.use(
-  '/api/v1/projects/:projectId/tickets/:ticketId/comments',
+  '/api/v1/projects',
   commentsRouter
 );
 app.use('/api/v1/dashboard', dashboardRoutes);
