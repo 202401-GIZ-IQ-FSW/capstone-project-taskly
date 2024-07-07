@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Button from '../Button/Button';
+import fetcher from '@/_utils/fetcher';
+import { useUser } from '@/hooks/useUser';
 
-const EditProfileForm = ({ user, onSubmit }) => {
-  // Initialize form state with user data
+const EditProfileForm = ({ user, onClose }) => {
+  const { handleSetUser } = useUser();
   const [formData, setFormData] = useState({
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
@@ -10,13 +12,35 @@ const EditProfileForm = ({ user, onSubmit }) => {
     email: user?.email || '',
     password: '',
     profilePhoto: user?.profilePhoto || '',
-    // Add other fields as needed
   });
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
+
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit(formData); // Pass form data to parent component
+    setLoading(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      const res = await fetcher('/v1/user/profile', {
+        method: 'PUT',
+        body: JSON.stringify(formData),
+      });
+      setSuccess('Profile updated successfully!');
+      handleSetUser(res?.updatedUser);
+      // Close the side nav after 1 second
+      setTimeout(() => {
+        onClose();
+      }, 1000);
+    } catch (err) {
+      setError(`Failed to update profile: ${err.message}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   // Handle form input changes
@@ -32,7 +56,6 @@ const EditProfileForm = ({ user, onSubmit }) => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Example logic to handle file upload (you may replace with your actual upload logic)
       const reader = new FileReader();
       reader.onloadend = () => {
         setFormData({
@@ -115,23 +138,6 @@ const EditProfileForm = ({ user, onSubmit }) => {
           />
         </div>
 
-        {/* Password */}
-        {/* <div className="my-8">
-          <label
-            htmlFor="password"
-            className="text-start block text-sm font-medium text-gray-900 mb-1">
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-primary-dark focus:ring focus:ring-primary-dark focus:ring-opacity-50"
-          />
-        </div> */}
-
         {/* Profile Picture */}
         <div className="my-8">
           <label
@@ -170,10 +176,15 @@ const EditProfileForm = ({ user, onSubmit }) => {
         <div className="my-8">
           <Button
             type="submit"
-            className="w-full px-6 py-3 bg-primary-dark text-white font-semibold rounded-md hover:bg-primary-light focus:outline-none focus:ring focus:ring-primary-dark focus:ring-opacity-50">
-            Save Changes
+            className="w-full px-6 py-3 bg-primary-dark text-white font-semibold rounded-md hover:bg-primary-light focus:outline-none focus:ring focus:ring-primary-dark focus:ring-opacity-50"
+            disabled={loading}>
+            {loading ? 'Saving...' : 'Save Changes'}
           </Button>
         </div>
+
+        {/* Success and Error Messages */}
+        {success && <p className="text-green-600">{success}</p>}
+        {error && <p className="text-red-600">{error}</p>}
       </form>
     </div>
   );

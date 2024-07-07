@@ -21,20 +21,6 @@ const Settings = () => {
     setIsSideNavOpen(false);
   };
 
-  const handleEditProfile = (formData) => {
-    // Handle saving edited profile data
-    console.log('Saving profile data:', formData);
-    // Implement logic to save the data
-    setIsSideNavOpen(false); // Close side nav after saving
-  };
-
-  const handleChangePassword = (formData) => {
-    // Handle changing password
-    console.log('Changing password:', formData);
-    // Implement logic to change the password
-    setIsSideNavOpen(false); // Close side nav after saving
-  };
-
   return (
     <main className="px-4 py-16 sm:px-6 lg:flex-auto lg:px-0 lg:py-10">
       <div className="mx-auto max-w-2xl space-y-16 sm:space-y-20 lg:mx-0 lg:max-w-none">
@@ -56,7 +42,7 @@ const Settings = () => {
                 onClick={() =>
                   toggleSideNav(
                     'Edit Profile',
-                    <EditProfileForm user={user} onSubmit={handleEditProfile} />
+                    <EditProfileForm user={user} onClose={closeSideNav} />
                   )
                 }
                 className="text-primary-dark font-semibold hover:text-darker-green">
@@ -129,10 +115,7 @@ const Settings = () => {
                 onClick={() =>
                   toggleSideNav(
                     'Change Password',
-                    <ChangePasswordForm
-                      onSubmit={handleChangePassword}
-                      onClose={closeSideNav}
-                    />
+                    <ChangePasswordForm onClose={closeSideNav} />
                   )
                 }
                 className="text-primary-dark font-semibold hover:text-darker-green">
