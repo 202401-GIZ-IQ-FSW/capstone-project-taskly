@@ -44,7 +44,10 @@ const ChangePasswordForm = ({ onClose }) => {
           confirmPassword: '',
         });
         setError('');
-        onClose();
+        // Close the side nav after 2 seconds
+        setTimeout(() => {
+          onClose();
+        }, 1500);
       }
     } catch (err) {
       setError(err.message);
