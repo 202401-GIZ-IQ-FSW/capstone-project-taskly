@@ -1,91 +1,138 @@
 import { useState } from 'react';
-import Button from '../Button/Button';
+import fetcher from '@/_utils/fetcher';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 
-const ChangePasswordForm = ({ onSubmit }) => {
+const ChangePasswordForm = ({ onClose }) => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const [formData, setFormData] = useState({
-    currentPassword: '',
+    oldPassword: '',
     newPassword: '',
     confirmPassword: '',
   });
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add validation logic if needed
-    onSubmit(formData);
+    const { oldPassword, newPassword, confirmPassword } = formData;
+
+    if (newPassword !== confirmPassword) {
+      setError('New password and confirm password do not match.');
+      return;
+    }
+
+    try {
+      const response = await fetcher('/v1/user/profile/change-password', {
+        method: 'PUT',
+        body: JSON.stringify({ oldPassword, newPassword }),
+      });
+
+      if (response.message) {
+        setSuccess(response.message);
+        setFormData({
+          oldPassword: '',
+          newPassword: '',
+          confirmPassword: '',
+        });
+        setError('');
+        onClose();
+      }
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
-      {/* Current Password */}
-      <div className="my-8">
+    <form onSubmit={handleSubmit}>
+      {/* Old Password */}
+      <div className="my-8 relative">
         <label
-          htmlFor="currentPassword"
+          htmlFor="oldPassword"
           className="text-start block text-sm font-medium text-gray-900 mb-1">
           Current Password
         </label>
         <input
-          type="password"
-          id="currentPassword"
-          name="currentPassword"
-          value={formData.currentPassword}
+          type={showPassword ? 'text' : 'password'}
+          id="oldPassword"
+          name="oldPassword"
+          value={formData.oldPassword}
           onChange={handleChange}
-          required
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-primary-dark focus:ring focus:ring-primary-dark focus:ring-opacity-50"
         />
+        <button
+          type="button"
+          className="absolute inset-y-0 right-3 flex items-center justify-center text-gray-500"
+          onClick={() => setShowPassword(!showPassword)}>
+          <div className="mt-5">{showPassword ? <FiEyeOff /> : <FiEye />}</div>
+        </button>
       </div>
 
       {/* New Password */}
-      <div className="my-8">
+      <div className="my-8 relative">
         <label
           htmlFor="newPassword"
           className="text-start block text-sm font-medium text-gray-900 mb-1">
           New Password
         </label>
         <input
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           id="newPassword"
           name="newPassword"
           value={formData.newPassword}
           onChange={handleChange}
-          required
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-primary-dark focus:ring focus:ring-primary-dark focus:ring-opacity-50"
         />
+        <button
+          type="button"
+          className="absolute inset-y-0 right-3 flex items-center justify-center text-gray-500"
+          onClick={() => setShowPassword(!showPassword)}>
+          <div className="mt-5">{showPassword ? <FiEyeOff /> : <FiEye />}</div>
+        </button>
       </div>
 
       {/* Confirm Password */}
-      <div className="my-8">
+      <div className="my-8 relative">
         <label
           htmlFor="confirmPassword"
           className="text-start block text-sm font-medium text-gray-900 mb-1">
-          Confirm Password
+          Confirm New Password
         </label>
         <input
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           id="confirmPassword"
           name="confirmPassword"
           value={formData.confirmPassword}
           onChange={handleChange}
-          required
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-primary-dark focus:ring focus:ring-primary-dark focus:ring-opacity-50"
         />
+        <button
+          type="button"
+          className="absolute inset-y-0 right-3 flex items-center justify-center text-gray-500"
+          onClick={() => setShowPassword(!showPassword)}>
+          <div className="mt-5">{showPassword ? <FiEyeOff /> : <FiEye />}</div>
+        </button>
       </div>
 
       {/* Submit Button */}
       <div className="my-8">
-        <Button
+        <button
           type="submit"
           className="w-full px-6 py-3 bg-primary-dark text-white font-semibold rounded-md hover:bg-primary-light focus:outline-none focus:ring focus:ring-primary-dark focus:ring-opacity-50">
           Change Password
-        </Button>
+        </button>
       </div>
+
+      {error && <p className="text-red-500 text-sm">{error}</p>}
+      {success && <p className="text-green-500 text-sm">{success}</p>}
     </form>
   );
 };

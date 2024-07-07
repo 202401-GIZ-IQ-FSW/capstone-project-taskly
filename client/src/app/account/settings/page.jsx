@@ -129,7 +129,10 @@ const Settings = () => {
                 onClick={() =>
                   toggleSideNav(
                     'Change Password',
-                    <ChangePasswordForm onSubmit={handleChangePassword} />
+                    <ChangePasswordForm
+                      onSubmit={handleChangePassword}
+                      onClose={closeSideNav}
+                    />
                   )
                 }
                 className="text-primary-dark font-semibold hover:text-darker-green">
