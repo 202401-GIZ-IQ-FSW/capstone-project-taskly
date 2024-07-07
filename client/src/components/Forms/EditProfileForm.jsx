@@ -56,14 +56,10 @@ const EditProfileForm = ({ user, onClose }) => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData({
-          ...formData,
-          profilePhoto: reader.result, // Update profile photo URL in formData
-        });
-      };
-      reader.readAsDataURL(file);
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        profilePhoto: file,
+      }));
     }
   };
 
@@ -153,6 +149,12 @@ const EditProfileForm = ({ user, onClose }) => {
             onChange={handleFileChange}
             className="hidden"
           />
+          {formData.profilePhoto &&
+            typeof formData.profilePhoto !== 'string' && (
+              <p className="text-sm text-gray-500 text-start">
+                {formData.profilePhoto.name}
+              </p>
+            )}
           <label
             htmlFor="profilePhoto"
             className="flex items-center gap-2 cursor-pointer text-primary-dark hover:text-darker-green">
