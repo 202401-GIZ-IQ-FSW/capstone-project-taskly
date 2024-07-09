@@ -1,3 +1,4 @@
+// client\src\app\account\dashboard\page.jsx
 'use client';
 import { useState, useEffect } from 'react';
 import fetcher from '@/_utils/fetcher';
@@ -12,7 +13,7 @@ function Dashboard() {
       try {
         const data = await fetcher('/v1/dashboard');
         setData(data || []);
-        console.log(data);
+        // console.log(data);
       } catch (err) {
         console.log(err.message);
       }

@@ -1,3 +1,4 @@
+// client\src\app\auth\login\page.jsx
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
@@ -9,7 +10,7 @@ import { FcGoogle } from 'react-icons/fc';
 export default function Login() {
   const { handleSetAccessToken, handleSetRefreshToken } = useUser();
   const [usernameOrEmail, setUsernameOrEmail] = useState('a');
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState('11111aA@');
   const [notificationMessage, setNotificationMessage] = useState('');
   const [notificationType, setNotificationType] = useState('');
 
@@ -130,7 +131,7 @@ export default function Login() {
       </div>
 
       <p className="mt-4 text-gray-600">
-        New user?{' '}
+        New user?
         <Link href="/auth/register" className="text-blue-500 hover:underline">
           Sign up now
         </Link>

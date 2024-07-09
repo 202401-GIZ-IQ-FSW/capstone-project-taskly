@@ -1,3 +1,4 @@
+// client\src\hooks\useTokenRefresh.js
 import { useEffect, useCallback, useState } from 'react';
 
 const useRefreshToken = (
@@ -6,7 +7,7 @@ const useRefreshToken = (
   handleSetRefreshToken
 ) => {
   const [refreshToken, setRefreshToken] = useState(
-    initialRefreshToken || window.localStorage.getItem('refreshToken')
+    initialRefreshToken ||  (typeof window != 'undefined')? window.localStorage.getItem('refreshToken'):''
   );
 
   const refreshAccessToken = useCallback(async () => {

@@ -1,3 +1,4 @@
+// client\src\app\contact\page.jsx
 'use client';
 
 import { useState } from 'react';
@@ -108,7 +109,7 @@ const ContactForm = () => {
               className="mr-2"
             />
             <label>
-              I accept the{' '}
+              I accept the
               <a href="#" className="text-blue-600">
                 Terms of Service
               </a>
@@ -119,7 +120,8 @@ const ContactForm = () => {
             className="w-full p-3 bg-gray-600 text-white rounded hover:bg-gray-700">
             Submit
           </button>
-        </form>      <Notification message={notificationMessage} type={notificationType} />
+        </form>
+        <Notification message={notificationMessage} type={notificationType} />
 
       </div>
     </div>
