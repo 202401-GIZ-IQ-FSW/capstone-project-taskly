@@ -1,4 +1,3 @@
-// client\src\app\account\layout.js
 'use client';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -20,6 +19,8 @@ import {
   FaSearch,
   FaBell,
   FaChevronDown,
+  FaChevronLeft,
+  FaChevronRight,
 } from 'react-icons/fa';
 import { useUser } from '@/hooks/useUser';
 import MobileSidebar from '@/components/Navigation/MobileSidebar/MobileSidebar';
@@ -35,12 +36,7 @@ const ProfileLayout = ({ children }) => {
 
   const { handleLogout, user, loggedIn } = useUser();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  // useEffect(() => {
-  //   if (!loggedIn) {
-  //     router.push('/auth/login');
-  //   }
-  // }, [user]);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const navigation = [
     { name: 'Dashboard', href: '/account/dashboard', icon: FaHome },
@@ -58,14 +54,16 @@ const ProfileLayout = ({ children }) => {
   return (
     <>
       <div>
-
         <MobileSidebar
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
           navigation={navigation}
         />
-
-        <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
+        {/* side bar */}
+        <div
+          className={`hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:flex-col ${
+            sidebarCollapsed ? 'lg:w-20' : 'lg:w-72'
+          }`}>
           <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
             <div className="flex h-16 shrink-0 items-center">
               <Link href="/">
@@ -76,6 +74,13 @@ const ProfileLayout = ({ children }) => {
                 />
               </Link>
             </div>
+            <button
+              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+              className="absolute inset-y-1/2 transform -translate-y-1/2 -right-3 bg-gray-200 hover:bg-gray-300 px-2 py-4 rounded-full shadow-md focus:outline-none flex items-center justify-center">
+              <div>
+                {sidebarCollapsed ? <FaChevronRight /> : <FaChevronLeft />}
+              </div>
+            </button>
             <nav className="flex flex-1 flex-col">
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
                 <li>
@@ -97,7 +102,7 @@ const ProfileLayout = ({ children }) => {
                             }`}
                             aria-hidden="true"
                           />
-                          {item.name}
+                          {!sidebarCollapsed && item.name}
                         </Link>
                       </li>
                     ))}
@@ -111,7 +116,7 @@ const ProfileLayout = ({ children }) => {
                       className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-black"
                       aria-hidden="true"
                     />
-                    Settings
+                    {!sidebarCollapsed && 'Settings'}
                   </Link>
                 </li>
               </ul>
@@ -119,7 +124,8 @@ const ProfileLayout = ({ children }) => {
           </div>
         </div>
 
-        <div className="lg:pl-72">
+        <div className={`${sidebarCollapsed ? 'lg:pl-20' : 'lg:pl-72'}`}>
+          {/* search, notifications and user icon */}
           <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:px-6 lg:px-8">
             <button
               type="button"
@@ -169,8 +175,13 @@ const ProfileLayout = ({ children }) => {
                     <span className="sr-only">Open user menu</span>
                     <img
                       className="h-8 w-8 rounded-full bg-gray-50"
-                      src={user?(user.profilePicture.startsWith('http') ? user.profilePicture : `http://localhost:3001/${user.profilePicture}`):''}
-
+                      src={
+                        user
+                          ? user.profilePicture.startsWith('http')
+                            ? user.profilePicture
+                            : `http://localhost:3001/${user.profilePicture}`
+                          : ''
+                      }
                       alt="profilePicture"
                     />
                     <span className="hidden lg:flex lg:items-center">
@@ -218,7 +229,6 @@ const ProfileLayout = ({ children }) => {
           </main>
         </div>
       </div>
-
       <ToastContainer
         position="top-right"
         autoClose={5000}
