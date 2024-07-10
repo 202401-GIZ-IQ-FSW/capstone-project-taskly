@@ -1,18 +1,22 @@
 'use client';
 
-import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react';
+import {
+  Dialog,
+  DialogPanel,
+  Transition,
+  TransitionChild,
+} from '@headlessui/react';
 import { FaTimes, FaCog } from 'react-icons/fa';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { sidebarNavigation } from '@/data/sidebarNavigation';
 
-const MobileSidebar = ({ sidebarOpen, setSidebarOpen, navigation }) => {
+const MobileSidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const pathname = usePathname();
 
   return (
     <Transition show={sidebarOpen}>
-      <Dialog
-        className="relative z-50 lg:hidden"
-        onClose={setSidebarOpen}>
+      <Dialog className="relative z-50 lg:hidden" onClose={setSidebarOpen}>
         <TransitionChild
           enter="transition-opacity ease-linear duration-300"
           enterFrom="opacity-0"
@@ -61,14 +65,10 @@ const MobileSidebar = ({ sidebarOpen, setSidebarOpen, navigation }) => {
                   />
                 </div>
                 <nav className="flex flex-1 flex-col">
-                  <ul
-                    role="list"
-                    className="flex flex-1 flex-col gap-y-7">
+                  <ul role="list" className="flex flex-1 flex-col gap-y-7">
                     <li>
-                      <ul
-                        role="list"
-                        className="-mx-2 space-y-1">
-                        {navigation.map((item) => (
+                      <ul role="list" className="-mx-2 space-y-1">
+                        {sidebarNavigation.map((item) => (
                           <li key={item.name}>
                             <Link
                               onClick={() => setSidebarOpen(!sidebarOpen)}
