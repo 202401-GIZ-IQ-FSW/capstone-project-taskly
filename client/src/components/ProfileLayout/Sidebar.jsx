@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import { sidebarNavigation } from '@/data/sidebarNavigation';
 import Link from 'next/link';
 import { FaChevronLeft, FaChevronRight, FaCog } from 'react-icons/fa';
-import { sidebarNavigation } from '@/data/sidebarNavigation';
 
 const Sidebar = ({
   pathname,

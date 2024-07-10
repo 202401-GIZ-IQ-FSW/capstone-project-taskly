@@ -1,5 +1,6 @@
 'use client';
 import fetcher from '@/_utils/fetcher';
+import TicketCard from '@/components/Cards/TicketCard';
 import { useProjects } from '@/context/ProjectsContext/ProjectsContext';
 import { useEffect, useState } from 'react';
 
@@ -8,8 +9,6 @@ const Tickets = () => {
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  console.log(selectedProject?._id);
 
   useEffect(() => {
     if (selectedProject) {
@@ -39,18 +38,13 @@ const Tickets = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">
+      <h2 className="text-2xl font-bold mb-4">
         Tickets for {selectedProject?.name}
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {tickets.length > 0 &&
-          tickets?.map((ticket) => (
-            <div
-              key={ticket._id}
-              className="p-4 border rounded shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-              <h3 className="text-lg font-semibold">{ticket.title}</h3>
-              <p className="text-gray-600">{ticket.description}</p>
-            </div>
+          tickets.map((ticket) => (
+            <TicketCard key={ticket._id} ticket={ticket} />
           ))}
       </div>
     </div>
