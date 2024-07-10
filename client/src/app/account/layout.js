@@ -18,19 +18,13 @@ const ProfileLayout = ({ children }) => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const { user, handleLogout } = useUser();
-  const { projects, selectedProject, setSelectedProject, error } =
-    useProjects();
+  const { projects, selectedProject, setSelectedProject } = useProjects();
 
   const userNavigation = [
     { name: 'Home Page', href: '/' },
     { name: 'Your profile', href: '/account' },
     { name: 'Sign out', href: '/', onClick: () => handleLogout() },
   ];
-
-  const handleProjectChange = (e) => {
-    const project = projects.find((p) => p._id === e.target.value);
-    setSelectedProject(project);
-  };
 
   return (
     <>
@@ -42,12 +36,11 @@ const ProfileLayout = ({ children }) => {
         <Sidebar
           userNavigation={userNavigation}
           pathname={pathname}
-          user={user}
           sidebarCollapsed={sidebarCollapsed}
           setSidebarCollapsed={setSidebarCollapsed}
           projects={projects}
           selectedProject={selectedProject}
-          handleProjectChange={handleProjectChange}
+          setSelectedProject={setSelectedProject}
         />
         <div className={`${sidebarCollapsed ? 'lg:pl-20' : 'lg:pl-72'}`}>
           <Topbar

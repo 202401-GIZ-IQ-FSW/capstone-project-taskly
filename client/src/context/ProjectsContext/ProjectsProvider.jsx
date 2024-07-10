@@ -20,6 +20,8 @@ const ProjectsProvider = ({ children }) => {
 
   useEffect(() => {
     fetchProjects();
+    // console.log(projects);
+    // console.log(selectedProject);
   }, []);
 
   return (
