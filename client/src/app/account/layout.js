@@ -1,6 +1,7 @@
+// ProfileLayout.js
 'use client';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import {
   Transition,
@@ -22,19 +23,24 @@ import {
   FaChevronLeft,
   FaChevronRight,
 } from 'react-icons/fa';
+import { MdViewKanban } from 'react-icons/md';
+
 import { useUser } from '@/hooks/useUser';
 import MobileSidebar from '@/components/Navigation/MobileSidebar/MobileSidebar';
 import { useRouter } from 'next/navigation';
 
-//import toastContainer from react-toastify
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useProjects } from '@/context/ProjectsContext/ProjectsContext';
+import ProjectsProvider from '@/context/ProjectsContext/ProjectsProvider';
 
 const ProfileLayout = ({ children }) => {
   const pathname = usePathname();
   const router = useRouter();
 
-  const { handleLogout, user, loggedIn } = useUser();
+  const [selectedProject, setSelectedProject] = useState(null);
+
+  const { handleLogout, user } = useUser();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
@@ -42,6 +48,7 @@ const ProfileLayout = ({ children }) => {
     { name: 'Dashboard', href: '/account/dashboard', icon: FaHome },
     { name: 'Projects', href: '/account/projects', icon: FaFolder },
     { name: 'Tickets', href: '/account/tickets', icon: FaCalendar },
+    { name: 'Kanban', href: '/account/kanban', icon: MdViewKanban },
     { name: 'Analytics', href: '/account/analytics', icon: FaChartPie },
   ];
 
@@ -51,6 +58,8 @@ const ProfileLayout = ({ children }) => {
     { name: 'Sign out', href: '/', onClick: handleLogout },
   ];
 
+  const { projects, error } = useProjects();
+
   return (
     <>
       <div>
@@ -59,7 +68,6 @@ const ProfileLayout = ({ children }) => {
           setSidebarOpen={setSidebarOpen}
           navigation={navigation}
         />
-        {/* side bar */}
         <div
           className={`hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:flex-col ${
             sidebarCollapsed ? 'lg:w-20' : 'lg:w-72'
@@ -73,6 +81,32 @@ const ProfileLayout = ({ children }) => {
                   alt="Your Company"
                 />
               </Link>
+            </div>
+            <div className="mt-4">
+              <label
+                htmlFor="projectSelect"
+                className="mr-2 w-auto min-w-32 hidden">
+                Choose project:
+              </label>
+              <select
+                id="projectSelect"
+                value={selectedProject ? selectedProject._id : ''}
+                onChange={(e) => {
+                  const project = projects.find(
+                    (p) => p._id === e.target.value
+                  );
+                  setSelectedProject(project);
+                }}
+                className="p-2 border rounded min-w-52">
+                <option value="" hidden>
+                  Select a project
+                </option>
+                {projects.map((project) => (
+                  <option key={project._id} value={project._id}>
+                    {project.name}
+                  </option>
+                ))}
+              </select>
             </div>
             <button
               onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
@@ -125,7 +159,6 @@ const ProfileLayout = ({ children }) => {
         </div>
 
         <div className={`${sidebarCollapsed ? 'lg:pl-20' : 'lg:pl-72'}`}>
-          {/* search, notifications and user icon */}
           <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:px-6 lg:px-8">
             <button
               type="button"
@@ -175,20 +208,14 @@ const ProfileLayout = ({ children }) => {
                     <span className="sr-only">Open user menu</span>
                     <img
                       className="h-8 w-8 rounded-full bg-gray-50"
-                      src={
-                        user
-                          ? user.profilePicture.startsWith('http')
-                            ? user.profilePicture
-                            : `http://localhost:3001/${user.profilePicture}`
-                          : ''
-                      }
-                      alt="profilePicture"
+                      src={user?.avatar}
+                      alt=""
                     />
                     <span className="hidden lg:flex lg:items-center">
                       <span
                         className="ml-4 text-sm font-semibold leading-6 text-gray-900"
                         aria-hidden="true">
-                        {user?.firstName}
+                        {user?.name}
                       </span>
                       <FaChevronDown
                         className="ml-2 h-5 w-5 text-gray-400"
@@ -197,22 +224,23 @@ const ProfileLayout = ({ children }) => {
                     </span>
                   </MenuButton>
                   <Transition
+                    as={React.Fragment}
                     enter="transition ease-out duration-100"
                     enterFrom="transform opacity-0 scale-95"
                     enterTo="transform opacity-100 scale-100"
                     leave="transition ease-in duration-75"
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95">
-                    <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <MenuItems className="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       {userNavigation.map((item) => (
                         <MenuItem key={item.name}>
                           {({ active }) => (
                             <Link
                               href={item.href}
+                              onClick={item.onClick}
                               className={`block px-4 py-2 text-sm ${
                                 active ? 'bg-gray-100' : ''
-                              } text-gray-700`}
-                              onClick={item.onClick}>
+                              }`}>
                               {item.name}
                             </Link>
                           )}
@@ -224,23 +252,10 @@ const ProfileLayout = ({ children }) => {
               </div>
             </div>
           </div>
-          <main className="py-10">
-            <div className="px-4 sm:px-6 lg:px-8">{children}</div>
-          </main>
+          <main className="p-4 sm:p-6 lg:p-8">{children}</main>
         </div>
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
+      <ToastContainer />
     </>
   );
 };
