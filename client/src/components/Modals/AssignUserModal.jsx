@@ -18,9 +18,9 @@ const AssignUserModal = ({ handleAssignUser, onClose }) => {
 
   const handleSubmit = async () => {
     try {
+      setIsModalOpen(false); // Also close the modal
       await handleAssignUser(assigneeIdOrUsernameOrEmail);
       onClose(); // Close the modal after successful assignment
-      setIsModalOpen(false); // Also close the modal
     } catch (error) {
       console.error('Error assigning user:', error);
       // Handle error state or display error message

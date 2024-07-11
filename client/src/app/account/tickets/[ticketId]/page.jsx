@@ -1,11 +1,14 @@
 'use client';
+import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import fetcher from '@/_utils/fetcher';
 import AssigneeList from '@/components/AssigneeList/AssigneeList';
 import CommentList from '@/components/CommentsList/CommentsList';
 import PriorityDropdown from '@/components/Dropdowns/PriorityDropdown';
 import ProgressDropdown from '@/components/Dropdowns/ProgressDropdown';
 import { useProjects } from '@/context/ProjectsContext/ProjectsContext';
-import { useEffect, useState } from 'react';
+import SuccessAlert from '@/components/Alerts/SuccessAlert';
+import WarnAlert from '@/components/Alerts/WarnAlert';
 
 const TicketDetail = ({ params }) => {
   const { ticketId } = params;
@@ -59,8 +62,12 @@ const TicketDetail = ({ params }) => {
         }
       );
       setTicket(updatedTicket);
+
+      // Show success message
+      SuccessAlert('Ticket status updated successfully');
     } catch (err) {
       setError(err.message);
+      WarnAlert(`Error updating ticket status: ${err.message}`);
     }
   };
 
@@ -74,8 +81,12 @@ const TicketDetail = ({ params }) => {
         }
       );
       setTicket(updatedTicket);
+
+      // Show success message
+      SuccessAlert('Ticket priority updated successfully');
     } catch (err) {
       setError(err.message);
+      WarnAlert(`Error updating ticket priority: ${err.message}`);
     }
   };
 
@@ -98,8 +109,12 @@ const TicketDetail = ({ params }) => {
         }
       );
       setAssignees(updatedTicket.assignees);
+
+      // Show success message
+      SuccessAlert('User assigned successfully');
     } catch (err) {
       setError(err.message);
+      WarnAlert(`Error assigning user: ${err.message}`);
     }
   };
 
@@ -113,17 +128,17 @@ const TicketDetail = ({ params }) => {
         }
       );
       setAssignees(updatedTicket.assignees);
+
+      // Show success message
+      SuccessAlert('User unassigned successfully');
     } catch (err) {
       setError(err.message);
+      WarnAlert(`Error unassigning user: ${err.message}`);
     }
   };
 
   if (loading) {
     return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
   }
 
   return (
