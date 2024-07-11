@@ -132,8 +132,8 @@ const TicketDetail = ({ params }) => {
   return (
     <div className="p-4 bg-white flex">
       <div className="w-3/4 pr-4">
-        <h2 className="text-2xl font-bold mb-2">{ticket.title}</h2>
-        <p className="text-gray-600 mb-4 line-clamp-2">{ticket.description}</p>
+        <h2 className="text-2xl font-bold mb-2">{ticket?.title}</h2>
+        <p className="text-gray-600 mb-4 line-clamp-2">{ticket?.description}</p>
         <CommentList
           selectedProject={selectedProject}
           ticketId={ticketId}

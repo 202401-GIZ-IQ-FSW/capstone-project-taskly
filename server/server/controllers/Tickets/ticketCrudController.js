@@ -85,10 +85,7 @@ const updateTicket = async (req, res) => {
       // const text = `Dear user,\n\nYour ticket with ID ${ticketId} is now ${updatedTicket.status}.\n\nThank you,\nSupport Team`;
 
       // await sendEmails(userEmail, subject, text);
-      res.status(200).json({
-        message: 'Ticket updated successfully',
-        ticket: updatedTicket,
-      });
+      res.status(200).json(updatedTicket);
     } else {
       res.status(404).json({ message: 'Ticket not found' });
     }

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import fetcher from '@/_utils/fetcher';
 import CommentCard from '../Cards/CommentCard';
+import Button from '../Button/Button';
 
 const CommentList = ({ selectedProject, ticketId, comments, setComments }) => {
   const [newComment, setNewComment] = useState('');
@@ -40,12 +41,9 @@ const CommentList = ({ selectedProject, ticketId, comments, setComments }) => {
           onChange={(e) => setNewComment(e.target.value)}
           className="w-full border rounded-md p-2"
           placeholder="Add a comment"
-          rows="4"></textarea>
-        <button
-          onClick={handleAddComment}
-          className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md">
-          Submit
-        </button>
+          rows="4"
+          required></textarea>
+        <Button onClick={handleAddComment}>Submit</Button>
       </div>
     </div>
   );
