@@ -1,5 +1,7 @@
 import Image from 'next/image';
+import { useState } from 'react';
 import Button from '../Button/Button';
+import AssignUserModal from '../Modals/AssignUserModal';
 
 const AssigneeList = ({ assignees, handleUnassignUser, handleAssignUser }) => {
   return (
@@ -23,11 +25,7 @@ const AssigneeList = ({ assignees, handleUnassignUser, handleAssignUser }) => {
             </button>
           </div>
         ))}
-        <Button
-          onClick={handleAssignUser}
-          className="mt-4 font-semibold self-start">
-          + Assign
-        </Button>
+        <AssignUserModal handleAssignUser={handleAssignUser} />
       </div>
     </div>
   );

@@ -79,13 +79,22 @@ const TicketDetail = ({ params }) => {
     }
   };
 
-  const handleAssignUser = async (assigneeId) => {
+  const handleAssignUser = async (assigneeIdOrUsernameOrEmail) => {
     try {
+      let bodyData = {};
+      if (assigneeIdOrUsernameOrEmail.includes('@')) {
+        bodyData.assigneeEmail = assigneeIdOrUsernameOrEmail;
+      } else if (isNaN(assigneeIdOrUsernameOrEmail)) {
+        bodyData.assigneeUsername = assigneeIdOrUsernameOrEmail;
+      } else {
+        bodyData.assigneeId = assigneeIdOrUsernameOrEmail;
+      }
+
       const updatedTicket = await fetcher(
         `/v1/projects/${selectedProject._id}/tickets/${ticketId}/assign`,
         {
           method: 'POST',
-          body: JSON.stringify({ assigneeId }),
+          body: JSON.stringify(bodyData),
         }
       );
       setAssignees(updatedTicket.assignees);
