@@ -56,9 +56,6 @@ const TicketDetail = ({ params }) => {
         {
           method: 'PUT',
           body: JSON.stringify({ status: newStatus }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
         }
       );
       setTicket(updatedTicket);
@@ -74,9 +71,6 @@ const TicketDetail = ({ params }) => {
         {
           method: 'PUT',
           body: JSON.stringify({ priority: newPriority }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
         }
       );
       setTicket(updatedTicket);
@@ -92,9 +86,6 @@ const TicketDetail = ({ params }) => {
         {
           method: 'POST',
           body: JSON.stringify({ assigneeId }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
         }
       );
       setAssignees(updatedTicket.assignees);
@@ -110,9 +101,6 @@ const TicketDetail = ({ params }) => {
         {
           method: 'POST',
           body: JSON.stringify({ assigneeId }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
         }
       );
       setAssignees(updatedTicket.assignees);

@@ -1,10 +1,11 @@
 import Image from 'next/image';
+import Button from '../Button/Button';
 
 const AssigneeList = ({ assignees, handleUnassignUser, handleAssignUser }) => {
   return (
     <div className="mb-2">
       <label className="font-semibold">Assigned</label>
-      <div className="flex items-center mt-2">
+      <div className="flex flex-col items-center mt-2">
         {assignees.map((user, index) => (
           <div key={index} className="flex items-center space-x-2">
             <Image
@@ -22,11 +23,11 @@ const AssigneeList = ({ assignees, handleUnassignUser, handleAssignUser }) => {
             </button>
           </div>
         ))}
-        <button
+        <Button
           onClick={handleAssignUser}
-          className="text-blue-500 font-semibold">
+          className="mt-4 font-semibold self-start">
           + Assign
-        </button>
+        </Button>
       </div>
     </div>
   );
