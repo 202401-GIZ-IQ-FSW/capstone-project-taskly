@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import fetcher from '@/_utils/fetcher';
+import CommentCard from '../Cards/CommentCard';
 
 const CommentList = ({ selectedProject, ticketId, comments, setComments }) => {
   const [newComment, setNewComment] = useState('');
@@ -30,12 +31,7 @@ const CommentList = ({ selectedProject, ticketId, comments, setComments }) => {
       <h3 className="text-lg font-semibold mb-2">Comments</h3>
       <div className="space-y-4">
         {comments.map((comment, index) => (
-          <div key={index} className="border p-2 rounded-md bg-gray-50">
-            <p className="text-gray-800">{comment.content}</p>
-            <p className="text-gray-500 text-sm">
-              {new Date(comment.createdAt).toLocaleString()}
-            </p>
-          </div>
+          <CommentCard key={index} comment={comment} />
         ))}
       </div>
       <div className="mt-4">
