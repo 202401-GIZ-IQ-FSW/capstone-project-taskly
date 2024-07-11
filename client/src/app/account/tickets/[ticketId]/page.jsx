@@ -1,10 +1,11 @@
 'use client';
-
 import fetcher from '@/_utils/fetcher';
+import AssigneeList from '@/components/AssigneeList/AssigneeList';
+import CommentList from '@/components/CommentsList/CommentsList';
+import PriorityDropdown from '@/components/Dropdowns/PriorityDropdown';
+import ProgressDropdown from '@/components/Dropdowns/ProgressDropdown';
 import { useProjects } from '@/context/ProjectsContext/ProjectsContext';
 import { useEffect, useState } from 'react';
-import clsx from 'clsx';
-import Image from 'next/image';
 
 const TicketDetail = ({ params }) => {
   const { ticketId } = params;
@@ -12,7 +13,6 @@ const TicketDetail = ({ params }) => {
   const [ticket, setTicket] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [newComment, setNewComment] = useState('');
   const [comments, setComments] = useState([]);
   const [assignees, setAssignees] = useState([]);
 
@@ -49,34 +49,76 @@ const TicketDetail = ({ params }) => {
     }
   };
 
-  const handleAddComment = async () => {
-    if (newComment.trim() === '') return;
-
+  const handleStatusChange = async (newStatus) => {
     try {
-      const data = await fetcher(
-        `/v1/projects/${selectedProject._id}/tickets/${ticketId}/comments`,
+      const updatedTicket = await fetcher(
+        `/v1/projects/${selectedProject._id}/tickets/${ticketId}`,
         {
-          method: 'POST',
-          body: JSON.stringify({ content: newComment }),
+          method: 'PUT',
+          body: JSON.stringify({ status: newStatus }),
           headers: {
             'Content-Type': 'application/json',
           },
         }
       );
-      setComments([...comments, data]);
-      setNewComment('');
+      setTicket(updatedTicket);
     } catch (err) {
       setError(err.message);
     }
   };
 
-  const handleStatusChange = async (e) => {
-    const newStatus = e.target.value;
-    setTicket({ ...ticket, status: newStatus });
+  const handlePriorityChange = async (newPriority) => {
+    try {
+      const updatedTicket = await fetcher(
+        `/v1/projects/${selectedProject._id}/tickets/${ticketId}`,
+        {
+          method: 'PUT',
+          body: JSON.stringify({ priority: newPriority }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      setTicket(updatedTicket);
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
-  const handleAssignUser = async () => {
-    // Handle assign user logic here
+  const handleAssignUser = async (assigneeId) => {
+    try {
+      const updatedTicket = await fetcher(
+        `/v1/projects/${selectedProject._id}/tickets/${ticketId}/assign`,
+        {
+          method: 'POST',
+          body: JSON.stringify({ assigneeId }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      setAssignees(updatedTicket.assignees);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleUnassignUser = async (assigneeId) => {
+    try {
+      const updatedTicket = await fetcher(
+        `/v1/projects/${selectedProject._id}/tickets/${ticketId}/unassign`,
+        {
+          method: 'POST',
+          body: JSON.stringify({ assigneeId }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      setAssignees(updatedTicket.assignees);
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   if (loading) {
@@ -88,69 +130,32 @@ const TicketDetail = ({ params }) => {
   }
 
   return (
-    <div className="p-4 border rounded-lg shadow-lg bg-white flex">
-      <div className="w-2/3 pr-4">
+    <div className="p-4 bg-white flex">
+      <div className="w-3/4 pr-4">
         <h2 className="text-2xl font-bold mb-2">{ticket.title}</h2>
         <p className="text-gray-600 mb-4 line-clamp-2">{ticket.description}</p>
-        <div className="mt-6">
-          <h3 className="text-lg font-semibold mb-2">Comments</h3>
-          <div className="space-y-4">
-            {comments.map((comment, index) => (
-              <div key={index} className="border p-2 rounded-md bg-gray-50">
-                <p className="text-gray-800">{comment.content}</p>
-                <p className="text-gray-500 text-sm">
-                  {new Date(comment.createdAt).toLocaleString()}
-                </p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-4">
-            <textarea
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              className="w-full border rounded-md p-2"
-              placeholder="Add a comment"
-              rows="4"></textarea>
-            <button
-              onClick={handleAddComment}
-              className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md">
-              Submit
-            </button>
-          </div>
-        </div>
+        <CommentList
+          selectedProject={selectedProject}
+          ticketId={ticketId}
+          comments={comments}
+          setComments={setComments}
+        />
       </div>
-      <div className="w-1/3 pl-4 border-l">
-        <div className="flex flex-col items-start">
-          <label className="font-semibold mb-2">Progress</label>
-          <select
-            value={ticket.status}
-            onChange={handleStatusChange}
-            className="mb-4 px-2 py-1 border rounded-md">
-            <option value="open">Open</option>
-            <option value="in progress">In Progress</option>
-            <option value="resolved">Resolved</option>
-            <option value="closed">Closed</option>
-          </select>
-          <div className="mb-2">
-            <label className="font-semibold">Assigned</label>
-            <div className="flex items-center mt-2">
-              {assignees.map((user, index) => (
-                <Image
-                  key={index}
-                  src={user.avatar || '/default-avatar.png'}
-                  alt={user.name}
-                  width={32}
-                  height={32}
-                  className="rounded-full mr-2"
-                />
-              ))}
-              <button
-                onClick={handleAssignUser}
-                className="text-blue-500 font-semibold">
-                + Assign
-              </button>
-            </div>
-          </div>
+      <div className="w-1/4 pl-4 border-l h-screen">
+        <div className="flex flex-col items-start gap-7">
+          <ProgressDropdown
+            currentStatus={ticket.status}
+            onChangeStatus={handleStatusChange}
+          />
+          <PriorityDropdown
+            currentPriority={ticket.priority}
+            onChangePriority={handlePriorityChange}
+          />
+          <AssigneeList
+            assignees={assignees}
+            handleUnassignUser={handleUnassignUser}
+            handleAssignUser={handleAssignUser}
+          />
         </div>
       </div>
     </div>
