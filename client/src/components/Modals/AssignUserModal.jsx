@@ -11,16 +11,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Button from '../Button/Button';
 
-const AssignUserModal = ({ handleAssignUser, onClose }) => {
+const AssignUserModal = ({ handleAssignUser }) => {
   const [assigneeIdOrUsernameOrEmail, setAssigneeIdOrUsernameOrEmail] =
     useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSubmit = async () => {
     try {
-      setIsModalOpen(false); // Also close the modal
       await handleAssignUser(assigneeIdOrUsernameOrEmail);
-      onClose(); // Close the modal after successful assignment
     } catch (error) {
       console.error('Error assigning user:', error);
       // Handle error state or display error message
@@ -29,13 +26,9 @@ const AssignUserModal = ({ handleAssignUser, onClose }) => {
 
   return (
     <>
-      <Dialog open={isModalOpen}>
+      <Dialog>
         <DialogTrigger asChild>
-          <Button
-            onClick={() => setIsModalOpen(true)} // Open modal when clicked
-            className="mt-4 font-semibold self-start">
-            + Assign
-          </Button>
+          <Button className="mt-4 font-semibold self-start">+ Assign</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>

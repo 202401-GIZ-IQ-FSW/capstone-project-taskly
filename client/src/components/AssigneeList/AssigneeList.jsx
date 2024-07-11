@@ -1,6 +1,4 @@
 import Image from 'next/image';
-import { useState } from 'react';
-import Button from '../Button/Button';
 import AssignUserModal from '../Modals/AssignUserModal';
 
 const AssigneeList = ({ assignees, handleUnassignUser, handleAssignUser }) => {
