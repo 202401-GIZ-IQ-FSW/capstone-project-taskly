@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const passport = require('passport');
+const os = require('os');
 
 require('dotenv').config();
 
@@ -51,16 +52,27 @@ app.use(verifyJWT); // everything below this line will use verifyJWT
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/projects', projectRoutes);
 app.use('/api/v1/projects', ticketRoutes);
-app.use(
-  '/api/v1/projects',
-  commentsRouter
-);
+app.use('/api/v1/projects', commentsRouter);
 app.use('/api/v1/dashboard', dashboardRoutes);
 
+// Function to get the local network IP address
+function getLocalIpAddress() {
+  const interfaces = os.networkInterfaces();
+  for (let name of Object.keys(interfaces)) {
+    for (let iface of interfaces[name]) {
+      if (iface.family === 'IPv4' && !iface.internal) {
+        return iface.address;
+      }
+    }
+  }
+  return 'localhost';
+}
 app.listen(port, () => {
+  const localIpAddress = getLocalIpAddress();
+  const serverUrl = `http://${localIpAddress}:${port}`;
   // this line for dev, uncomment it if you want to log all working routes
   printAllRoutes(app);
-  console.log(`Server listening on port ${port}`);
+  console.log(`Server listening at ${serverUrl}`);
   connectToMongo();
 });
 

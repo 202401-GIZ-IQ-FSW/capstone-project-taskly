@@ -1,7 +1,15 @@
 // a function to print all the app routes in the console
+// server\server\util\devHelpers.js
 const printAllRoutes = (app) => {
   const visitedRoutes = new Set();
-
+  function test(val) {
+    val == 'GET' || val == 'PUT'
+      ? (val = val + '   ')
+      : val == 'POST'
+      ? (val = val + '  ')
+      : '';
+    return val;
+  }
   function print(path, layer) {
     if (layer.route) {
       layer.route.stack.forEach(
@@ -12,7 +20,7 @@ const printAllRoutes = (app) => {
         print.bind(null, path.concat(split(layer.regexp)))
       );
     } else if (layer.method) {
-      const routeKey = `${layer.method.toUpperCase()} /${path
+      const routeKey = `${test(layer.method.toUpperCase())} /${path
         .concat(split(layer.regexp))
         .filter(Boolean)
         .join('/')}`;
