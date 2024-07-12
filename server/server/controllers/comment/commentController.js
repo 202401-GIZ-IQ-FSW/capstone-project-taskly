@@ -14,13 +14,22 @@ const createComment = async (req, res) => {
       return res.status(401).json({ message: 'ticket not found' });
     }
 
-    const newComment = await CommentModel.create({
+    let newComment = await CommentModel.create({
       ticketId: ticketId,
       commentedBy: userId,
       content,
     });
+    newComment = await CommentModel.findById(newComment._id)
+    .populate('commentedBy', ['profilePicture', 'username']);
 
-    res.status(201).json(newComment);
+    res.status(201).json({
+      _id: newComment._id,
+      ticketId: newComment.ticketId,
+      commentedBy: { _id: userId, username: newComment.commentedBy.username,profilePicture:newComment.commentedBy.profilePicture },
+      content: newComment.content,
+      createdAt: newComment.createdAt,
+      updatedAt: newComment.updatedAt,
+    });
   } catch (error) {
     res.status(500).json({
       error: 'An error occurred while creating the ticket',
@@ -40,7 +49,7 @@ const getAllComments = async (req, res) => {
     }
 
     const comments = await CommentModel.find({ ticketId })
-      .populate('commentedBy', 'username') // populate commentedBy field with username
+    .populate('commentedBy', ['profilePicture', 'username'])    // populate commentedBy field with username
       .populate({
         path: 'replies.userId',
         select: 'username', // populate userId field with username in replies

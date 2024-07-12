@@ -33,7 +33,10 @@ const getAllProjects = async (req, res) => {
     }
 
     // Find projects owned by the user
-    const projects = await ProjectModel.find({ ownderId: userId });
+    const projects = await ProjectModel.find({ ownderId: userId }).populate(
+      'ownerId',
+      'username'
+    );;
     res.json(projects);
   } catch (error) {
     res.status(500).json({ error: 'An error occurred while getting the projects', message: error.message });
