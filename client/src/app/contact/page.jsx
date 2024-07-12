@@ -62,12 +62,13 @@ const ContactForm = () => {
               Hey! We are looking forward to start a project with you!
             </p>
             <p className="mb-4 text-gray-600">
-              Etiam sit amet convallis erat - class aptent taciti sociosqu ad
-              litora torquent per conubia! Maecenas gravida lacus. Lorem etiam
-              sit litora torquent per conubia! Maecenas gravida lacus. Lorem
-              etiam sit litora torquent per conubia! Maecenas gravida lacus.
-              Lorem etiam sit litora torquent per conubia! Maecenas gravida
-              lacus. Lorem etiam sit amet convallis erat.
+              Feel free to reach out to us anytime - we're here to assist you!
+              You can visit our office, call us, or send us an email. We value
+              your feedback and inquiries, and our team is dedicated to
+              providing the best support possible. Whether you have questions,
+              need help, or just want to give us your thoughts, we're all ears
+              and ready to respond promptly. Our priority is to ensure you have
+              a great experience with our services.
             </p>
             <div className="flex space-x-4">
               <a
@@ -183,8 +184,12 @@ const ContactForm = () => {
               <h5 className="font-roboto text-custom-black font-medium text-lg">
                 Address
               </h5>
-              <p className="text-custom-teal mb-2 text-xs">Oakland Jack London</p>
-              <p className="text-custom-teal text-xs">245 2nd St, Oakland, CA 94607</p>
+              <p className="text-custom-teal mb-2 text-xs">
+                Oakland Jack London
+              </p>
+              <p className="text-custom-teal text-xs">
+                245 2nd St, Oakland, CA 94607
+              </p>
             </div>
             <div className="flex flex-col">
               <div className="flex flex-col mb-2">
