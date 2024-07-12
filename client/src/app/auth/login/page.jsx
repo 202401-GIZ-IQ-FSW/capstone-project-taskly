@@ -1,3 +1,4 @@
+// client\src\app\auth\login\page.jsx
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
@@ -13,8 +14,8 @@ const Scene = dynamic(() => import('@/components/Robot/Scene/Scene'), {
 
 export default function Login() {
   const { handleSetAccessToken, handleSetRefreshToken } = useUser();
-  const [usernameOrEmail, setUsernameOrEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [usernameOrEmail, setUsernameOrEmail] = useState('a');
+  const [password, setPassword] = useState('11111aA@');
   const [notificationMessage, setNotificationMessage] = useState('');
   const [notificationType, setNotificationType] = useState('');
 
