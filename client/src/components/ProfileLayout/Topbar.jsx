@@ -8,6 +8,7 @@ import {
 } from '@headlessui/react';
 import { FaBars, FaSearch, FaBell, FaChevronDown } from 'react-icons/fa';
 import Link from 'next/link';
+import SearchComponent from '../SearchTicket/search';
 
 const Topbar = ({ user, setSidebarOpen, userNavigation }) => {
   return (
@@ -37,6 +38,7 @@ const Topbar = ({ user, setSidebarOpen, userNavigation }) => {
             name="search"
           />
         </form>
+        <SearchComponent />
         <div className="flex items-center gap-x-4 lg:gap-x-6">
           <button
             type="button"
