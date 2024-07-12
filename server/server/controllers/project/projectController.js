@@ -95,17 +95,19 @@ const deleteProject = async (req, res) => {
 // - GET /api/v1/projects/{projectId}/tickets/search?q={query} - Search tickets within a project
 const searchTicket = async (req, res) => {
   try {
-    const query = req.query.q;
+    const projectId = req.params.projectId;
+    const query = req.query.query;
+
     if (!query) {
-      return res.status(400).json({ message: 'Query parameter q is required' });
+      return res.status(400).json({ message: 'Query parameter is required' });
     }
 
-    const regex = new RegExp(query, 'i');  
+    const regex = new RegExp(query, 'i');
     const result = await TicketModel.find({
+      projectId: projectId,
       $or: [
-        { name: regex },
-        { description: regex },  
-      ],
+        { title: regex },
+       ]
     });
 
     if (result.length === 0) {
