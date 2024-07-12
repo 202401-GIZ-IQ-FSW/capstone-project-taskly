@@ -3,37 +3,46 @@ const User = require('../../models/UserModel');
 const Project = require('../../models/ProjectModel');
 
 
-exports.getNewTickets = async (req, res)=> {
+exports.getAllTickets = async (req, res) => {
     try {
-        const newTickets = await Ticket.find({ createdAt: { $gte: new Date(Date.now() - 24*60*60*1000) } }); // get the latest tickets
-        res.json(newTickets);
+        const tickets = await Ticket.find();
+        res.json(tickets);
     } catch (error) {
         res.status(500).send(error.message);
     }
 };
 
-exports.getNewUsers = async (req, res) => {
+exports.getAllUsers = async (req, res) => {
     try {
-        const newUsers = await User.find({ createdAt: { $gte: new Date(Date.now() - 24*60*60*1000) } });
-        res.json(newUsers);
+        const users = await User.find();
+        res.json(users);
     } catch (error) {
         res.status(500).send(error.message);
     }
 };
 
-exports.getNewProjects = async (req, res) => {
+exports.getAllProjects = async (req, res) => {
     try {
-        const newProjects = await Project.find({ createdAt: { $gte: new Date(Date.now() - 24*60*60*1000) } });
-        res.json(newProjects);
+        const projects = await Project.find();
+        res.json(projects);
     } catch (error) {
         res.status(500).send(error.message);
     }
-};
+}
 
 exports.getResolvedTickets = async (req, res) => {
     try {
-        const resolvedTickets = await Ticket.find({ status: 'resolved', updatedAt: { $gte: new Date(Date.now() - 24*60*60*1000) } });
+        const resolvedTickets = await Ticket.find({ status: 'resolved' });
         res.json(resolvedTickets);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+};
+
+exports.getOpenedTickets = async (req, res) => {
+    try {
+        const openedTickets = await Ticket.find({ status: 'open' });
+        res.json(openedTickets);
     } catch (error) {
         res.status(500).send(error.message);
     }
