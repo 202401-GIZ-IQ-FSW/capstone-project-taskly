@@ -1,4 +1,3 @@
-// client\src\app\auth\login\page.jsx
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
@@ -6,16 +5,11 @@ import fetcher from '@/_utils/fetcher';
 import Notification from '@/components/Notification';
 import { useUser } from '@/hooks/useUser';
 import { FcGoogle } from 'react-icons/fc';
-import dynamic from 'next/dynamic';
-
-const Scene = dynamic(() => import('@/components/Robot/Scene/Scene'), {
-  ssr: false,
-});
 
 export default function Login() {
   const { handleSetAccessToken, handleSetRefreshToken } = useUser();
-  const [usernameOrEmail, setUsernameOrEmail] = useState('a');
-  const [password, setPassword] = useState('11111aA@');
+  const [usernameOrEmail, setUsernameOrEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [notificationMessage, setNotificationMessage] = useState('');
   const [notificationType, setNotificationType] = useState('');
 
@@ -64,21 +58,20 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex gap-2 mx-auto items-center justify-center bg-gradient-to-r from-gray-950 to-gray-800 relative">
-      <div>
-        <Scene />
-      </div>
-
-      <div className="flex max-w-4xl p-10 text-center bg-white bg-opacity-5 rounded-lg shadow-lg backdrop-filter backdrop-blur-lg">
-        <div>
-          <h1 className="text-4xl font-bold mb-2 text-white">Taskly</h1>
-          <p className="mb-10 text-gray-200 font-light text-sm">
-            Sign in to manage your support tickets
+    <div className="min-h-screen flex items-center justify-center relative">
+      <div className="flex flex-col md:flex-row max-w-4xl w-full bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="flex-1 bg-teal-500 p-8 flex flex-col justify-center items-center text-white rounded-tl-lg rounded-bl-lg md:rounded-bl-none md:rounded-tr-lg">
+          <h2 className="text-3xl md:text-4xl font-bold mb-2">WELCOME BACK!</h2>
+          <p className="mb-6 text-sm md:text-base">
+            Lorem ipsum dolor sit amet consectetur adipisicing.
           </p>
+        </div>
+        <div className="flex-1 p-8">
+          <h1 className="text-2xl font-bold mb-6 text-teal-700">Login</h1>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="text-start">
               <label
-                className="text-sm font-normal text-white"
+                className="text-sm font-normal text-teal-700"
                 htmlFor="usernameOrEmail">
                 Username or Email
               </label>
@@ -88,12 +81,12 @@ export default function Login() {
                 value={usernameOrEmail}
                 onChange={(e) => setUsernameOrEmail(e.target.value)}
                 required
-                className="w-full px-3 py-2 rounded bg-white bg-opacity-50 text-gray-200 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="w-full px-3 py-2 rounded bg-gray-100 text-gray-800 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-teal-500"
               />
             </div>
             <div className="text-start">
               <label
-                className="text-sm font-normal text-white"
+                className="text-sm font-normal text-teal-700"
                 htmlFor="password">
                 Password
               </label>
@@ -103,10 +96,10 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-3 py-2 rounded bg-white bg-opacity-50 text-gray-200 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="w-full px-3 py-2 rounded bg-gray-100 text-gray-800 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-teal-500"
               />
             </div>
-            <div className="flex items-center justify-between text-sm text-gray-200">
+            <div className="flex items-center justify-between text-sm text-teal-700">
               <label className="flex items-center">
                 <input
                   type="checkbox"
@@ -118,22 +111,19 @@ export default function Login() {
               </label>
               <Link
                 href="/forgot-password"
-                className="text-blue-300 hover:underline">
+                className="text-teal-500 hover:underline">
                 Forgot your password?
               </Link>
             </div>
             <button
               type="submit"
-              className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+              className="w-full py-2 bg-teal-500 text-white rounded hover:bg-teal-600">
               Sign In
             </button>
-
-            <div className="flex items-center my-4">
-              <div className="flex-grow border-t border-gray-300"></div>
-              <span className="mx-4 text-gray-200">or</span>
-              <div className="flex-grow border-t border-gray-300"></div>
-            </div>
           </form>
+
+          <hr className="my-4 border-gray-300 border-t-2 border-solid rounded-full w-1/2 mx-auto" />
+
           <div className="flex justify-center space-x-4 mt-6">
             <button
               onClick={() => {
@@ -146,18 +136,18 @@ export default function Login() {
             </button>
           </div>
 
-          <p className="mt-4 text-gray-200">
-            Don't have account?{' '}
+          <p className="mt-4 text-teal-700">
+            Don't have an account?{' '}
             <Link
               href="/auth/register"
-              className="text-blue-300 hover:underline">
+              className="text-teal-500 hover:underline">
               Sign up now
             </Link>
           </p>
-
-          <Notification message={notificationMessage} type={notificationType} />
         </div>
       </div>
+
+      <Notification message={notificationMessage} type={notificationType} />
     </div>
   );
 }
