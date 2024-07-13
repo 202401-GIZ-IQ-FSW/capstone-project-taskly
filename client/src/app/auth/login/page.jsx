@@ -5,11 +5,6 @@ import fetcher from '@/_utils/fetcher';
 import Notification from '@/components/Notification';
 import { useUser } from '@/hooks/useUser';
 import { FcGoogle } from 'react-icons/fc';
-import dynamic from 'next/dynamic';
-
-const Scene = dynamic(() => import('@/components/Robot/Scene/Scene'), {
-  ssr: false,
-});
 
 export default function Login() {
   const { handleSetAccessToken, handleSetRefreshToken } = useUser();
@@ -64,9 +59,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex gap-2 mx-auto items-center justify-center bg-gradient-to-r from-gray-950 to-gray-800 relative">
-      <div>
-        <Scene />
-      </div>
+     
 
       <div className="flex max-w-4xl p-10 text-center bg-white bg-opacity-5 rounded-lg shadow-lg backdrop-filter backdrop-blur-lg">
         <div>
