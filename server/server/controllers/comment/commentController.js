@@ -40,12 +40,14 @@ const getAllComments = async (req, res) => {
     }
 
     const comments = await CommentModel.find({ ticketId })
-      .populate('commentedBy', 'username') // populate commentedBy field with username
+      .populate({
+        path: 'commentedBy',
+        select: 'username profilePicture',
+      }) // populate commentedBy field with username
       .populate({
         path: 'replies.userId',
-        select: 'username', // populate userId field with username in replies
+        select: 'username',
       });
-
     res.status(200).json(comments);
   } catch (error) {
     res.status(500).json({
