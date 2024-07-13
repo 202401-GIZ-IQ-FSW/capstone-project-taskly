@@ -55,6 +55,7 @@ app.use('/api/v1/projects', projectRoutes);
 app.use('/api/v1/projects', ticketRoutes);
 app.use('/api/v1/projects', commentsRouter);
 app.use('/api/v1/dashboard', dashboardRoutes);
+app.use('/api/v1/reports', reportRoute);
 
 // Function to get the local network IP address
 function getLocalIpAddress() {
