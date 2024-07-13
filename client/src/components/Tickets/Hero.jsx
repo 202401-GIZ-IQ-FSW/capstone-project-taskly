@@ -31,7 +31,7 @@ const Hero = () => {
         <div className="relative max-w-sm sm:max-w-lg mx-auto xl:max-w-2xl">
           <img
             className="aspect-[3/2] w-full bg-gray-50 object-cover self-center mb-16"
-            src="/task-hero.png"
+            src="/assets/task-hero.png"
             alt="Ticket Management App"
           />
         </div>

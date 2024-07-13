@@ -6,16 +6,16 @@ const TicketStats = ({ activity, submitted, resolved, supportText }) => (
       <p>Ticket activity</p>
       <p>{activity}</p>
     </div>
-    <div className="text-center p-10 bg-[#e9ecef]">
-      <p>Tickets submitted</p>
-      <p>{submitted}</p>
+    <div className="flex-1 text-center bg-green-500 text-white rounded-lg shadow-lg p-8">
+      <p className="text-lg font-semibold">Tickets submitted</p>
+      <p className="text-2xl font-bold">{submitted}</p>
     </div>
-    <div className="text-center p-10 bg-[#e9ecef]">
-      <p>Tickets resolved</p>
-      <p>{resolved}</p>
+    <div className="flex-1 text-center bg-purple-500 text-white rounded-lg shadow-lg p-8">
+      <p className="text-lg font-semibold">Tickets resolved</p>
+      <p className="text-2xl font-bold">{resolved}</p>
     </div>
-    <div className="text-center p-10 bg-[#e9ecef]">
-      <p>{supportText}</p>
+    <div className="flex-1 text-center bg-pink-500 text-white rounded-lg shadow-lg p-8">
+      <p className="text-lg font-semibold">{supportText}</p>
     </div>
   </section>
 );
