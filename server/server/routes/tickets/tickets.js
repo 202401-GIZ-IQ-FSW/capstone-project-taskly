@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router({ mergeParams: true }); // Enable merging params from parent routes
 const ticketComments = require('./comments');
 
-const ticketController = require('../../controllers/Tickets/ticketCrudController');
+const ticketController = require('../../controllers/Tickets/ticketsController');
 const { validateObjectId } = require('../../middleware/validateObjectId');
 
 router.post('/', ticketController.createTicket);
@@ -16,6 +16,6 @@ router.post('/:ticketId/assign', validateObjectId('ticketId'), ticketController.
 router.post('/:ticketId/unassign', validateObjectId('ticketId'), ticketController.unassignTicket);
 
 // Ticket Comments Routes
-router.use('/:ticketId/comments', ticketComments);
+router.use('/:ticketId/comments', validateObjectId('ticketId'), ticketComments);
 
 module.exports = router;

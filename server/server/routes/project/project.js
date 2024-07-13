@@ -21,7 +21,7 @@ router.delete('/:projectId', validateObjectId('projectId'), deleteProject);
 // Project Tickets routes
 router.use('/:projectId/tickets', validateObjectId('projectId'), ticketRoutes);
 
-// routes for search and filter
+// Routes for search and filter
 router.get('/:projectId/tickets/search', searchTicket);
 router.get('/:projectId/tickets/filter', filterTicket);
 
