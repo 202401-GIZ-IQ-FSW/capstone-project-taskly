@@ -1,11 +1,8 @@
+// client\src\data\Links.js
 export const navLinks = [
   { text: "Home", url: "/" },
-  // { text: "Create", url: "/create" },
-  // { text: "Notifications", url: "#" },
   { text: "About", url: "/about" },
-  { text: "Contact Us", url: "/contact" },
-  { text: "Signin", url: "/signin" },
-  { text: "Signup", url: "/signup" },
+  { text: "Contact Us", url: "/contact" }
 ];
 
 export const signUpLink = [

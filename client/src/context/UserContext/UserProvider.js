@@ -115,9 +115,17 @@ export const UserProvider = ({ children }) => {
 
   useRefreshToken(refreshToken, handleSetAccessToken, handleSetRefreshToken);
 
+  const handleSetUser = useCallback((updatedUser) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      ...updatedUser,
+    }));
+  }, []);
+
   const value = {
     loggedIn,
     user,
+    handleSetUser,
     accessToken,
     handleSetAccessToken,
     handleSetRefreshToken,
