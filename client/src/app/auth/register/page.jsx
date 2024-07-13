@@ -214,7 +214,7 @@ const Register = () => {
               </form>
             </div>
 
-            <div className="mt-10 flex flex-col items-center justify-center">
+            <div className="mt-4 flex flex-col items-center justify-center">
             <div className="relative flex items-center w-full mb-4">
               <div className="flex-grow border-t border-gray-200"></div>
               <span className="flex-shrink px-3 text-gray-900 text-sm font-medium leading-6">
@@ -223,7 +223,7 @@ const Register = () => {
               <div className="flex-grow border-t border-gray-200"></div>
             </div>
 
-              <div className="mt-6">
+              <div>
                 <Link
                   href="http://localhost:3001/api/v1/auth/google"
                   className="bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow hover:bg-gray-100 flex items-center">
