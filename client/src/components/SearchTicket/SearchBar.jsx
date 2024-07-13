@@ -12,14 +12,12 @@ const SearchBar = () => {
 
   const fetchData = async (value) => {
     try {
-      const response = await fetcher(
+      const data = await fetcher(
         `/v1/projects/${selectedProject._id}/tickets/search?q=${value}`
       );
-      console.log('results ', response);
-      if (response.status === 200) {
-        const data = await response.json();
-        setTickets(data);
-      }
+      console.log('results ', data);
+      setTickets(data);
+      console.log('tickets ', tickets);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -39,7 +37,10 @@ const SearchBar = () => {
       fetchData(input);
     }
   };
-
+  const clearSearch = () => {
+    setInput('');
+    setTickets([]);
+  };
   return (
     <>
       <form className="relative flex flex-1" action="#" method="GET">
@@ -62,10 +63,13 @@ const SearchBar = () => {
         />
       </form>
       {tickets.length > 0 && (
-        <div className="bg-blue-200 absolute top-44 w-full max-h-32 overflow-y-auto rounded-md shadow-lg !z-50">
-          results here
+        <div className="bg-gray-100 absolute top-24 w-full max-h-96 space-y-6 overflow-y-auto rounded-md shadow-lg py-10 px-5">
           {tickets.map((ticket) => (
-            <SearchCard key={ticket._id} ticket={ticket} />
+            <SearchCard
+              key={ticket._id}
+              ticket={ticket}
+              clearSearch={clearSearch}
+            />
           ))}
         </div>
       )}
