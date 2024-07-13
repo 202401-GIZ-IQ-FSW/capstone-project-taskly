@@ -17,7 +17,7 @@ const projectRoutes = require('./routes/project/project');
 const userRoutes = require('./routes/user/userProfileRoute');
 const contactUsRoute = require('./routes/contactUs/ContactUs');
 const dashboardRoutes = require('./routes/dashboard/main');
-const analyticsRoutes = require('./routes/analysis/analysisRoute');
+const analyticsRoutes = require('./routes/analysis/analytics');
 
 const app = express();
 const port =
