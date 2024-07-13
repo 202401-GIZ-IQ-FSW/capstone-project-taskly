@@ -27,12 +27,53 @@ const CommentList = ({ selectedProject, ticketId, comments, setComments }) => {
     }
   };
 
+  const handleDeleteComment = async (commentId) => {
+    try {
+      await fetcher(
+        `/v1/projects/${selectedProject._id}/tickets/${ticketId}/comments/${commentId}`,
+        {
+          method: 'DELETE',
+        }
+      );
+      setComments(comments.filter((comment) => comment._id !== commentId));
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  const handleEditComment = async (commentId, updatedContent) => {
+    try {
+      const updatedComment = await fetcher(
+        `/v1/projects/${selectedProject._id}/tickets/${ticketId}/comments/${commentId}`,
+        {
+          method: 'PUT',
+          body: JSON.stringify({ content: updatedContent }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      setComments(
+        comments.map((comment) =>
+          comment._id === commentId ? updatedComment : comment
+        )
+      );
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
   return (
     <div className="mt-6">
       <h3 className="text-lg font-semibold mb-2">Comments</h3>
       <div className="space-y-4">
-        {comments.map((comment, index) => (
-          <CommentCard key={index} comment={comment} />
+        {comments.map((comment) => (
+          <CommentCard
+            key={comment._id}
+            comment={comment}
+            onDelete={handleDeleteComment}
+            onEdit={handleEditComment}
+          />
         ))}
       </div>
       <div className="mt-4">
