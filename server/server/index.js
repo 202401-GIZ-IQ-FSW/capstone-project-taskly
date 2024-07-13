@@ -16,11 +16,9 @@ const authRoutes = require('./routes/auth/auth');
 const adminRoutes = require('./routes/admin/admin');
 const projectRoutes = require('./routes/project/project');
 const userRoutes = require('./routes/user/userProfileRoute');
-const ticketRoutes = require('./routes/tickets/ticket');
-const commentsRouter = require('./routes/comment/commentRoute');
 const contactUsRoute = require('./routes/contactUs/ContactUs');
 const dashboardRoutes = require('./routes/dashboard/main');
-const reportRoute = require('./routes/letter/reportRoute');
+const analyticsRoutes = require('./routes/analysis/analytics');
 
 const app = express();
 const port =
@@ -52,10 +50,9 @@ app.use('/api/v1', contactUsRoute);
 app.use(verifyJWT); // everything below this line will use verifyJWT
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/projects', projectRoutes);
-app.use('/api/v1/projects', ticketRoutes);
-app.use('/api/v1/projects', commentsRouter);
+
 app.use('/api/v1/dashboard', dashboardRoutes);
-app.use('/api/v1/reports', reportRoute);
+app.use('/api/v1/analytics', analyticsRoutes);
 
 // Function to get the local network IP address
 function getLocalIpAddress() {
