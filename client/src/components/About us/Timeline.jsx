@@ -26,7 +26,7 @@ const Timeline = () => {
             January
           </time>
           <div className="text-lg font-black text-custom-black">
-            <div className="flex items-center font-robot justify-end">
+            <div className="flex items-center font-robot justify-start md:justify-end ">
               Re:Coded BootCamp Kick-off
               <IoRocketOutline className="ml-2 text-custom-teal" />
             </div>
@@ -93,7 +93,7 @@ const Timeline = () => {
             April-June
           </time>
           <div className="text-lg font-black text-custom-black">
-            <div className="flex items-center font-robot justify-end">
+            <div className="flex items-center font-robot justify-start md:justify-end">
               Back-end phase
               <IoServer className="ml-2 text-custom-teal" />
             </div>
@@ -156,7 +156,7 @@ const Timeline = () => {
             June-July
           </time>
           <div className="text-lg font-black text-custom-black">
-            <div className="flex items-center font-robot justify-end">
+            <div className="flex items-center font-robot justify-start md:justify-end">
               Our Mission
               <FaCrosshairs className="ml-2 text-custom-teal" />
             </div>
