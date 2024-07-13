@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",
+    "daisyui": "^4.12.10",
     "postcss": "^8",
     "supertest": "^7.0.0"
   }

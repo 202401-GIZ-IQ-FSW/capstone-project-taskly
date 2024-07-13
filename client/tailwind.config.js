@@ -17,6 +17,11 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        roboto: ['Roboto', 'sans-serif'],
+        dancing: ['Dancing Script', 'cursive'],
+        lato: ['Lato', 'sans-serif'],
+      },
       backgroundImage: {
         'diagonal-split': 'linear-gradient(135deg, #1e293b 50%, #1e40af 50%)',
       },
@@ -46,6 +51,9 @@ module.exports = {
         'primary-dark': '#7DAE9C',
         'accent-light': '#F4DDBC',
         'accent-dark': '#5E8D7A',
+        'custom-black': '#181717',
+        'custom-teal': ' #149c90',
+        'custom-gray': '#eee',
         'custom-black': '#181717',
         'custom-teal': ' #149c90',
         'custom-gray': '#eee'
