@@ -32,20 +32,13 @@ const createComment = async (req, res) => {
 // - GET /api/v1/projects/{projectId}/tickets/{ticketId}/comments - Get all comments for a ticket
 const getAllComments = async (req, res) => {
   const { ticketId } = req.params;
-  const userId = req.user.id;
   try {
     const checkTicket = await TicketModel.findById(ticketId);
     if (!checkTicket) {
       return res.status(404).json({ message: 'Ticket not found' });
     }
 
-    const comments = await CommentModel.find({ ticketId })
-      .populate('commentedBy', 'username') // populate commentedBy field with username
-      .populate({
-        path: 'replies.userId',
-        select: 'username', // populate userId field with username in replies
-      });
-
+    const comments = await CommentModel.find({ ticketId });
     res.status(200).json(comments);
   } catch (error) {
     res.status(500).json({

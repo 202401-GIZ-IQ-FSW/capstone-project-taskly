@@ -51,7 +51,7 @@ const Projects = () => {
           const data = await fetcher(
             `/v1/projects/${selectedProject._id}/tickets`
           );
-          setTickets(Array.isArray(data.tickets) ? data.tickets : []);
+          setTickets(Array.isArray(data) ? data : []);
         } catch (err) {
           setError(err.message);
         }
