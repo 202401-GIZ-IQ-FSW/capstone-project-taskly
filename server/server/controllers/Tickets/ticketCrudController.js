@@ -1,6 +1,6 @@
 // server\server\controllers\Tickets\ticketCrudController.js
 const TicketModel = require('../../models/TicketModel');
-const sendEmails = require('../../config/mailer');
+// const sendEmails = require('../../config/mailer');
 const UserModel = require('../../models/UserModel');
 
 const createTicket = async (req, res) => {
@@ -23,9 +23,7 @@ const createTicket = async (req, res) => {
       assignees,
     });
     await newTicket.save();
-    res
-      .status(201)
-      .json({ message: 'Ticket created successfully', ticket: newTicket });
+    res.status(201).json(newTicket);
   } catch (error) {
     res
       .status(500)
