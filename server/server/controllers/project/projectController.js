@@ -127,7 +127,7 @@ const searchTicket = async (req, res) => {
     const regex = new RegExp(query, 'i');
     const result = await TicketModel.find({
       projectId,
-      $or: [{ name: regex }, { description: regex }],
+      title: regex, // Search only by ticket title
     });
 
     if (result.length === 0) {

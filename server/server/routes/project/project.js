@@ -12,6 +12,12 @@ const {
   filterTicket,
 } = require('../../controllers/project/projectController');
 
+
+// Routes for search and filter. IMPORTANT: keep these routes at the top of the file before the others
+router.get('/:projectId/tickets/search',validateObjectId('projectId'), searchTicket);
+router.get('/:projectId/tickets/filter',validateObjectId('projectId'), filterTicket);
+
+
 router.post('/', createProject);
 router.get('/', getAllProjects);
 router.get('/:projectId', validateObjectId('projectId'), getSingleProject);
@@ -20,9 +26,5 @@ router.delete('/:projectId', validateObjectId('projectId'), deleteProject);
 
 // Project Tickets routes
 router.use('/:projectId/tickets', validateObjectId('projectId'), ticketRoutes);
-
-// Routes for search and filter
-router.get('/:projectId/tickets/search', searchTicket);
-router.get('/:projectId/tickets/filter', filterTicket);
 
 module.exports = router;
