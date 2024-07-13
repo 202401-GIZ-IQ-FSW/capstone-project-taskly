@@ -93,32 +93,22 @@ const deleteProject = async (req, res) => {
 
 
 // - GET /api/v1/projects/{projectId}/tickets/search?q={query} - Search tickets within a project
-const searchTicket = async (req, res) => {
+const searchTickets = async (req, res) => {
   try {
-    const projectId = req.params.projectId;
-    const query = req.query.query;
+    const { title } = req.query; // Extract the title from query parameters
+    const query = {};
 
-    if (!query) {
-      return res.status(400).json({ message: 'Query parameter is required' });
+    if (title) {
+      query.title = new RegExp(title, 'i'); // Case-insensitive regex search for title
     }
 
-    const regex = new RegExp(query, 'i');
-    const result = await TicketModel.find({
-      projectId: projectId,
-      $or: [
-        { title: regex },
-       ]
-    });
-
-    if (result.length === 0) {
-      return res.status(404).json({ message: 'No tickets found' });
-    }
-
-    res.status(200).json(result);
-  } catch (error) {
-    res.status(500).json({ error: 'An error occurred while searching for tickets', message: error.message });
+    const tickets = await TicketModel.find(query).populate('assignees projectId');
+    res.status(200).json(tickets);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
+
 
 // - GET /api/v1/projects/{projectId}/tickets/filter?status={status}&priority={priority} - Filter tickets within a project by status and priority
 const filterTicket = async(req, res) => {
@@ -159,6 +149,6 @@ const filterTicket = async(req, res) => {
   getSingleProject,
   updateProject,
   deleteProject,
-  searchTicket,
+  searchTickets,
   filterTicket,
 };

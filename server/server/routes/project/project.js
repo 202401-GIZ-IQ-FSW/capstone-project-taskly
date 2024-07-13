@@ -7,7 +7,7 @@ const {
   getSingleProject,
   updateProject,
   deleteProject,
-  searchTicket,
+  searchTickets,
   filterTicket,
 } = require('../../controllers/project/projectController');
 
@@ -19,6 +19,6 @@ router.delete('/:projectId', validateObjectId('projectId'), deleteProject);
  
 
 // routes for search and filter
-router.get('/:projectId/tickets/search', searchTicket);
+router.get('/search', searchTickets);
 router.get('/:projectId/tickets/filter', filterTicket);
 module.exports = router;
