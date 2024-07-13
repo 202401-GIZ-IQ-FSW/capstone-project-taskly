@@ -53,18 +53,13 @@ module.exports = {
         'accent-dark': '#5E8D7A',
         'custom-black': '#181717',
         'custom-teal': ' #149c90',
-        'custom-gray': '#eee'
+        'custom-gray': '#eee',
         'custom-black': '#181717',
         'custom-teal': ' #149c90',
         'custom-gray': '#eee'
       },
     },
   },
-  plugins: [
-    require('tailwindcss-animate'),
-    require('@tailwindcss/forms'),
-    require('daisyui'),
-  ],
   plugins: [
     require('tailwindcss-animate'),
     require('@tailwindcss/forms'),
