@@ -19,7 +19,7 @@ const ticketRoutes = require('./routes/tickets/ticket');
 const commentsRouter = require('./routes/comment/commentRoute');
 const contactUsRoute = require('./routes/contactUs/ContactUs');
 const dashboardRoutes = require('./routes/dashboard/main');
-const newsLetterRoute = require('./routes/letter/newsLetterRoute');
+const reportRoute = require('./routes/letter/reportRoute');
 
 const app = express();
 const port =
@@ -57,7 +57,7 @@ app.use(
   commentsRouter
 );
 
-app.use('/api/v1/newsletter', newsLetterRoute);
+app.use('/api/v1/reports', reportRoute);
 
 app.listen(port, () => {
   // this line for dev, uncomment it if you want to log all working routes
