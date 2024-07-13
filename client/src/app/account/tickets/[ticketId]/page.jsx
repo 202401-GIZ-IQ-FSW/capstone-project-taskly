@@ -142,8 +142,8 @@ const TicketDetail = ({ params }) => {
   }
 
   return (
-    <div className="p-4 bg-white flex">
-      <div className="w-3/4 pr-4">
+    <div className="p-4 bg-white flex flex-col md:flex-row">
+      <div className="md:w-3/4 md:pr-4">
         <h2 className="text-2xl font-bold mb-2">{ticket?.title}</h2>
         <p className="text-gray-600 mb-4 line-clamp-2">{ticket?.description}</p>
         <CommentList
@@ -153,7 +153,7 @@ const TicketDetail = ({ params }) => {
           setComments={setComments}
         />
       </div>
-      <div className="w-1/4 pl-4 border-l h-screen">
+      <div className="md:w-1/4 md:pl-4 border-t md:border-t-0 md:border-l mt-4 md:mt-0 h-screen">
         <div className="flex flex-col items-start gap-7">
           <ProgressDropdown
             currentStatus={ticket.status}
