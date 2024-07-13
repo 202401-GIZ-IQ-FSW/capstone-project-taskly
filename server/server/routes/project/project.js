@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const ticketRoutes = require('../tickets/tickets');
 const { validateObjectId } = require('../../middleware/validateObjectId');
 const {
   createProject,
@@ -11,14 +12,19 @@ const {
   filterTicket,
 } = require('../../controllers/project/projectController');
 
+
+// Routes for search and filter. IMPORTANT: keep these routes at the top of the file before the others
+router.get('/:projectId/tickets/search',validateObjectId('projectId'), searchTicket);
+router.get('/:projectId/tickets/filter',validateObjectId('projectId'), filterTicket);
+
+
 router.post('/', createProject);
 router.get('/', getAllProjects);
 router.get('/:projectId', validateObjectId('projectId'), getSingleProject);
 router.put('/:projectId', validateObjectId('projectId'), updateProject);
 router.delete('/:projectId', validateObjectId('projectId'), deleteProject);
- 
 
-// routes for search and filter
-router.get('/search', searchTickets);
-router.get('/:projectId/tickets/filter', filterTicket);
+// Project Tickets routes
+router.use('/:projectId/tickets', validateObjectId('projectId'), ticketRoutes);
+
 module.exports = router;
