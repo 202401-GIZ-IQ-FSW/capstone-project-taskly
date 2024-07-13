@@ -20,6 +20,7 @@ const ticketRoutes = require('./routes/tickets/ticket');
 const commentsRouter = require('./routes/comment/commentRoute');
 const contactUsRoute = require('./routes/contactUs/ContactUs');
 const dashboardRoutes = require('./routes/dashboard/main');
+const reportRoute = require('./routes/letter/reportRoute');
 
 const app = express();
 const port =
@@ -54,6 +55,7 @@ app.use('/api/v1/projects', projectRoutes);
 app.use('/api/v1/projects', ticketRoutes);
 app.use('/api/v1/projects', commentsRouter);
 app.use('/api/v1/dashboard', dashboardRoutes);
+app.use('/api/v1/reports', reportRoute);
 
 // Function to get the local network IP address
 function getLocalIpAddress() {
