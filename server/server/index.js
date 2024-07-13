@@ -17,7 +17,7 @@ const projectRoutes = require('./routes/project/project');
 const userRoutes = require('./routes/user/userProfileRoute');
 const contactUsRoute = require('./routes/contactUs/ContactUs');
 const dashboardRoutes = require('./routes/dashboard/main');
-const analysisRoutes = require('./routes/analysis/analysisRoute');
+const analyticsRoutes = require('./routes/analysis/analysisRoute');
 
 const app = express();
 const port =
@@ -51,7 +51,7 @@ app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/projects', projectRoutes);
 
 app.use('/api/v1/dashboard', dashboardRoutes);
-app.use('/api/v1/analysis', analysisRoutes);
+app.use('/api/v1/analytics', analyticsRoutes);
 
 app.listen(port, () => {
   // this line for dev, uncomment it if you want to log all working routes
