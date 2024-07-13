@@ -3,7 +3,7 @@ const User = require('../../models/UserModel');
 const Project = require('../../models/ProjectModel');
 
 
-exports.getAllTickets = async (req, res) => {
+const getAllTickets = async (req, res) => {
     try {
         const tickets = await Ticket.find();
         res.json(tickets);
@@ -12,7 +12,7 @@ exports.getAllTickets = async (req, res) => {
     }
 };
 
-exports.getAllUsers = async (req, res) => {
+const getAllUsers = async (req, res) => {
     try {
         const users = await User.find();
         res.json(users);
@@ -21,7 +21,7 @@ exports.getAllUsers = async (req, res) => {
     }
 };
 
-exports.getAllProjects = async (req, res) => {
+const getAllProjects = async (req, res) => {
     try {
         const projects = await Project.find();
         res.json(projects);
@@ -30,7 +30,7 @@ exports.getAllProjects = async (req, res) => {
     }
 }
 
-exports.getResolvedTickets = async (req, res) => {
+const getResolvedTickets = async (req, res) => {
     try {
         const resolvedTickets = await Ticket.find({ status: 'resolved' });
         res.json(resolvedTickets);
@@ -39,7 +39,7 @@ exports.getResolvedTickets = async (req, res) => {
     }
 };
 
-exports.getOpenedTickets = async (req, res) => {
+const getOpenedTickets = async (req, res) => {
     try {
         const openedTickets = await Ticket.find({ status: 'open' });
         res.json(openedTickets);
@@ -47,3 +47,12 @@ exports.getOpenedTickets = async (req, res) => {
         res.status(500).send(error.message);
     }
 };
+
+module.exports = {
+    getAllProjects,
+    getAllTickets,
+    getAllUsers,
+    getOpenedTickets,
+    getResolvedTickets
+    
+}
