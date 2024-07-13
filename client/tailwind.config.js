@@ -22,6 +22,14 @@ module.exports = {
         dancing: ['Dancing Script', 'cursive'],
         lato: ['Lato', 'sans-serif'],
       },
+      backgroundImage: {
+        'diagonal-split': 'linear-gradient(135deg, #1e293b 50%, #1e40af 50%)',
+      },
+      fontFamily: {
+        roboto: ['Roboto', 'sans-serif'],
+        dancing: ['Dancing Script', 'cursive'],
+        lato: ['Lato', 'sans-serif'],
+      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
@@ -46,9 +54,17 @@ module.exports = {
         'custom-black': '#181717',
         'custom-teal': ' #149c90',
         'custom-gray': '#eee'
+        'custom-black': '#181717',
+        'custom-teal': ' #149c90',
+        'custom-gray': '#eee'
       },
     },
   },
+  plugins: [
+    require('tailwindcss-animate'),
+    require('@tailwindcss/forms'),
+    require('daisyui'),
+  ],
   plugins: [
     require('tailwindcss-animate'),
     require('@tailwindcss/forms'),

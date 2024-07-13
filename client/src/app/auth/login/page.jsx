@@ -58,19 +58,22 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex gap-2 mx-auto items-center justify-center bg-gradient-to-r from-gray-950 to-gray-800 relative">
-     
-
-      <div className="flex max-w-4xl p-10 text-center bg-white bg-opacity-5 rounded-lg shadow-lg backdrop-filter backdrop-blur-lg">
-        <div>
-          <h1 className="text-4xl font-bold mb-2 text-white">Taskly</h1>
-          <p className="mb-10 text-gray-200 font-light text-sm">
-            Sign in to manage your support tickets
-          </p>
+    <div className="flex flex-col justify-center items-center min-h-screen bg-custom-gray">
+      <div className="flex flex-col md:flex-row max-w-4xl w-full bg-white/50 rounded-lg shadow-xl overflow-hidden">
+        <div className="flex-1 bg-teal-500 p-8 flex flex-col justify-center items-center text-white">
+          <h2 className="text-3xl md:text-4xl font-roboto font-bold mb-2">
+            WELCOME BACK!
+          </h2>
+          <p className="mb-6 text-xl font-dancing">Happy to see you again.</p>
+        </div>
+        <div className="flex-1 p-8">
+          <h1 className="text-3xl font-semibold mb-6 font-roboto text-teal-600">
+            Sign in
+          </h1>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="text-start">
               <label
-                className="text-sm font-normal text-white"
+                className="text-sm font-normal font-roboto text-teal-700"
                 htmlFor="usernameOrEmail">
                 Username or Email
               </label>
@@ -80,12 +83,12 @@ export default function Login() {
                 value={usernameOrEmail}
                 onChange={(e) => setUsernameOrEmail(e.target.value)}
                 required
-                className="w-full px-3 py-2 rounded bg-white bg-opacity-50 text-gray-200 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="w-full px-3 py-2 rounded font-roboto bg-gray-100 text-gray-800 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-teal-500"
               />
             </div>
             <div className="text-start">
               <label
-                className="text-sm font-normal text-white"
+                className="text-sm font-normal font-roboto text-teal-700"
                 htmlFor="password">
                 Password
               </label>
@@ -95,10 +98,10 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-3 py-2 rounded bg-white bg-opacity-50 text-gray-200 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="w-full px-3 py-2 rounded bg-gray-100 text-gray-800 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-teal-500"
               />
             </div>
-            <div className="flex items-center justify-between text-sm text-gray-200">
+            <div className="flex items-center justify-between text-sm text-teal-700">
               <label className="flex items-center">
                 <input
                   type="checkbox"
@@ -110,23 +113,25 @@ export default function Login() {
               </label>
               <Link
                 href="/forgot-password"
-                className="text-blue-300 hover:underline">
+                className="text-teal-500 font-roboto hover:underline">
                 Forgot your password?
               </Link>
             </div>
             <button
               type="submit"
-              className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+              className="w-full py-2 bg-teal-500 text-white font-roboto rounded hover:bg-teal-600 focus:bg-teal-500">
               Sign In
             </button>
-
-            <div className="flex items-center my-4">
-              <div className="flex-grow border-t border-gray-300"></div>
-              <span className="mx-4 text-gray-200">or</span>
-              <div className="flex-grow border-t border-gray-300"></div>
-            </div>
           </form>
-          <div className="flex justify-center space-x-4 mt-6">
+
+          <div className="flex flex-col items-center justify-center mt-6">
+            <div className="relative flex items-center w-full mb-4">
+              <div className="flex-grow border-t border-gray-200"></div>
+              <span className="flex-shrink px-3 text-gray-900 text-sm font-medium leading-6">
+                Or Sign In with
+              </span>
+              <div className="flex-grow border-t border-gray-200"></div>
+            </div>
             <button
               onClick={() => {
                 window.location.href =
@@ -138,18 +143,18 @@ export default function Login() {
             </button>
           </div>
 
-          <p className="mt-4 text-gray-200">
-            Don't have account?{' '}
+          <p className="mt-4 text-teal-700">
+            Don't have an account?{' '}
             <Link
               href="/auth/register"
-              className="text-blue-300 hover:underline">
+              className="text-teal-500 hover:underline">
               Sign up now
             </Link>
           </p>
-
-          <Notification message={notificationMessage} type={notificationType} />
         </div>
       </div>
+
+      <Notification message={notificationMessage} type={notificationType} />
     </div>
   );
 }

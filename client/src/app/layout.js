@@ -1,6 +1,7 @@
 import ConditionalLayout from '@/components/Navigation/ConditionalLayout';
 import { UserProvider } from '@/context/UserContext/UserProvider';
 import './globals.css';
+import ProjectsProvider from '@/context/ProjectsContext/ProjectsProvider';
 
 export const metadata = {
   title: 'Taskly',
@@ -12,7 +13,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <UserProvider>
-          <ConditionalLayout>{children}</ConditionalLayout>
+          <ProjectsProvider>
+            <ConditionalLayout>{children}</ConditionalLayout>
+          </ProjectsProvider>
         </UserProvider>
       </body>
     </html>
