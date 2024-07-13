@@ -80,25 +80,26 @@ const Register = () => {
   };
 
   return (
-    <>
-      <div className="flex min-h-screen flex-1 relative">
-        <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
-          <div className="mx-auto w-full max-w-sm lg:w-96">
-            <div>
-              {/* <img
-                className="h-10 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                alt="Your Company"
-              /> */}
-              <h2 className="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                Sign Up for an account
-              </h2>
-            </div>
+    <div className="flex flex-col justify-center items-center min-h-screen bg-custom-gray p-10">
+      <div className="flex flex-col md:flex-row max-w-4xl w-full bg-white/50 rounded-lg shadow-xl overflow-hidden">
+        <div className="flex-1 bg-teal-500 p-8 flex flex-col justify-center items-center text-white">
+          <h2 className="text-3xl md:text-4xl font-roboto font-bold mb-2">
+            WELCOME!
+          </h2>
+          <p className="mb-6 text-xl font-dancing">
+            Create your account to get started.
+          </p>
+        </div>
+        <div className="flex-1 p-8">
+          <h2 className="text-3xl font-semibold mb-6 font-roboto text-teal-600">
+            Sign Up
+          </h2>
 
-            <div className="mt-10">
-              <div>
-                <form onSubmit={handleSubmit} encType="multipart/form-data">
-                  <div className="mb-3">
+          <div className="mt-10">
+            <div>
+              <form onSubmit={handleSubmit} encType="multipart/form-data">
+                <div className="flex flex-row gap-3">
+                  <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       First Name *
                     </label>
@@ -112,7 +113,7 @@ const Register = () => {
                       required
                     />
                   </div>
-                  <div className="mb-3">
+                  <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Last Name *
                     </label>
@@ -126,130 +127,118 @@ const Register = () => {
                       required
                     />
                   </div>
-                  <div className="mb-3">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Username *
-                    </label>
-                    <input
-                      type="text"
-                      name="username"
-                      value={formData.username}
-                      onChange={handleChange}
-                      placeholder="Username"
-                      className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
-                    />
-                  </div>
+                </div>
 
-                  <div className="mb-3">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Email *
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="Email"
-                      className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
-                    />
-                  </div>
-                  <div className="relative mb-3">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Password *
-                    </label>
-                    <input
-                      type={showPassword ? 'text' : 'password'}
-                      name="password"
-                      value={formData.password}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
-                    />
-                    <button
-                      type="button"
-                      className="absolute inset-y-0 right-3 flex items-center justify-center text-gray-500"
-                      onClick={() => setShowPassword(!showPassword)}>
-                      <div className="mt-5">
-                        {showPassword ? <FiEyeOff /> : <FiEye />}
-                      </div>
-                    </button>
-                  </div>
-                  <div className="relative mb-3">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Confirm Password *
-                    </label>
-                    <input
-                      type={showConfirmPassword ? 'text' : 'password'}
-                      name="confirmPassword"
-                      value={formData.confirmPassword}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
-                    />
-                    <button
-                      type="button"
-                      className="absolute inset-y-0 right-3 flex items-center justify-center text-gray-500"
-                      onClick={() =>
-                        setShowConfirmPassword(!showConfirmPassword)
-                      }>
-                      <div className="mt-5">
-                        {showPassword ? <FiEyeOff /> : <FiEye />}
-                      </div>
-                    </button>
-                  </div>
-                  <p className="text-gray-600 text-xs text-left mb-3">
-                    By tapping Submit, you agree to our Terms and Conditions and
-                    Privacy Policy.
-                  </p>
+                <div className="mb-3">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Username *
+                  </label>
+                  <input
+                    type="text"
+                    name="username"
+                    value={formData.username}
+                    onChange={handleChange}
+                    placeholder="Username"
+                    className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Email"
+                    className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
+                <div className="relative mb-3">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Password *
+                  </label>
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
                   <button
-                    type="submit"
-                    className="w-full py-2 bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    Sign up
+                    type="button"
+                    className="absolute inset-y-0 right-3 flex items-center justify-center text-gray-500"
+                    onClick={() => setShowPassword(!showPassword)}>
+                    <div className="mt-5">
+                      {showPassword ? <FiEyeOff /> : <FiEye />}
+                    </div>
                   </button>
-                </form>
-              </div>
-
-              <div className="mt-10">
-                <div className="relative">
-                  <div
-                    className="absolute inset-0 flex items-center"
-                    aria-hidden="true">
-                    <div className="w-full border-t border-gray-200" />
-                  </div>
-                  <div className="relative flex justify-center text-sm font-medium leading-6">
-                    <span className="bg-white px-6 text-gray-900">
-                      Or Sign In with
-                    </span>
-                  </div>
                 </div>
-
-                <div className="mt-6">
-                  <Link
-                    href="http://localhost:3001/api/v1/auth/google"
-                    className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-transparent">
-                    <FcGoogle className="h-5 w-5" />
-                    <span className="text-sm font-semibold leading-6">
-                      Google
-                    </span>
-                  </Link>
+                <div className="relative mb-3">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Confirm Password *
+                  </label>
+                  <input
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-3 flex items-center justify-center text-gray-500"
+                    onClick={() =>
+                      setShowConfirmPassword(!showConfirmPassword)
+                    }>
+                    <div className="mt-5">
+                      {showPassword ? <FiEyeOff /> : <FiEye />}
+                    </div>
+                  </button>
                 </div>
+                <p className="text-gray-600 text-xs text-left mb-3">
+                  By tapping Sign up, you agree to our Terms and Conditions and
+                  Privacy Policy.
+                </p>
+                <button
+                  type="submit"
+                  className="w-full py-2 bg-teal-500 text-white font-roboto rounded hover:bg-teal-600 focus:bg-teal-500">
+                  Sign up
+                </button>
+              </form>
+            </div>
+
+            <div className="mt-10 flex flex-col items-center justify-center">
+            <div className="relative flex items-center w-full mb-4">
+              <div className="flex-grow border-t border-gray-200"></div>
+              <span className="flex-shrink px-3 text-gray-900 text-sm font-medium leading-6">
+                Or Sign In with
+              </span>
+              <div className="flex-grow border-t border-gray-200"></div>
+            </div>
+
+              <div className="mt-6">
+                <Link
+                  href="http://localhost:3001/api/v1/auth/google"
+                  className="bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow hover:bg-gray-100 flex items-center">
+                  <FcGoogle className="h-5 w-5" />
+                  <span className="text-sm font-semibold leading-6">
+                  Sign in with Google
+                  </span>
+                </Link>
               </div>
             </div>
           </div>
         </div>
-        <div className="hidden w-0 flex-1 lg:block">
-          <img
-            className="absolute right-0 h-full w-full object-cover max-w-3xl"
-            src="/bg.png"
-            // src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80"
-            alt=""
-          />
-        </div>
       </div>
       <Notification message={notificationMessage} type={notificationType} />
-    </>
+    </div>
   );
 };
 
