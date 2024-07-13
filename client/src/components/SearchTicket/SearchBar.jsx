@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import TicketCard from './TicketCard';
 import fetcher from '@/_utils/fetcher';
-import { FaSearch } from 'react-icons/fa';
 import { useProjects } from '@/context/ProjectsContext/ProjectsContext';
+import { useState } from 'react';
+import { FaSearch } from 'react-icons/fa';
+import SearchCard from './SearchCard';
 
 const SearchBar = () => {
-  const [input, setInput] = useState('');
   const [tickets, setTickets] = useState([]);
+
+  const [input, setInput] = useState('');
   const { selectedProject } = useProjects();
 
   const fetchData = async (value) => {
@@ -14,14 +15,13 @@ const SearchBar = () => {
       const response = await fetcher(
         `/v1/projects/${selectedProject._id}/tickets/search?q=${value}`
       );
-      if (!response.ok) {
-        throw new Error('Failed to fetch data');
+      console.log('results ', response);
+      if (response.status === 200) {
+        const data = await response.json();
+        setTickets(data);
       }
-      const data = await response.json();
-      setTickets(data.tickets);
     } catch (error) {
       console.error('Error fetching data:', error);
-      setTickets([]);
     }
   };
 
@@ -32,11 +32,6 @@ const SearchBar = () => {
     } else {
       setTickets([]);
     }
-  };
-
-  const handleSelectTicket = (ticketId) => {
-    // Redirect to ticket page
-    window.location.href = `/tickets/${ticketId}`;
   };
 
   const handleKeyPress = (e) => {
@@ -67,14 +62,10 @@ const SearchBar = () => {
         />
       </form>
       {tickets.length > 0 && (
-        <div className="mt-2 rounded-md bg-white shadow-lg overflow-hidden">
+        <div className="bg-blue-200 absolute top-44 w-full max-h-32 overflow-y-auto rounded-md shadow-lg !z-50">
+          results here
           {tickets.map((ticket) => (
-            <div
-              key={ticket.id}
-              onClick={() => handleSelectTicket(ticket.id)}
-              className="cursor-pointer px-4 py-2 hover:bg-gray-100">
-              <TicketCard ticket={ticket} />
-            </div>
+            <SearchCard key={ticket._id} ticket={ticket} />
           ))}
         </div>
       )}
