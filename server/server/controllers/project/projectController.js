@@ -115,7 +115,7 @@ const deleteProject = async (req, res) => {
 };
 
 // - GET /api/v1/projects/{projectId}/tickets/search?q={query} - Search tickets within a project
-const searchTicket = async (req, res) => {
+const searchTickets = async (req, res) => {
   try {
     const projectId = req.params.projectId;
     const query = req.query.q;
@@ -142,6 +142,7 @@ const searchTicket = async (req, res) => {
     });
   }
 };
+
 
 // - GET /api/v1/projects/{projectId}/tickets/filter?status={status}&priority={priority} - Filter tickets within a project by status and priority
 const filterTicket = async (req, res) => {
@@ -186,6 +187,6 @@ module.exports = {
   getSingleProject,
   updateProject,
   deleteProject,
-  searchTicket,
+  searchTickets,
   filterTicket,
 };

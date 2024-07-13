@@ -8,7 +8,7 @@ const {
   getSingleProject,
   updateProject,
   deleteProject,
-  searchTicket,
+  searchTickets,
   filterTicket,
 } = require('../../controllers/project/projectController');
 
