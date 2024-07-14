@@ -12,6 +12,7 @@ import fetcher from '@/_utils/fetcher';
 
 const NotificationsDropdown = () => {
   const [notifications, setNotifications] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -42,14 +43,23 @@ const NotificationsDropdown = () => {
         console.error('Error marking notification as read:', error);
       }
     }
+
+    setIsOpen(false); // Close the dropdown after handling the click event
   };
 
+  const unreadCount = notifications.filter((n) => !n.isRead).length;
+
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger>
+    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+      <DropdownMenuTrigger className="relative">
         <FaBell className="h-6 w-6" aria-hidden="true" />
+        {unreadCount > 0 && (
+          <span className="absolute bottom-3 left-3 inline-flex items-center justify-center text-xs font-bold leading-none text-red-100 bg-red-600 h-4 w-4 rounded-full">
+            {unreadCount}
+          </span>
+        )}
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='max-h-96 overflow-y-auto'>
+      <DropdownMenuContent className="max-h-96 overflow-y-auto scrollbar-fade">
         {notifications.length > 0 ? (
           notifications.map((notification) => (
             <div key={notification._id}>

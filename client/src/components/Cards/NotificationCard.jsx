@@ -8,7 +8,7 @@ const NotificationCard = ({ notification, onClick }) => {
     <Link href={ticketLink} className={`block text-gray-800`}>
       <div
         className={`p-4 cursor-pointer w-72 ${
-          notification.isRead ? 'bg-gray-100' : 'bg-blue-100'
+          notification.isRead ? 'bg-gray-100' : 'bg-blue-100/60'
         }`}
         onClick={() => onClick(notification)}
         dangerouslySetInnerHTML={{ __html: notification.message }}>
