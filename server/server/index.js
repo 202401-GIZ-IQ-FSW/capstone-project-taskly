@@ -50,6 +50,7 @@ app.use('/api/v1', contactUsRoute);
 app.use(verifyJWT); // everything below this line will use verifyJWT
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/projects', projectRoutes);
+app.use('/api/v1/notifications', notificationsRoutes);
 
 app.use('/api/v1/dashboard', dashboardRoutes);
 app.use('/api/v1/analytics', analyticsRoutes);
