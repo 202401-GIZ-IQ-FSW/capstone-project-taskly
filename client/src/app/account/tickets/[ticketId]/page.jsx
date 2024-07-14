@@ -51,6 +51,12 @@ const TicketDetail = ({ params }) => {
     }
   };
 
+  const sendNotificationToAssignees = async (message) => {
+    for (const assignee of assignees) {
+      await sendNotification(assignee._id, message);
+    }
+  };
+
   const handleStatusChange = async (newStatus) => {
     try {
       const updatedTicket = await fetcher(
@@ -64,6 +70,11 @@ const TicketDetail = ({ params }) => {
 
       // Show success message
       SuccessAlert('Ticket status updated successfully');
+
+      // Send notification to assignees
+      await sendNotificationToAssignees(
+        `The status of ticket <strong>${ticket?.title}</strong> in project ${selectedProject?.name} has been changed to <strong>${newStatus}</strong>.`
+      );
     } catch (err) {
       setError(err.message);
       WarnAlert(`Error updating ticket status: ${err.message}`);
@@ -83,6 +94,11 @@ const TicketDetail = ({ params }) => {
 
       // Show success message
       SuccessAlert('Ticket priority updated successfully');
+
+      // Send notification to assignees
+      await sendNotificationToAssignees(
+        `The priority of ticket <strong>${ticket?.title}</strong> in project ${selectedProject?.name} has been changed to <strong>${newPriority}</strong>.`
+      );
     } catch (err) {
       setError(err.message);
       WarnAlert(`Error updating ticket priority: ${err.message}`);
@@ -111,10 +127,7 @@ const TicketDetail = ({ params }) => {
 
       // Show success message
       SuccessAlert('User assigned successfully');
-      console.log(assigneeIdOrUsernameOrEmail);
-      console.log(
-        updatedTicket.assignees[updatedTicket.assignees.length - 1]._id
-      );
+
       // Send notification
       await sendNotification(
         updatedTicket.assignees[updatedTicket.assignees.length - 1]._id, //  the last assignee is the newly assigned user
