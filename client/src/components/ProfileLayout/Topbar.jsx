@@ -10,6 +10,7 @@ import {
 import Link from 'next/link';
 import SearchBar from '../SearchTicket/SearchBar';
 import NotificationsDropdown from '../Dropdowns/NotificationsDropdown';
+import UserIconDropdown from '../Dropdowns/UserIconDropdown';
 
 const Topbar = ({ user, setSidebarOpen, userNavigation }) => {
   return (
@@ -29,18 +30,14 @@ const Topbar = ({ user, setSidebarOpen, userNavigation }) => {
           </div>
 
           <div className="flex items-center gap-x-4 lg:gap-x-6">
-            <button
-              type="button"
-              className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
-              <span className="sr-only">View notifications</span>
-
-              <NotificationsDropdown />
-            </button>
+            <NotificationsDropdown />
             <div
               className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10"
               aria-hidden="true"
             />
-            <Menu as="div" className="relative">
+            <UserIconDropdown user={user} userNavigation={userNavigation} />
+
+            {/* <Menu as="div" className="relative">
               <MenuButton className="flex items-center gap-x-2 text-sm font-semibold leading-6 text-gray-900">
                 <span className="sr-only">Open user menu</span>
                 <img
@@ -81,7 +78,7 @@ const Topbar = ({ user, setSidebarOpen, userNavigation }) => {
                   ))}
                 </MenuItems>
               </Transition>
-            </Menu>
+            </Menu> */}
           </div>
         </div>
       </div>
