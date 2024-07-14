@@ -1,7 +1,7 @@
 // server\server\index.js
 const express = require('express');
 const cors = require('cors');
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
 const http = require('http');
 const socketIo = require('socket.io');
 const passport = require('passport');
@@ -18,6 +18,7 @@ const verifyJWT = require('./middleware/verifyJWT');
 const authRoutes = require('./routes/auth/auth');
 const adminRoutes = require('./routes/admin/admin');
 const projectRoutes = require('./routes/project/project');
+const notificationRoutes = require('./routes/notification/notification');
 const userRoutes = require('./routes/user/userProfileRoute');
 const contactUsRoute = require('./routes/contactUs/ContactUs');
 const dashboardRoutes = require('./routes/dashboard/main');
@@ -58,7 +59,7 @@ app.use('/api/v1', contactUsRoute);
 app.use(verifyJWT); // everything below this line will use verifyJWT
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/projects', projectRoutes);
-app.use('/api/v1/notifications', notificationsRoutes);
+app.use('/api/v1/notifications', notificationRoutes);
 
 app.use('/api/v1/dashboard', dashboardRoutes);
 app.use('/api/v1/analytics', analyticsRoutes);
