@@ -1,4 +1,4 @@
-const io = require('../../index');
+const { io } = require('../../index'); // Import io from your main server file
 const NotificationModel = require('../../models/NotificationModel');
 
 // - GET /api/v1/notifications - Get all notifications for the current user
@@ -48,6 +48,11 @@ const triggerNotificationsOnTicketActions = async (req, res) => {
   try {
     const { projectId, ticketId } = req.params;
     const { userId, message } = req.body;
+
+    // Check if userId is provided
+    if (!userId) {
+      return res.status(400).json({ message: 'userId is required' });
+    }
     const notification = new NotificationModel({
       userId,
       message: `Ticket ${ticketId} in project ${projectId} message: ${message}`,
@@ -68,6 +73,11 @@ const triggerNotificationsOnProjectActions = async (req, res) => {
   try {
     const { projectId } = req.params;
     const { userId, message } = req.body;
+
+    // Check if userId is provided
+    if (!userId) {
+      return res.status(400).json({ message: 'userId is required' });
+    }
     const notification = new NotificationModel({
       userId,
       message: `Project ${projectId}: ${message}`,

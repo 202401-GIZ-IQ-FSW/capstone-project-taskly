@@ -1,6 +1,5 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import fetcher from '@/_utils/fetcher';
 import AssigneeList from '@/components/AssigneeList/AssigneeList';
 import CommentList from '@/components/CommentsList/CommentsList';
@@ -112,6 +111,15 @@ const TicketDetail = ({ params }) => {
 
       // Show success message
       SuccessAlert('User assigned successfully');
+      console.log(assigneeIdOrUsernameOrEmail);
+      console.log(
+        updatedTicket.assignees[updatedTicket.assignees.length - 1]._id
+      );
+      // Send notification
+      await sendNotification(
+        updatedTicket.assignees[updatedTicket.assignees.length - 1]._id, // Assuming the last assignee is the newly assigned user
+        `You have been assigned to ticket ${ticketId} in project ${selectedProject.name}`
+      );
     } catch (err) {
       setError(err.message);
       WarnAlert(`Error assigning user: ${err.message}`);
@@ -134,6 +142,20 @@ const TicketDetail = ({ params }) => {
     } catch (err) {
       setError(err.message);
       WarnAlert(`Error unassigning user: ${err.message}`);
+    }
+  };
+
+  const sendNotification = async (userId, message) => {
+    try {
+      await fetcher(
+        `/v1/projects/${selectedProject._id}/tickets/${ticketId}/notify`,
+        {
+          method: 'POST',
+          body: JSON.stringify({ userId, message }),
+        }
+      );
+    } catch (err) {
+      console.error('Error sending notification:', err.message);
     }
   };
 

@@ -10,7 +10,7 @@ const AssigneeList = ({ assignees, handleUnassignUser, handleAssignUser }) => {
           <div key={index} className="flex items-center space-x-2">
             <Image
               src={user.avatar || '/default-avatar.png'}
-              alt={user.name}
+              alt={user.name || ''}
               width={32}
               height={32}
               className="rounded-full"
