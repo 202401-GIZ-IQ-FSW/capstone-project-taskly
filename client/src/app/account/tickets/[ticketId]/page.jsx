@@ -118,7 +118,7 @@ const TicketDetail = ({ params }) => {
       // Send notification
       await sendNotification(
         updatedTicket.assignees[updatedTicket.assignees.length - 1]._id, //  the last assignee is the newly assigned user
-        `You have been assigned to ticket ${ticket?.title} in project ${selectedProject?.name}`
+        `You have been assigned to ticket <strong>${ticket?.title}</strong> in project: ${selectedProject?.name}`
       );
     } catch (err) {
       setError(err.message);

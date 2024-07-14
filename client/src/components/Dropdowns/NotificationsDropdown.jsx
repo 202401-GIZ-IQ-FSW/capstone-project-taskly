@@ -29,13 +29,13 @@ const NotificationsDropdown = () => {
   const handleNotificationClick = async (notification) => {
     if (!notification.isRead) {
       try {
-        await fetcher(`/v1/notifications/${notification._id}/read`, {
+        await fetcher(`/v1/notifications/${notification._id}`, {
           method: 'PUT',
         });
 
         setNotifications((prevNotifications) =>
           prevNotifications.map((n) =>
-            n.id === notification.id ? { ...n, isRead: true } : n
+            n._id === notification._id ? { ...n, isRead: true } : n
           )
         );
       } catch (error) {
@@ -49,18 +49,18 @@ const NotificationsDropdown = () => {
       <DropdownMenuTrigger>
         <FaBell className="h-6 w-6" aria-hidden="true" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className='max-h-96 overflow-y-auto'>
         {notifications.length > 0 ? (
           notifications.map((notification) => (
-            <>
-              <DropdownMenuItem key={notification.id} as="div">
+            <div key={notification._id}>
+              <DropdownMenuItem as="div">
                 <NotificationCard
                   notification={notification}
                   onClick={() => handleNotificationClick(notification)}
                 />
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-            </>
+            </div>
           ))
         ) : (
           <DropdownMenuItem as="div">
