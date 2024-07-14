@@ -48,7 +48,7 @@ const VerticalChart = () => {
   };
   return (
     <div>
-      <h2>All Projects, Users, and Tickets</h2>
+      <h2 className="bg-custom-teal text-white py-2 px-4 rounded hover:bg-green-700 cursor-pointer inline-block">All Projects, Users, and Tickets</h2>
       <Bar data={chartData} />
     </div>
   );
