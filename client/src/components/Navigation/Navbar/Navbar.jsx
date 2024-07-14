@@ -14,7 +14,7 @@ const Navbar = () => {
     : navLinks;
   return (
     <header className="bg-white shadow-md py-4 px-6 flex justify-between items-center">
-      <Link href={'/'}>Tickets</Link>
+      <Link href={'/'} className='font-roboto text-4xl font-semibold text-custom-teal'>Taskly</Link>
       <nav>
         {filteredLinks.map((link, index) => (
           <Link
@@ -27,7 +27,7 @@ const Navbar = () => {
       </nav>
       <div>
         {user ? (
-          <UserLoggedIn user={user} handleLogout={handleLogout} />
+          <UserLoggedIn user={user} handleLogout={handleLogout}/>
         ) : (
           <UserLoggedOut />
         )}
