@@ -63,6 +63,14 @@ app.use('/api/v1/notifications', notificationsRoutes);
 app.use('/api/v1/dashboard', dashboardRoutes);
 app.use('/api/v1/analytics', analyticsRoutes);
 
+// Socket.io connection
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
+
 // Function to get the local network IP address
 function getLocalIpAddress() {
   const interfaces = os.networkInterfaces();
