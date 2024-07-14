@@ -8,16 +8,19 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import NotificationCard from '../Cards/NotificationCard';
+import fetcher from '@/_utils/fetcher';
 
 const NotificationsDropdown = () => {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    // Fetch notifications from the backend
     const fetchNotifications = async () => {
-      const response = await fetch('/api/v1/notifications');
-      const data = await response.json();
-      setNotifications(data);
+      try {
+        const data = await fetcher('/api/v1/notifications');
+        setNotifications(data);
+      } catch (error) {
+        console.error('Error fetching notifications:', error);
+      }
     };
 
     fetchNotifications();
@@ -25,17 +28,19 @@ const NotificationsDropdown = () => {
 
   const handleNotificationClick = async (notification) => {
     if (!notification.isRead) {
-      // Mark the notification as read in the backend
-      await fetch(`/api/v1/notifications/${notification.id}/read`, {
-        method: 'POST',
-      });
+      try {
+        await fetcher(`/api/v1/notifications/${notification.id}/read`, {
+          method: 'POST',
+        });
 
-      // Update the local state to reflect the change
-      setNotifications((prevNotifications) =>
-        prevNotifications.map((n) =>
-          n.id === notification.id ? { ...n, isRead: true } : n
-        )
-      );
+        setNotifications((prevNotifications) =>
+          prevNotifications.map((n) =>
+            n.id === notification.id ? { ...n, isRead: true } : n
+          )
+        );
+      } catch (error) {
+        console.error('Error marking notification as read:', error);
+      }
     }
   };
 
@@ -47,12 +52,15 @@ const NotificationsDropdown = () => {
       <DropdownMenuContent>
         {notifications.length > 0 ? (
           notifications.map((notification) => (
-            <DropdownMenuItem key={notification.id} as="div">
-              <NotificationCard
-                notification={notification}
-                onClick={handleNotificationClick}
-              />
-            </DropdownMenuItem>
+            <>
+              <DropdownMenuItem key={notification.id} as="div">
+                <NotificationCard
+                  notification={notification}
+                  onClick={() => handleNotificationClick(notification)}
+                />
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+            </>
           ))
         ) : (
           <DropdownMenuItem as="div">
