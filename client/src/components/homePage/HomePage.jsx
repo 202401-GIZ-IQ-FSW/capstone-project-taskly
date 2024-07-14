@@ -1,34 +1,32 @@
 import React from 'react';
-import Header from '../header/Header';
-import TicketSubmission from '../tickets/TicketSubmission';
-import TicketStats from '../tickets/TicketStats';
-import Footer from '../footer/Footer';
+import Header from '../components/Header';
+import TicketSubmission from '../components/TicketSubmission';
+import TicketStats from '../components/TicketStats';
+import Footer from '../components/Footer';
 import { headerLinks, footerLinks, signUpLink } from '@/data/Links';
 
 const Home = () => {
   return (
-    <div>
-      <Header links={headerLinks} authentication={signUpLink} />
-      <TicketSubmission 
-        title="Submit your technical issues and queries easily!"
-        subtitle="Securely submit and manage support tickets for technical issues"
-        submitText="Submit"
-        newTicketText="New ticket"
-      />
-      <TicketStats 
-        activity="10K+" 
-        submitted="100K+" 
-        resolved="500K+" 
-        supportText="Get help now"
-      />
-      <Footer 
-        companyName="TicketMaster" 
-        footerText="Your ultimate ticket support solution!" 
-        links={footerLinks}
-      />
+    <div className="relative min-h-screen">
+      <div className="relative z-10">
+        <Header links={headerLinks} authentication={signUpLink} />
+        <main className="container mx-auto py-12">
+          <TicketSubmission 
+            title="Submit your technical issues and queries easily!"
+            subtitle="Securely submit and manage support tickets for technical issues"
+            newTicketText="New ticket"
+          />
+          <TicketStats 
+            activity="10K+" 
+            submitted="100K+" 
+            resolved="500K+" 
+            supportText="Get help now"
+          />
+        </main>
+        <Footer footerLinks={footerLinks} />
+      </div>
     </div>
   );
 };
 
 export default Home;
-

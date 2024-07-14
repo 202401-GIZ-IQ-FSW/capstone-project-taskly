@@ -2,6 +2,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import fetcher from '@/_utils/fetcher';
 import { UserContext } from './UserContext';
+import useRefreshToken from '@/hooks/useTokenRefresh';
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -12,9 +13,8 @@ export const UserProvider = ({ children }) => {
   const loadTokensFromStorage = () => {
     if (typeof window !== 'undefined') {
       try {
-        const storedAccessToken = window.localStorage.getItem('access_token');
-        const storedRefreshToken = window.localStorage.getItem('refresh_token');
-
+        const storedAccessToken = window.localStorage.getItem('accessToken');
+        const storedRefreshToken = window.localStorage.getItem('refreshToken');
         if (storedAccessToken) setAccessToken(storedAccessToken);
         if (storedRefreshToken) setRefreshToken(storedRefreshToken);
       } catch (error) {
@@ -42,7 +42,7 @@ export const UserProvider = ({ children }) => {
   const handleSetAccessToken = useCallback((token) => {
     if (typeof window !== 'undefined') {
       try {
-        window.localStorage.setItem('access_token', token);
+        window.localStorage.setItem('accessToken', token);
         setAccessToken(token);
         console.log('Access token set:', token);
       } catch (error) {
@@ -54,7 +54,7 @@ export const UserProvider = ({ children }) => {
   const handleSetRefreshToken = useCallback((token) => {
     if (typeof window !== 'undefined') {
       try {
-        window.localStorage.setItem('refresh_token', token);
+        window.localStorage.setItem('refreshToken', token);
         setRefreshToken(token);
         console.log('Refresh token set:', token);
       } catch (error) {
@@ -66,7 +66,11 @@ export const UserProvider = ({ children }) => {
   const fetchUserProfile = async () => {
     if (accessToken) {
       try {
-        const userAccount = await fetcher('/v1/user/profile');
+        const userAccount = await fetcher('/v1/user/profile', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
 
         if (userAccount) {
           setUser(userAccount);
@@ -87,48 +91,21 @@ export const UserProvider = ({ children }) => {
     }
   }, [accessToken]);
 
-  // Refresh token logic
-  // useEffect(() => {
-  //   if (typeof window !== 'undefined') {
-  //     const handleRefreshToken = async () => {
-  //       if (!refreshToken) return;
-
-  //       try {
-  //         const res = await fetcher('/v1/token-refresh', {
-  //           method: 'POST',
-  //           headers: { Authorization: `Bearer ${refreshToken}` },
-  //         });
-  //         if (res) {
-  //           handleSetAccessToken(res.access_token);
-  //           handleSetRefreshToken(res.refresh_token);
-  //           console.log('Token refreshed');
-  //         } else {
-  //           console.error('Failed to refresh token');
-  //         }
-  //       } catch (error) {
-  //         console.error('Error while refreshing token:', error);
-  //       }
-  //     };
-
-  //     const refreshInterval = parseInt(process.env.NEXT_PUBLIC_JWT_REFRESH_INTERVAL, 10);
-  //     const tokenRefreshInterval = setInterval(handleRefreshToken, refreshInterval);
-
-  //     return () => clearInterval(tokenRefreshInterval);
-  //   }
-  // }, [refreshToken, handleSetAccessToken, handleSetRefreshToken]);
-
   const handleLogout = async () => {
     if (typeof window !== 'undefined') {
-      const response = await fetcher('/v1/auth/logout', {
+      const response = await fetch('http://localhost:3001/api/v1/auth/logout', {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
       });
 
-      if (response.message) {
-        window.localStorage.removeItem('access_token');
-        window.localStorage.removeItem('refresh_token');
+      if (response.ok) {
+        window.localStorage.removeItem('accessToken');
+        window.localStorage.removeItem('refreshToken');
         setUser(null);
         setLoggedIn(false);
-        console.log(response.message)
         window.location.href = '/';
       } else {
         console.error('Logout failed');
@@ -136,12 +113,21 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  useRefreshToken(refreshToken, handleSetAccessToken, handleSetRefreshToken);
+
+  const handleSetUser = useCallback((updatedUser) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      ...updatedUser,
+    }));
+  }, []);
+
   const value = {
     loggedIn,
     user,
+    handleSetUser,
     accessToken,
     handleSetAccessToken,
-    refreshToken,
     handleSetRefreshToken,
     handleLogout,
   };

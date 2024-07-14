@@ -1,27 +1,27 @@
-// client\src\app\auth\login\page.jsx
 'use client';
-import fetcher from '@/_utils/fetcher';
-import { useUser } from '@/hooks/useUser';
 import { useState } from 'react';
+import Link from 'next/link';
+import fetcher from '@/_utils/fetcher';
 import Notification from '@/components/Notification';
+import { useUser } from '@/hooks/useUser';
+import { FcGoogle } from 'react-icons/fc';
 
 export default function Login() {
   const { handleSetAccessToken, handleSetRefreshToken } = useUser();
-  const [usernameOrEmail, setUsernameOrEmail] = useState('a');
-  const [password, setPassword] = useState('11111aA@');
+  const [usernameOrEmail, setUsernameOrEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [notificationMessage, setNotificationMessage] = useState('');
   const [notificationType, setNotificationType] = useState('');
 
   const generateRandomNumber = () => {
-    return Math.floor(100 + Math.random() * 900); 
+    return Math.floor(100 + Math.random() * 900);
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    const isEmail = usernameOrEmail.includes('@');
+    const key = isEmail ? 'email' : 'username';
     try {
-      const isEmail = usernameOrEmail.includes('@');
-      const key = isEmail ? 'email' : 'username';
-
       const res = await fetcher('/v1/auth/login', {
         method: 'POST',
         body: JSON.stringify({
@@ -30,89 +30,131 @@ export default function Login() {
         }),
       });
 
-      if (res.user) {
-        handleSetAccessToken(res.accessToken);
-        handleSetRefreshToken(res.refreshToken);
-        window.dispatchEvent(new Event('storage')); // Trigger storage event
-        window.location.href = '/';
+      if (res) {
+        handleLoginSuccess(res.accessToken, res.refreshToken);
       } else {
-        setNotificationMessage(`Failed to Login, MSG: ${res.message} <span hidden>${generateRandomNumber()}</span>`);
+        setNotificationMessage(
+          `Failed to Login, MSG: ${
+            res.message
+          } <span hidden>${generateRandomNumber()}</span>`
+        );
         setNotificationType('error');
       }
     } catch (error) {
-      setNotificationMessage(`Failed to Login, MSG: ${error.message} <span hidden>${generateRandomNumber()}</span>`);
+      setNotificationMessage(
+        `Failed to Login, MSG: ${
+          error.message
+        } <span hidden>${generateRandomNumber()}</span>`
+      );
       setNotificationType('error');
     }
   };
 
+  const handleLoginSuccess = (accessToken, refreshToken) => {
+    handleSetAccessToken(accessToken);
+    handleSetRefreshToken(refreshToken);
+    window.dispatchEvent(new Event('storage')); // Trigger storage event
+    window.location.href = '/account/dashboard'; // Redirect to homepage
+  };
+
   return (
-    <div className="flex flex-col justify-center items-center h-full py-20">
-      <h1 className="mb-4 text-2xl font-bold">Sign in to your account</h1>
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white border shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="usernameOrEmail">
-            Username or Email
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="usernameOrEmail"
-            required
-            type="text"
-            placeholder="Username or Email"
-            value={usernameOrEmail}
-            onChange={(e) => setUsernameOrEmail(e.target.value)}
-          />
+    <div className="flex flex-col justify-center items-center min-h-screen bg-custom-gray">
+      <div className="flex flex-col md:flex-row max-w-4xl w-full bg-white/50 rounded-lg shadow-xl overflow-hidden">
+        <div className="flex-1 bg-teal-500 p-8 flex flex-col justify-center items-center text-white">
+          <h2 className="text-3xl md:text-4xl font-roboto font-bold mb-2">
+            WELCOME BACK!
+          </h2>
+          <p className="mb-6 text-xl font-dancing">Happy to see you again.</p>
         </div>
-        <div className="mb-6">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="password">
-            Password
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-            id="password"
-            required
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+        <div className="flex-1 p-8">
+          <h1 className="text-3xl font-semibold mb-6 font-roboto text-teal-600">
+            Sign in
+          </h1>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="text-start">
+              <label
+                className="text-sm font-normal font-roboto text-teal-700"
+                htmlFor="usernameOrEmail">
+                Username or Email
+              </label>
+              <input
+                id="usernameOrEmail"
+                type="text"
+                value={usernameOrEmail}
+                onChange={(e) => setUsernameOrEmail(e.target.value)}
+                required
+                className="w-full px-3 py-2 rounded font-roboto bg-gray-100 text-gray-800 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-teal-500"
+              />
+            </div>
+            <div className="text-start">
+              <label
+                className="text-sm font-normal font-roboto text-teal-700"
+                htmlFor="password">
+                Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-full px-3 py-2 rounded bg-gray-100 text-gray-800 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-teal-500"
+              />
+            </div>
+            <div className="flex items-center justify-between text-sm text-teal-700">
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="rememberMe"
+                  name="rememberMe"
+                  className="mr-2"
+                />
+                Remember me
+              </label>
+              <Link
+                href="/forgot-password"
+                className="text-teal-500 font-roboto hover:underline">
+                Forgot your password?
+              </Link>
+            </div>
+            <button
+              type="submit"
+              className="w-full py-2 bg-teal-500 text-white font-roboto rounded hover:bg-teal-600 focus:bg-teal-500">
+              Sign In
+            </button>
+          </form>
+
+          <div className="flex flex-col items-center justify-center mt-6">
+            <div className="relative flex items-center w-full mb-4">
+              <div className="flex-grow border-t border-gray-200"></div>
+              <span className="flex-shrink px-3 text-gray-900 text-sm font-medium leading-6">
+                Or Sign In with
+              </span>
+              <div className="flex-grow border-t border-gray-200"></div>
+            </div>
+            <button
+              onClick={() => {
+                window.location.href =
+                  'http://localhost:3001/api/v1/auth/google';
+              }}
+              className="bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow hover:bg-gray-100 flex items-center">
+              <FcGoogle className="h-5 w-5 mr-3" />
+              Sign in with Google
+            </button>
+          </div>
+
+          <p className="mt-4 text-teal-700">
+            Don't have an account?{' '}
+            <Link
+              href="/auth/register"
+              className="text-teal-500 hover:underline">
+              Sign up now
+            </Link>
+          </p>
         </div>
-        <div className="mb-6">
-          <input
-            className="mr-2 leading-tight"
-            type="checkbox"
-            id="rememberMe"
-            name="rememberMe"
-          />
-          <label
-            className="text-sm"
-            htmlFor="rememberMe">
-            Keep me signed in
-          </label>
-        </div>
-        <input
-          type="submit"
-          value="Sign In"
-          className="bg-gray-500 text-white py-2 px-4 rounded-md w-full hover:bg-gray-600"
-        />
-      </form>
-      <hr className="w-48"/>
-      or
-      <button
-        onClick={() => {
-          window.location.href = 'http://localhost:3001/api/v1/auth/google';
-        }}
-        className="bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow hover:bg-gray-100 flex items-center">
-        <img src="/ic_google.svg" alt="Google Icon" className="w-5 h-5 mr-2" />
-        Sign in with Google
-      </button>
-      <Notification message={notificationMessage} type={notificationType} />
       </div>
+
+      <Notification message={notificationMessage} type={notificationType} />
+    </div>
   );
 }

@@ -14,7 +14,6 @@ export default function RedirectToHom() {
         const refreshToken = urlParams.get('refreshToken');
         if (accessToken && refreshToken) {
           handleSetAccessToken(accessToken);
-          handleSetRefreshToken(refreshToken);
           window.dispatchEvent(new Event('storage'));
           window.location.href = '/';
         } else {

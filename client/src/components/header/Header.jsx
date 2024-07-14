@@ -15,28 +15,35 @@ const Header = ({ links, authentication }) => {
   };
 
   return (
-    <header className="bg-white shadow-md py-4 px-6 flex justify-between items-center">
-      <div>Tickets</div>
-      <nav>
+    <header className="bg-gradient-to-r from-blue-500 to-teal-400 shadow-lg py-4 px-6 flex justify-between items-center">
+      <div className="text-2xl font-bold text-white">TicketMaster</div>
+      <nav className="flex items-center space-x-4">
         {links.map((link, index) => (
           <Link
             key={index}
             href={link.url}
-            className="mr-4 text-gray-700 hover:text-gray-900"
+            className="text-white hover:text-gray-200"
           >
             {link.text}
           </Link>
         ))}
-        <button onClick={openModal}>Search tickets</button>
+        <button 
+          onClick={openModal} 
+          className="bg-white text-blue-500 px-4 py-2 rounded hover:bg-gray-200"
+        >
+          Search tickets
+        </button>
       </nav>
 
-      {authentication.map((authLink, index) => (
-        <Link key={index} href={authLink.url}>
-          <button className="bg-gray-400 text-white px-4 py-2 rounded">
-            {authLink.text}
-          </button>
-        </Link>
-      ))}
+      <div className="flex space-x-4">
+        {authentication.map((authLink, index) => (
+          <Link key={index} href={authLink.url}>
+            <button className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-400">
+              {authLink.text}
+            </button>
+          </Link>
+        ))}
+      </div>
 
       {isModalOpen && <SearchTickets onClose={closeModal} />}
     </header>
@@ -44,4 +51,3 @@ const Header = ({ links, authentication }) => {
 };
 
 export default Header;
-
