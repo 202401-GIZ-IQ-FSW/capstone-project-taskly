@@ -11,7 +11,7 @@ const DB_URI = `mongodb://${DB_USER}:${DB_PASSWORD}@${
 let url = DB_URI;
 // uncomment this line if you are using `nodemon server/index.js` command
 // url = 'mongodb://localhost:27017/tickets-db';                              // for local database
-url = 'mongodb+srv://ahmed2:0UHBOmgvr8YiULV6@cluster0.xnuvh3k.mongodb.net/'; // for atlas cloud database
+// url = 'mongodb+srv://ahmed2:0UHBOmgvr8YiULV6@cluster0.xnuvh3k.mongodb.net/'; // for atlas cloud database
 mongoose.set('strictQuery', true);
 const connectToMongo = () => {
   mongoose.connect(url, { useNewUrlParser: true });
