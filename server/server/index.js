@@ -33,7 +33,7 @@ const io = socketIo(server);
 const port =
   process.env.NODE_ENV === 'test'
     ? process.env.NODE_LOCAL_TEST_PORT
-    : process.env.NODE_LOCAL_PORT;
+    : process.env.NODE_LOCAL_PORT || 4000;
 
 app.use(
   cors({
