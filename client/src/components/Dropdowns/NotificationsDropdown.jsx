@@ -29,8 +29,8 @@ const NotificationsDropdown = () => {
   const handleNotificationClick = async (notification) => {
     if (!notification.isRead) {
       try {
-        await fetcher(`/v1/notifications/${notification.id}/read`, {
-          method: 'POST',
+        await fetcher(`/v1/notifications/${notification._id}/read`, {
+          method: 'PUT',
         });
 
         setNotifications((prevNotifications) =>
