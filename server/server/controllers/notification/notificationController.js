@@ -58,7 +58,7 @@ const triggerNotificationsOnTicketActions = async (req, res) => {
       message: `Ticket ${ticketId} in project ${projectId} message: ${message}`,
     });
     await notification.save();
-    io.emit('notification', notification);
+    // io.emit('notification', notification);
     res.status(201).json(notification);
   } catch (error) {
     res.status(500).json({
@@ -83,7 +83,7 @@ const triggerNotificationsOnProjectActions = async (req, res) => {
       message: `Project ${projectId}: ${message}`,
     });
     await notification.save();
-    io.emit('notification', notification);
+    // io.emit('notification', notification);
     res.status(201).json(notification);
   } catch (error) {
     res.status(500).json({

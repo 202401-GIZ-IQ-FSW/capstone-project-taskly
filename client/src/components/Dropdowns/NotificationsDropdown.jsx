@@ -16,7 +16,7 @@ const NotificationsDropdown = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const data = await fetcher('/api/v1/notifications');
+        const data = await fetcher('/v1/notifications');
         setNotifications(data);
       } catch (error) {
         console.error('Error fetching notifications:', error);
@@ -29,7 +29,7 @@ const NotificationsDropdown = () => {
   const handleNotificationClick = async (notification) => {
     if (!notification.isRead) {
       try {
-        await fetcher(`/api/v1/notifications/${notification.id}/read`, {
+        await fetcher(`/v1/notifications/${notification.id}/read`, {
           method: 'POST',
         });
 
