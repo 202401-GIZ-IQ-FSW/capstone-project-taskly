@@ -9,6 +9,7 @@ import {
 } from '@headlessui/react';
 import Link from 'next/link';
 import SearchBar from '../SearchTicket/SearchBar';
+import NotificationsDropdown from '../Dropdowns/NotificationsDropdown';
 
 const Topbar = ({ user, setSidebarOpen, userNavigation }) => {
   return (
@@ -32,7 +33,8 @@ const Topbar = ({ user, setSidebarOpen, userNavigation }) => {
               type="button"
               className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
               <span className="sr-only">View notifications</span>
-              <FaBell className="h-6 w-6" aria-hidden="true" />
+
+              <NotificationsDropdown />
             </button>
             <div
               className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10"
