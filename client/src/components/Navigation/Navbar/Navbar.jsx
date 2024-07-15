@@ -19,14 +19,14 @@ const Navbar = () => {
 
   return (
     <header className="shadow-md py-4 px-4 lg:px-8 flex justify-between items-center">
-      <Link href={'/'} className='font-roboto text-3xl lg:text-4xl font-extrabold text-custom-blue'>Taskly</Link>
+      <Link href={'/'} className='font-roboto text-3xl lg:text-4xl font-extrabold text-custom-blue-200'>Taskly</Link>
       <div className="flex items-center justify-center">
         <nav className="hidden lg:flex lg:flex-row items-center justify-center lg:mr-80 md:mr-40">
           {filteredLinks.map((link, index) => (
             <Link
               key={index}
               href={link.url}
-              className="text-custom-blue font-extrabold font-lato border-b-2 border-transparent hover:border-light-blue hover:text-custom-blue/70 transition duration-300 ease-in-out px-3 py-2 m-1">
+              className="text-custom-blue-300 font-extrabold font-lato border-b-2 border-transparent hover:border-light-blue hover:text-custom-blue-200 transition duration-300 ease-in-out px-3 py-2 m-1">
               {link.text}
             </Link>
           ))}

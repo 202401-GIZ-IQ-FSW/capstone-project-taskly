@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 const ProjectList = ({ title, projects }) => {
   return (
-    <div className="p-4 bg-light-blue w-1/2 rounded-lg shadow-lg mb-5">
+    <div className="p-4 bg-light-blue  rounded-lg shadow-lg mb-5">
       <h1 className="text-xl font-extrabold mb-3 text-gray-700">
         {title} ({projects ? projects.length : '0'})
       </h1>
@@ -13,7 +13,7 @@ const ProjectList = ({ title, projects }) => {
             <Link
               key={project._id}
               href={`/account/projects/${project._id}/tickets`}
-              className="flex-1 min-w-[200px] max-w-[250px]">
+              className="flex-1 min-w-[200px] max-w-[250px] m-1">
               <div className="bg-white shadow-md rounded-md p-4 hover:shadow-lg transition-shadow duration-300">
                 <h3 className="text-md font-semibold mb-1 text-custom-blue">
                   {project.name || ''}
