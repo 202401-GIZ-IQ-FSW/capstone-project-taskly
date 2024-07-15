@@ -10,7 +10,7 @@ const TicketManagement = ({ selectedProject, setError }) => {
   const [tickets, setTickets] = useState([]);
   // const [showTicketViewModal, setShowTicketViewModal] = useState(false);
   // const [comments, setComments] = useState([]);
-  const [activityLog, setActivityLog] = useState([]);
+  // const [activityLog, setActivityLog] = useState([]);
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [showTicketModal, setShowTicketModal] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -62,10 +62,10 @@ const TicketManagement = ({ selectedProject, setError }) => {
     }
   };
 
-  const openTicketModal = (ticket) => {
-    setSelectedTicket(ticket);
-    setShowTicketViewModal(true);
-  };
+  // const openTicketModal = (ticket) => {
+  //   setSelectedTicket(ticket);
+  //   setShowTicketViewModal(true);
+  // };
 
   return (
     <>
