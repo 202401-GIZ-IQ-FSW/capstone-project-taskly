@@ -124,7 +124,7 @@ const MobileSidebar = ({
                     </li>
                   </ul>
                 </nav>
-              </div>
+              </div></div></div>
             </DialogPanel>
           </TransitionChild>
         </div>

@@ -27,14 +27,14 @@ const Sidebar = ({
           </Link>
         </div>
         <div className={`${sidebarCollapsed ? 'hidden' : 'block'}`}>
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label htmlFor="projectSelect" className="mr-2 text-white font-roboto mb-2">
               Choose project:
             </label>
             <select
               id="projectSelect"
               value={selectedProject ? selectedProject._id : ''}
-              onChange={handleProjectChange}
+              onChange={onProjectChange}
               className={`p-2 border rounded min-w-52 ${
                 sidebarCollapsed ? 'w-full' : ''
               }`}>
@@ -47,7 +47,7 @@ const Sidebar = ({
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
           <ProjectSelectDropdown
             projects={projects}
             selectedProject={selectedProject}
