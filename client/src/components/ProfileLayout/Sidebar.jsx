@@ -1,6 +1,7 @@
 import { sidebarNavigation } from '@/data/sidebarNavigation';
 import Link from 'next/link';
 import { FaChevronLeft, FaChevronRight, FaCog } from 'react-icons/fa';
+import ProjectSelectDropdown from '../Dropdowns/ProjectSelectDropdown';
 
 const Sidebar = ({
   pathname,
@@ -33,27 +34,11 @@ const Sidebar = ({
           </Link>
         </div>
         <div className={`${sidebarCollapsed ? 'hidden' : 'block'}`}>
-          <div className="mb-4">
-            <label htmlFor="projectSelect" className="mr-2">
-              Choose project:
-            </label>
-            <select
-              id="projectSelect"
-              value={selectedProject ? selectedProject._id : ''}
-              onChange={handleProjectChange}
-              className={`p-2 border rounded min-w-52 ${
-                sidebarCollapsed ? 'w-full' : ''
-              }`}>
-              <option value="" hidden>
-                Select a project
-              </option>
-              {projects?.map((project) => (
-                <option key={project._id} value={project._id}>
-                  {project.name}
-                </option>
-              ))}
-            </select>
-          </div>
+          <ProjectSelectDropdown
+            projects={projects}
+            selectedProject={selectedProject}
+            onProjectChange={handleProjectChange}
+          />
           {/* <ul className="space-y-1">
             {projects?.map((project) => (
               <li
