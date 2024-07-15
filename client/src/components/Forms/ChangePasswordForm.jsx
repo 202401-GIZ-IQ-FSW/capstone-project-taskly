@@ -134,7 +134,7 @@ const ChangePasswordForm = ({ onClose }) => {
         <button
           type="submit"
           className="w-full px-6 py-3 bg-light-blue text-white font-semibold rounded-md hover:bg-custom-blue focus:outline-none focus:ring focus:ring-light-blue focus:ring-opacity-50">
-
+</button>
         <Button type="submit" className="w-full px-6 py-3">
 
           Change Password
