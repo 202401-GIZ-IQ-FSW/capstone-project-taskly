@@ -26,12 +26,22 @@ const ProfileLayout = ({ children }) => {
     { name: 'Sign out', href: '/', onClick: () => handleLogout() },
   ];
 
+  const handleProjectChange = (e) => {
+    const projectId = e.target.value;
+    const project = projects.find((p) => p._id === projectId);
+    setSelectedProject(project);
+    console.log('selected project is ', project?.name);
+  };
+
   return (
     <>
       <div>
         <MobileSidebar
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
+          projects={projects}
+          selectedProject={selectedProject}
+          onProjectChange={handleProjectChange}
         />
         <Sidebar
           userNavigation={userNavigation}
@@ -40,7 +50,7 @@ const ProfileLayout = ({ children }) => {
           setSidebarCollapsed={setSidebarCollapsed}
           projects={projects}
           selectedProject={selectedProject}
-          setSelectedProject={setSelectedProject}
+          onProjectChange={handleProjectChange}
         />
         <div className={`${sidebarCollapsed ? 'lg:pl-20' : 'lg:pl-72'}`}>
           <Topbar

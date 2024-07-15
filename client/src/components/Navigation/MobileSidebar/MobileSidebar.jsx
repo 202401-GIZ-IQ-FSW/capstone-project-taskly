@@ -10,8 +10,15 @@ import { FaTimes, FaCog } from 'react-icons/fa';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { sidebarNavigation } from '@/data/sidebarNavigation';
+import ProjectSelectDropdown from '@/components/Dropdowns/ProjectSelectDropdown';
 
-const MobileSidebar = ({ sidebarOpen, setSidebarOpen }) => {
+const MobileSidebar = ({
+  sidebarOpen,
+  setSidebarOpen,
+  projects,
+  selectedProject,
+  onProjectChange,
+}) => {
   const pathname = usePathname();
 
   return (
@@ -47,23 +54,32 @@ const MobileSidebar = ({ sidebarOpen, setSidebarOpen }) => {
                   <button
                     type="button"
                     className="-m-2.5 p-2.5"
-                    onClick={() => setSidebarOpen(false)}>
+                    // onClick={() => setSidebarOpen(false)}
+                  >
                     <span className="sr-only">Close sidebar</span>
                     <FaTimes
-                      className="h-6 w-6 text-white"
+                      className="h-6 w-6 text-white sr-only"
                       aria-hidden="true"
                     />
                   </button>
                 </div>
               </TransitionChild>
               <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
-                <div className="flex h-16 shrink-0 items-center">
+                <div className="mt-12">
+                  <ProjectSelectDropdown
+                    projects={projects}
+                    selectedProject={selectedProject}
+                    onProjectChange={onProjectChange}
+                    setSidebarOpen={setSidebarOpen}
+                  />
+                </div>
+                {/* <div className="flex h-16 shrink-0 items-center">
                   <img
                     className="h-8 w-auto"
                     src="https://tailwindui.com/img/logos/mark.svg?color=blacko&shade=600"
                     alt="Your Company"
                   />
-                </div>
+                </div> */}
                 <nav className="flex flex-1 flex-col">
                   <ul role="list" className="flex flex-1 flex-col gap-y-7">
                     <li>

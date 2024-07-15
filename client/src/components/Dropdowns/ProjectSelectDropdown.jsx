@@ -11,6 +11,7 @@ const ProjectSelectDropdown = ({
   projects,
   selectedProject,
   onProjectChange,
+  setSidebarOpen,
 }) => {
   const handleProjectSelect = (project) => {
     // Create a synthetic event object
@@ -20,6 +21,7 @@ const ProjectSelectDropdown = ({
       },
     };
     onProjectChange(syntheticEvent);
+    setSidebarOpen?.(false);
   };
 
   return (

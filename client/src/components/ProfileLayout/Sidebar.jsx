@@ -9,15 +9,8 @@ const Sidebar = ({
   setSidebarCollapsed,
   projects,
   selectedProject,
-  setSelectedProject,
+  onProjectChange,
 }) => {
-  const handleProjectChange = (e) => {
-    const projectId = e.target.value;
-    const project = projects.find((p) => p._id === projectId);
-    setSelectedProject(project);
-    console.log('selected project is ', project?.name);
-  };
-
   return (
     <div
       className={`hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:flex-col ${
@@ -37,7 +30,7 @@ const Sidebar = ({
           <ProjectSelectDropdown
             projects={projects}
             selectedProject={selectedProject}
-            onProjectChange={handleProjectChange}
+            onProjectChange={onProjectChange}
           />
           {/* <ul className="space-y-1">
             {projects?.map((project) => (
