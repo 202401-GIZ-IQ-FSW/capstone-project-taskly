@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "postinstall": "docker-compose up -d && docker-compose exec -w /usr/src/app/client capstone-client-app npm install || true",
-    "start": "docker-compose up",
-    "build": "docker-compose up --build",
+    "old-postinstall": "docker-compose up -d && docker-compose exec -w /usr/src/app/client capstone-client-app npm install || true",
+    "old-start": "docker-compose up",
+    "old-build": "docker-compose up --build",
     "prune": "docker-compose down -v",
     "stop": "docker-compose down",
     "lint": "next lint",

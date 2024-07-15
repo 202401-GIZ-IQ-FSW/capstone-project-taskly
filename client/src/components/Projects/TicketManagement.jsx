@@ -8,9 +8,9 @@ import Link from 'next/link';
 
 const TicketManagement = ({ selectedProject, setError }) => {
   const [tickets, setTickets] = useState([]);
-  // const [showTicketViewModal, setShowTicketViewModal] = useState(false);
-  // const [comments, setComments] = useState([]);
-  // const [activityLog, setActivityLog] = useState([]);
+  const [showTicketViewModal, setShowTicketViewModal] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [activityLog, setActivityLog] = useState([]);
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [showTicketModal, setShowTicketModal] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -62,10 +62,10 @@ const TicketManagement = ({ selectedProject, setError }) => {
     }
   };
 
-  // const openTicketModal = (ticket) => {
-  //   setSelectedTicket(ticket);
-  //   setShowTicketViewModal(true);
-  // };
+  const openTicketModal = (ticket) => {
+    setSelectedTicket(ticket);
+    setShowTicketViewModal(true);
+  };
 
   return (
     <>
@@ -96,17 +96,14 @@ const TicketManagement = ({ selectedProject, setError }) => {
                           draggableId={ticket._id}
                           index={index}>
                           {(provided) => (
-                            <Link href={`/account/tickets/${ticket._id}`}>
-                              <div
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                className="p-2 mb-2 bg-white rounded shadow cursor-pointer"
-                                // onClick={() => openTicketModal(ticket)}
-                              >
-                                {ticket.title}
-                              </div>
-                            </Link>
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              className="p-2 mb-2 bg-white rounded shadow cursor-pointer"
+                              onClick={() => openTicketModal(ticket)}>
+                              {ticket.title}
+                            </div>
                           )}
                         </Draggable>
                       ))}
@@ -122,7 +119,7 @@ const TicketManagement = ({ selectedProject, setError }) => {
         <Button onClick={() => setShowTicketModal(true)}>Create Ticket</Button>
       </div>
 
-      {/* <TicketViewModal
+      <TicketViewModal
         isOpen={showTicketViewModal}
         setIsOpen={setShowTicketViewModal}
         selectedTicket={selectedTicket}
@@ -131,7 +128,7 @@ const TicketManagement = ({ selectedProject, setError }) => {
         setComments={setComments}
         activityLog={activityLog}
         setActivityLog={setActivityLog}
-      /> */}
+      />
 
       <TicketModal
         showTicketModal={showTicketModal}

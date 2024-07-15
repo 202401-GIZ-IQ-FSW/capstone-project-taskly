@@ -16,14 +16,12 @@ const ProjectSettings = ({
   const [showEditProjectModal, setShowEditProjectModal] = useState(false);
   const [showDeleteProjectModal, setShowDeleteProjectModal] = useState(false);
   const [showInviteMemberModal, setShowInviteMemberModal] = useState(false);
-  const [newMemberId, setNewMemberId] = useState('');
-  const [inviteRole, setInviteRole] = useState('view');
 
   return (
-    <div className="">
+    <div className="relative">
       <button
         onClick={() => setShowSettingsDropdown(!showSettingsDropdown)}
-        className="font-extrabold text-2xl absolute -top-10 right-0"
+        className="font-extrabold text-2xl"
         title="Project Settings"
         id="settings">
         ...
@@ -76,11 +74,8 @@ const ProjectSettings = ({
           isOpen={showInviteMemberModal}
           setIsOpen={setShowInviteMemberModal}
           selectedProject={selectedProject}
-          newMemberId={newMemberId}
           setSelectedProject={setSelectedProject}
-          setNewMemberId={setNewMemberId}
-          inviteRole={inviteRole}
-          setInviteRole={setInviteRole}
+          setError={setError}
         />
       )}
     </div>

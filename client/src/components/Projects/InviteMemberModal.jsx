@@ -1,49 +1,65 @@
 // client\src\components\Projects\InviteMemberModal.jsx
 import React, { useState, useEffect } from 'react';
 import fetcher from '@/_utils/fetcher';
-import Button from '../Button/Button';
+import Notification from '@/components/Notification';
 
 const InviteMemberModal = ({
   isOpen,
   setIsOpen,
   selectedProject,
-  newMemberId,
-  setNewMemberId,
   setSelectedProject,
-  inviteRole,
-  setInviteRole,
+  setError,
 }) => {
   const [users, setUsers] = useState([]);
   const [email, setEmail] = useState('');
+  const [newMemberId, setNewMemberId] = useState('');
+  const [inviteRole, setInviteRole] = useState('view');
+  const [notificationMessage, setNotificationMessage] = useState('');
+  const [notificationType, setNotificationType] = useState('');
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const data = await fetcher('/v1/admin/users');
+        const data = await fetcher(
+          `/v1/admin/users?invite=1&id=${selectedProject._id}`
+        );
         setUsers(Array.isArray(data) ? data : []);
-        // console.log(data);
-        // console.log(selectedProject);
       } catch (err) {
         setError(err.message);
       }
     };
     fetchUsers();
   }, []);
-  const handleInviteMember = async () => {
+  const generateRandomNumber = () => {
+    return Math.floor(100 + Math.random() * 900); // Generates a random number
+  };
+  const handleInviteMember = async (MemberId, Role) => {
     try {
-      await fetcher(`/v1/projects/${selectedProject._id}/invite`, {
+      const res = await fetcher(`/v1/admin/invite?id=${selectedProject._id}`, {
         method: 'POST',
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({
+          id: MemberId ?? newMemberId,
+          role: Role ?? inviteRole,
+        }),
         headers: {
           'Content-Type': 'application/json',
         },
       });
-
-      setEmail('');
-      setIsOpen(false);
+      if (res.message == 'Invite updated successfully') {
+        setNotificationMessage(
+          `${res.message} <span hidden>${generateRandomNumber()}</span>`
+        );
+        setNotificationType('success');
+      } else {
+        setNotificationMessage(
+          `${res.error} <span hidden>${generateRandomNumber()}</span>`
+        );
+        setNotificationType('error');
+      }
     } catch (error) {
       console.error('Failed to invite member:', error);
     }
   };
+
   const handleRemoveMember = async (memberId) => {
     try {
       await fetcher(`/v1/projects/${selectedProject._id}/members/${memberId}`, {
@@ -83,27 +99,29 @@ const InviteMemberModal = ({
           <option value="view">View</option>
           <option value="edit">Edit</option>
         </select>
-        <Button
+        <button
           onClick={() => handleInviteMember(newMemberId, inviteRole)}
-          className="p-2 rounded mr-2">
+          className="p-2 bg-green-500 text-white rounded mr-2">
           Invite
-        </Button>
+        </button>
 
         <div className="mt-4">
           <h3 className="text-lg font-bold mb-2">Current Members</h3>
           <ul>
-            <li className="flex justify-between items-center">
+            <li className="flex justify-between items-center m-1">
               <span>
-                {selectedProject ? selectedProject.ownerId?.username : ''}
+                {selectedProject ? selectedProject.ownerId.username : ''}
                 (Owner)
               </span>
             </li>
             {selectedProject &&
               selectedProject.editAccess.map((member) => (
-                <li key={member} className="flex justify-between items-center">
-                  <span>{member} (Edit)</span>
+                <li
+                  key={member._id}
+                  className="flex justify-between items-center m-1">
+                  <span>{member.username} (Edit)</span>
                   <button
-                    onClick={() => handleRemoveMember(member)}
+                    onClick={() => handleInviteMember(member._id, 'edit')}
                     className="p-1 bg-red-500 text-white rounded">
                     Remove
                   </button>
@@ -111,10 +129,12 @@ const InviteMemberModal = ({
               ))}
             {selectedProject &&
               selectedProject.viewAccess.map((member) => (
-                <li key={member} className="flex justify-between items-center">
-                  <span>{member} (View)</span>
+                <li
+                  key={member._id}
+                  className="flex justify-between items-center m-1">
+                  <span>{member.username} (View)</span>
                   <button
-                    onClick={() => handleRemoveMember(member)}
+                    onClick={() => handleInviteMember(member._id, 'view')}
                     className="p-1 bg-red-500 text-white rounded">
                     Remove
                   </button>
@@ -127,10 +147,12 @@ const InviteMemberModal = ({
           <ul>
             {selectedProject &&
               selectedProject.editorsInvited.map((member) => (
-                <li key={member} className="flex justify-between items-center">
-                  <span>{member} (Edit)</span>
+                <li
+                  key={member._id}
+                  className="flex justify-between items-center m-1">
+                  <span>{member.username} (Edit)</span>
                   <button
-                    onClick={() => handleRemoveMember(member)}
+                    onClick={() => handleInviteMember(member._id, 'edit')}
                     className="p-1 bg-red-500 text-white rounded">
                     Cancel Invite
                   </button>
@@ -138,10 +160,12 @@ const InviteMemberModal = ({
               ))}
             {selectedProject &&
               selectedProject.viewersInvited.map((member) => (
-                <li key={member} className="flex justify-between items-center">
-                  <span>{member} (View)</span>
+                <li
+                  key={member._id}
+                  className="flex justify-between items-center m-1">
+                  <span>{member.username} (View)</span>
                   <button
-                    onClick={() => handleRemoveMember(member)}
+                    onClick={() => handleInviteMember(member._id, 'view')}
                     className="p-1 bg-red-500 text-white rounded">
                     Cancel Invite
                   </button>
@@ -156,6 +180,7 @@ const InviteMemberModal = ({
           Cancel
         </button>
       </div>
+      <Notification message={notificationMessage} type={notificationType} />
     </div>
   );
 };
