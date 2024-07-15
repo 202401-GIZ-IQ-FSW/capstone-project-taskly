@@ -22,7 +22,7 @@ const TicketManagement = ({ selectedProject, setError }) => {
           const data = await fetcher(
             `/v1/projects/${selectedProject._id}/tickets`
           );
-          setTickets(Array.isArray(data.tickets) ? data.tickets : []);
+          if (data) setTickets(data.tickets);
         } catch (err) {
           setError(err.message);
         }
@@ -51,8 +51,8 @@ const TicketManagement = ({ selectedProject, setError }) => {
           }),
         }
       );
-      if (res.tickets) {
-        setTickets(res.tickets);
+      if (res) {
+        setTickets(res);
         setIsDragging(false);
       }
     } catch (error) {

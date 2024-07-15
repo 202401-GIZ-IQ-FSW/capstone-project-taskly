@@ -38,7 +38,7 @@ const TicketModal = ({
           },
         }
       );
-      setTickets([...tickets, data.ticket]);
+      setTickets([...tickets, data]);
       setShowTicketModal(false);
       setNewTicketTitle('');
       setNewTicketDescription('');

@@ -1,6 +1,7 @@
 // server\server\controllers\Tickets\ticketCrudController.js
 const TicketModel = require('../../models/TicketModel');
 const sendEmails = require('../../config/mailer');
+const UserModel = require('../../models/UserModel');
 
 const createTicket = async (req, res) => {
   try {
@@ -103,7 +104,6 @@ const getTicketById = async (req, res) => {
 const updateTicket = async (req, res) => {
   const ticketId = req.params.ticketId;
   const projectId = req.params.projectId;
-
   const { newStatus, newOrder } = req.body;
 
   try {

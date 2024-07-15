@@ -15,12 +15,21 @@ const createTicket = async (req, res) => {
         .json({ message: 'Title and description are required' });
     }
 
+    const highestOrderTicket = await TicketModel.findOne({
+      projectId,
+      status: 'open',
+    })
+      .sort({ order: -1 })
+      .exec();
+
+    const nextOrder = highestOrderTicket ? highestOrderTicket.order + 1 : 1;
+
     const newTicket = new TicketModel({
       title,
       description,
       priority,
       projectId,
-      assignees,
+      order: nextOrder,
     });
     await newTicket.save();
     res.status(201).json(newTicket);
@@ -34,17 +43,38 @@ const createTicket = async (req, res) => {
 const getAllTickets = async (req, res) => {
   const projectId = req.params.projectId;
   try {
-    const tickets = await TicketModel.find({ projectId }).populate({
-      path: 'assignees',
-      select: 'username email', // Specify the fields you want to select from the User model
-    });
-    res.status(200).json(tickets);
+    let tickets = await TicketModel.find({ projectId })
+      .populate('assignees', ['_id', 'profilePicture', 'username', 'firstName'])
+      .sort({ order: 1 })
+      .exec();
+    tickets = await sortItems(tickets);
+    res.status(200).json({ tickets });
   } catch (error) {
     res
       .status(500)
       .json({ message: 'Error retrieving tickets', error: error.message });
   }
 };
+
+async function sortItems(tickets) {
+  const statuses = ['open', 'in progress', 'resolved', 'closed'];
+  let orders = [-1, -1, -1, -1];
+
+  for (const item of tickets) {
+    const statusIndex = statuses.indexOf(item.status);
+    if (statusIndex !== -1) {
+      orders[statusIndex] += 1;
+      if (item.order !== orders[statusIndex]) {
+        const ticket = await TicketModel.findById(item._id);
+        ticket.order = orders[statusIndex];
+        item.order = orders[statusIndex];
+        await ticket.save();
+      }
+    }
+  }
+
+  return tickets;
+}
 
 const getTicketById = async (req, res) => {
   try {
@@ -67,24 +97,37 @@ const getTicketById = async (req, res) => {
 
 const updateTicket = async (req, res) => {
   const ticketId = req.params.ticketId;
-  try {
-    const updatedTicket = await TicketModel.findByIdAndUpdate(
-      ticketId,
-      req.body,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
 
-    if (updatedTicket) {
+  const projectId = req.params.projectId;
+  const { newStatus, newOrder } = req.body;
+
+  try {
+    if (newOrder < 0) {
+      const ticket = await TicketModel.findOne({ status: newStatus, order: 0 });
+      if (ticket) {
+        ticket.order = 0.9;
+        await ticket.save();
+      }
+    }
+    await TicketModel.findByIdAndUpdate(
+      ticketId,
+      { status: newStatus, order: newOrder },
+      { new: true, runValidators: true }
+    );
+    let tickets = await TicketModel.find({ projectId })
+      .populate('assignees', ['_id', 'profilePicture', 'username', 'firstName'])
+      .sort({ order: 1 })
+      .exec();
+    tickets = await sortItems(tickets);
+
+    if (tickets) {
       // send users emails for telling them that the ticket has updated
       // const userEmail = updatedTicket.user.email;
       // const subject =  `your ticket has been updated ${ticketId}`;
       // const text = `Dear user,\n\nYour ticket with ID ${ticketId} is now ${updatedTicket.status}.\n\nThank you,\nSupport Team`;
 
       // await sendEmails(userEmail, subject, text);
-      res.status(200).json(updatedTicket);
+      res.status(200).json(tickets);
     } else {
       res.status(404).json({ message: 'Ticket not found' });
     }
