@@ -48,7 +48,7 @@ module.exports = {
         'primary-blue': '#1B93FF',
         primary: '#9CCBBB',
         'primary-light': '#B8E3D2',
-        'primary-dark': '#7DAE9C',
+        'light-blue': '#7DAE9C',
         'accent-light': '#F4DDBC',
         'accent-dark': '#5E8D7A',
         'custom-black': '#181717',
@@ -58,7 +58,7 @@ module.exports = {
         'custom-teal': ' #149c90',
         'custom-gray': '#eee',
         'custom-blue': '#0B2D50',
-        'light-blue': '#A2C7EB'
+        'light-blue': '#A2C7EB',
       },
     },
   },

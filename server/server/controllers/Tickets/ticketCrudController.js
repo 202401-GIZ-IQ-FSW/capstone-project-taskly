@@ -1,12 +1,12 @@
 // server\server\controllers\Tickets\ticketCrudController.js
 const TicketModel = require('../../models/TicketModel');
-// const sendEmails = require('../../config/mailer');
+const sendEmails = require('../../config/mailer');
 const UserModel = require('../../models/UserModel');
 
 const createTicket = async (req, res) => {
   try {
     const projectId = req.params.projectId;
-    const { title, description, priority, assignees } = req.body;
+    const { title, description, priority } = req.body;
 
     // Basic validation
     if (!title || !description) {
@@ -32,7 +32,9 @@ const createTicket = async (req, res) => {
       order: nextOrder,
     });
     await newTicket.save();
-    res.status(201).json(newTicket);
+    res
+      .status(201)
+      .json({ message: 'Ticket created successfully', ticket: newTicket });
   } catch (error) {
     res
       .status(500)
@@ -48,7 +50,9 @@ const getAllTickets = async (req, res) => {
       .sort({ order: 1 })
       .exec();
     tickets = await sortItems(tickets);
-    res.status(200).json(tickets);
+    res
+      .status(200)
+      .json({ message: 'Tickets retrieved successfully', tickets });
   } catch (error) {
     res
       .status(500)
@@ -79,10 +83,10 @@ async function sortItems(tickets) {
 const getTicketById = async (req, res) => {
   try {
     const ticketId = req.params.ticketId;
-    const ticket = await TicketModel.findById(ticketId).populate({
-      path: 'assignees',
-      select: 'username email', // Specify the fields you want to select from the User model
-    });
+    const ticket = await TicketModel.findById(ticketId).populate(
+      'assignees',
+      'username email'
+    );
     if (ticket) {
       res.status(200).json(ticket);
     } else {
@@ -98,70 +102,31 @@ const getTicketById = async (req, res) => {
 const updateTicket = async (req, res) => {
   const ticketId = req.params.ticketId;
   const projectId = req.params.projectId;
-  const { newStatus, newOrder, status, priority, title, description } =
-    req.body;
+  const { newStatus, newOrder } = req.body;
 
   try {
-    if (newOrder !== undefined && newOrder < 0) {
+    if (newOrder < 0) {
       const ticket = await TicketModel.findOne({ status: newStatus, order: 0 });
       if (ticket) {
         ticket.order = 0.9;
         await ticket.save();
       }
     }
+    await TicketModel.findByIdAndUpdate(
+      ticketId,
+      { status: newStatus, order: newOrder },
+      { new: true, runValidators: true }
+    );
+    let tickets = await TicketModel.find({ projectId })
+      .populate('assignees', ['_id', 'profilePicture', 'username', 'firstName'])
+      .sort({ order: 1 })
+      .exec();
+    tickets = await sortItems(tickets);
 
-    if (newStatus !== undefined || newOrder !== undefined) {
-      await TicketModel.findByIdAndUpdate(
-        ticketId,
-        { status: newStatus, order: newOrder },
-        { new: true, runValidators: true }
-      );
-      let tickets = await TicketModel.find({ projectId })
-        .populate('assignees', [
-          '_id',
-          'profilePicture',
-          'username',
-          'firstName',
-        ])
-        .sort({ order: 1 })
-        .exec();
-      tickets = await sortItems(tickets);
-
-      if (tickets) {
-        res.status(200).json(tickets);
-      } else {
-        res.status(404).json({ message: 'Tickets not found' });
-      }
-    } else if (
-      status !== undefined ||
-      priority !== undefined ||
-      title !== undefined ||
-      description !== undefined
-    ) {
-      const updateFields = {};
-      if (status !== undefined) updateFields.status = status;
-      if (priority !== undefined) updateFields.priority = priority;
-      if (title !== undefined) updateFields.title = title;
-      if (description !== undefined) updateFields.description = description;
-
-      const updatedTicket = await TicketModel.findByIdAndUpdate(
-        ticketId,
-        updateFields,
-        { new: true, runValidators: true }
-      ).populate('assignees', [
-        '_id',
-        'profilePicture',
-        'username',
-        'firstName',
-      ]);
-
-      if (updatedTicket) {
-        res.status(200).json(updatedTicket);
-      } else {
-        res.status(404).json({ message: 'Ticket not found' });
-      }
+    if (tickets) {
+      res.status(200).json(tickets);
     } else {
-      res.status(400).json({ message: 'Invalid update parameters' });
+      res.status(404).json({ message: 'Ticket not found' });
     }
   } catch (error) {
     res
@@ -189,37 +154,26 @@ const deleteTicket = async (req, res) => {
 
 const assignTicket = async (req, res) => {
   const ticketId = req.params.ticketId;
-  const { assigneeId, assigneeUsername, assigneeEmail } = req.body;
+  const assigneeId = req.body.assigneeId;
 
   try {
-    // Find the user by ID, username, or email
-    let assigneeUser;
-    if (assigneeId) {
-      assigneeUser = await UserModel.findById(assigneeId);
-    } else if (assigneeUsername) {
-      assigneeUser = await UserModel.findOne({ username: assigneeUsername });
-    } else if (assigneeEmail) {
-      assigneeUser = await UserModel.findOne({ email: assigneeEmail });
-    }
-
-    if (!assigneeUser) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
     const foundTicket = await TicketModel.findById(ticketId);
 
     if (foundTicket) {
-      if (!foundTicket.assignees.includes(assigneeUser._id)) {
-        foundTicket.assignees.push(assigneeUser._id);
+      if (!foundTicket.assignees.includes(assigneeId)) {
+        foundTicket.assignees.push(assigneeId);
         await foundTicket.save();
 
         // Populate the assignees with username and email
-        await foundTicket.populate({
-          path: 'assignees',
-          select: 'username email',
-        });
+        const populatedTicket = await foundTicket.populate(
+          'assignees',
+          'username email'
+        );
 
-        res.status(200).json(foundTicket);
+        res.status(200).json({
+          message: 'Ticket assigned successfully',
+          ticket: populatedTicket,
+        });
       } else {
         res
           .status(400)
@@ -237,37 +191,26 @@ const assignTicket = async (req, res) => {
 
 const unassignTicket = async (req, res) => {
   const ticketId = req.params.ticketId;
-  const { assigneeId, assigneeUsername, assigneeEmail } = req.body;
+  const assigneeId = req.body.assigneeId;
 
   try {
-    // Find the user by ID, username, or email
-    let assigneeUser;
-    if (assigneeId) {
-      assigneeUser = await UserModel.findById(assigneeId);
-    } else if (assigneeUsername) {
-      assigneeUser = await UserModel.findOne({ username: assigneeUsername });
-    } else if (assigneeEmail) {
-      assigneeUser = await UserModel.findOne({ email: assigneeEmail });
-    }
-
-    if (!assigneeUser) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
     const foundTicket = await TicketModel.findById(ticketId);
 
     if (foundTicket) {
-      if (foundTicket.assignees.includes(assigneeUser._id)) {
-        foundTicket.assignees.pull(assigneeUser._id);
+      if (foundTicket.assignees.includes(assigneeId)) {
+        foundTicket.assignees.pull(assigneeId);
         await foundTicket.save();
 
         // Populate the assignees with username and email
-        await foundTicket.populate({
-          path: 'assignees',
-          select: 'username email',
-        });
+        const populatedTicket = await foundTicket.populate(
+          'assignees',
+          'username email'
+        );
 
-        res.status(200).json(foundTicket);
+        res.status(200).json({
+          message: 'Ticket unassigned successfully',
+          ticket: populatedTicket,
+        });
       } else {
         res.status(400).json({ message: 'User not assigned to this ticket' });
       }

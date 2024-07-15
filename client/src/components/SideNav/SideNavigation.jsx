@@ -56,8 +56,8 @@ const SideNavigation = ({ isOpen, onClose, children, title }) => {
             aria-labelledby="modal-headline">
             <div className="h-full flex flex-col">
               {/* Header */}
-              <div className="flex justify-between p-4 border-b border-gray-200 items-center">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              <div className="flex justify-between px-2 py-6 border-b border-gray-200 items-center">
+                <h3 className="text-lg font-semibold text-gray-900 my-2">
                   {title}
                 </h3>
 
@@ -70,7 +70,9 @@ const SideNavigation = ({ isOpen, onClose, children, title }) => {
                 </button>
               </div>
               {/* Main content */}
-              <div className="flex-grow p-4 overflow-y-auto">{children}</div>
+              <div className="flex-grow p-4 overflow-y-auto scrollbar-fade">
+                {children}
+              </div>
             </div>
           </Transition>
         </div>

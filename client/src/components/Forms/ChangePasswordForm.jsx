@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import fetcher from '@/_utils/fetcher';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+import Button from '../Button/Button';
 
 const ChangePasswordForm = ({ onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -69,6 +70,7 @@ const ChangePasswordForm = ({ onClose }) => {
           name="oldPassword"
           value={formData.oldPassword}
           onChange={handleChange}
+          required
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-light-blue focus:ring focus:ring-light-blue focus:ring-opacity-50"
         />
         <button
@@ -92,6 +94,7 @@ const ChangePasswordForm = ({ onClose }) => {
           name="newPassword"
           value={formData.newPassword}
           onChange={handleChange}
+          required
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-light-blue focus:ring focus:ring-light-blue focus:ring-opacity-50"
         />
         <button
@@ -114,6 +117,7 @@ const ChangePasswordForm = ({ onClose }) => {
           id="confirmPassword"
           name="confirmPassword"
           value={formData.confirmPassword}
+          required
           onChange={handleChange}
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-light-blue focus:ring focus:ring-light-blue focus:ring-opacity-50"
         />
@@ -130,8 +134,11 @@ const ChangePasswordForm = ({ onClose }) => {
         <button
           type="submit"
           className="w-full px-6 py-3 bg-light-blue text-white font-semibold rounded-md hover:bg-custom-blue focus:outline-none focus:ring focus:ring-light-blue focus:ring-opacity-50">
+
+        <Button type="submit" className="w-full px-6 py-3">
+
           Change Password
-        </button>
+        </Button>
       </div>
 
       {error && <p className="text-red-500 text-sm">{error}</p>}

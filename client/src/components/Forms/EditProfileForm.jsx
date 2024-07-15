@@ -178,7 +178,9 @@ const EditProfileForm = ({ user, onClose }) => {
         <div className="my-8">
           <Button
             type="submit"
+
             className="w-full px-6 py-3 bg-light-blue text-white font-semibold rounded-md hover:bg-custom-blue focus:outline-none focus:ring focus:ring-custom-blue focus:ring-opacity-50"
+
             disabled={loading}>
             {loading ? 'Saving...' : 'Save Changes'}
           </Button>

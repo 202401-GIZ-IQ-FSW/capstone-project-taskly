@@ -1,20 +1,18 @@
-'use client';
 import React, { useState, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import fetcher from '@/_utils/fetcher';
 import TicketViewModal from '@/components/Projects/TicketViewModal';
 import TicketModal from '@/components/Projects/TicketModal';
-import { useProjects } from '@/context/ProjectsContext/ProjectsContext';
-import Link from 'next/link';
-import Button from '@/components/Button/Button';
+import Button from '../Button/Button';
 
-const TicketsKanban = () => {
+const TicketManagement = ({ selectedProject, setError }) => {
   const [tickets, setTickets] = useState([]);
+  const [showTicketViewModal, setShowTicketViewModal] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [activityLog, setActivityLog] = useState([]);
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [showTicketModal, setShowTicketModal] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-  const { selectedProject } = useProjects();
-  const [error, setError] = useState(null);
 
   const statuses = ['open', 'in progress', 'resolved', 'closed'];
 
@@ -28,14 +26,12 @@ const TicketsKanban = () => {
           if (data) setTickets(data);
         } catch (err) {
           setError(err.message);
-          console.error(err);
         }
       };
 
       fetchTickets();
     }
   }, [selectedProject]);
-
   const handleDragEnd = async (result) => {
     const { destination, draggableId } = result;
     setIsDragging(true);
@@ -99,15 +95,14 @@ const TicketsKanban = () => {
                           draggableId={ticket._id}
                           index={index}>
                           {(provided) => (
-                            <Link href={`/account/tickets/${ticket._id}`}>
-                              <div
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                className="p-2 mb-2 bg-white rounded shadow cursor-pointer">
-                                {ticket.title}
-                              </div>
-                            </Link>
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              className="p-2 mb-2 bg-white rounded shadow cursor-pointer"
+                              onClick={() => openTicketModal(ticket)}>
+                              {ticket.title}
+                            </div>
                           )}
                         </Draggable>
                       ))}
@@ -120,12 +115,19 @@ const TicketsKanban = () => {
       </DragDropContext>
 
       <div className="mt-4 flex justify-end">
-        <Button
-          onClick={() => setShowTicketModal(true)}
-          className="">
-          Create Ticket
-        </Button>
+        <Button onClick={() => setShowTicketModal(true)}>Create Ticket</Button>
       </div>
+
+      <TicketViewModal
+        isOpen={showTicketViewModal}
+        setIsOpen={setShowTicketViewModal}
+        selectedTicket={selectedTicket}
+        selectedProject={selectedProject}
+        comments={comments}
+        setComments={setComments}
+        activityLog={activityLog}
+        setActivityLog={setActivityLog}
+      />
 
       <TicketModal
         showTicketModal={showTicketModal}
@@ -140,4 +142,4 @@ const TicketsKanban = () => {
   );
 };
 
-export default TicketsKanban;
+export default TicketManagement;
