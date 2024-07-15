@@ -45,7 +45,7 @@ const Settings = () => {
                     <EditProfileForm user={user} onClose={closeSideNav} />
                   )
                 }
-                className="text-primary-dark font-semibold hover:text-darker-green">
+                className="text-light-blue font-semibold hover:text-darker-green">
                 Edit Profile
               </button>
             </div>
@@ -118,7 +118,7 @@ const Settings = () => {
                     <ChangePasswordForm onClose={closeSideNav} />
                   )
                 }
-                className="text-primary-dark font-semibold hover:text-darker-green">
+                className="text-light-blue font-semibold hover:text-darker-green">
                 Change Password
               </button>
             </div>
