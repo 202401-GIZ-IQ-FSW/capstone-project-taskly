@@ -54,7 +54,7 @@ const SideNavigation = ({ isOpen, onClose, children, title }) => {
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-headline">
-            <div className="h-full flex flex-col ">
+            <div className="h-full flex flex-col">
               {/* Header */}
               <div className="flex justify-between px-2 py-6 border-b border-gray-200 items-center">
                 <h3 className="text-lg font-semibold text-gray-900 my-2">
