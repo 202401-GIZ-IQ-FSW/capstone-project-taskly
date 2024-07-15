@@ -14,6 +14,11 @@ const projectSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
+projectSchema.pre('find', function (next) {
+  this.populate('ownerId').populate({
+    path: 'ownerId',
+  });
+  next();
+});
 const Project = mongoose.model('Project', projectSchema);
 module.exports = Project;

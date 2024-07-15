@@ -25,7 +25,7 @@ const UserIconDropdown = ({ user, userNavigation }) => {
       <div className="mr-2">
         <DropdownMenuContent>
           {userNavigation.map((item, index) => (
-            <>
+            <div key={item.name}>
               <DropdownMenuItem key={item.name}>
                 <Link
                   href={item.href}
@@ -37,7 +37,7 @@ const UserIconDropdown = ({ user, userNavigation }) => {
               {index === userNavigation.length - 1 ? null : (
                 <DropdownMenuSeparator />
               )}
-            </>
+            </div>
           ))}
         </DropdownMenuContent>
       </div>
