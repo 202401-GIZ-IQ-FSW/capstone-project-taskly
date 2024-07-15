@@ -22,7 +22,7 @@ const ProfileLayout = ({ children }) => {
 
   const userNavigation = [
     { name: 'Home', href: '/' },
-    { name: 'Profile', href: '/account' },
+    { name: 'Profile', href: '/account/settings' },
     { name: 'Sign out', href: '/', onClick: () => handleLogout() },
   ];
 

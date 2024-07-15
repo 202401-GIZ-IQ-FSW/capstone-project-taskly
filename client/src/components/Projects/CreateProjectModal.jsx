@@ -1,6 +1,7 @@
 // client\src\components\Projects\CreateProjectModal.jsx
 import React, { useState } from 'react';
 import fetcher from '@/_utils/fetcher';
+import Button from '../Button/Button';
 
 const CreateProjectModal = ({ setIsOpen, setProjects, setSelectedProject }) => {
   const [projectName, setProjectName] = useState('');
@@ -46,11 +47,11 @@ const CreateProjectModal = ({ setIsOpen, setProjects, setSelectedProject }) => {
           onChange={(e) => setProjectDescription(e.target.value)}
           className="p-2 border rounded w-full mb-4"
         />
-        <button
+        <Button
           onClick={handleCreateProject}
           className="p-2 bg-blue-500 text-white rounded">
           Create
-        </button>
+        </Button>
         <button
           onClick={() => setIsOpen(false)}
           className="p-2 bg-gray-300 rounded ml-2">

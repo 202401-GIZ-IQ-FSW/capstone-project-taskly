@@ -1,6 +1,7 @@
 // client\src\components\Projects\EditProjectModal.jsx
 import React, { useState, useEffect } from 'react';
 import fetcher from '@/_utils/fetcher';
+import Button from '../Button/Button';
 
 const EditProjectModal = ({ setIsOpen, selectedProject, setProjects }) => {
   const [projectName, setProjectName] = useState('');
@@ -54,11 +55,11 @@ const EditProjectModal = ({ setIsOpen, selectedProject, setProjects }) => {
           onChange={(e) => setProjectDescription(e.target.value)}
           className="p-2 border rounded w-full mb-4"
         />
-        <button
+        <Button
           onClick={handleEditProject}
-          className="p-2 bg-blue-500 text-white rounded">
+          className="p-2  rounded">
           Save
-        </button>
+        </Button>
         <button
           onClick={() => setIsOpen(false)}
           className="p-2 bg-gray-300 rounded ml-2">

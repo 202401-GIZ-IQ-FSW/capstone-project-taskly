@@ -1,6 +1,7 @@
 // client\src\components\Projects\InviteMemberModal.jsx
 import React, { useState, useEffect } from 'react';
 import fetcher from '@/_utils/fetcher';
+import Button from '../Button/Button';
 
 const InviteMemberModal = ({
   isOpen,
@@ -82,18 +83,18 @@ const InviteMemberModal = ({
           <option value="view">View</option>
           <option value="edit">Edit</option>
         </select>
-        <button
+        <Button
           onClick={() => handleInviteMember(newMemberId, inviteRole)}
-          className="p-2 bg-green-500 text-white rounded mr-2">
+          className="p-2 rounded mr-2">
           Invite
-        </button>
+        </Button>
 
         <div className="mt-4">
           <h3 className="text-lg font-bold mb-2">Current Members</h3>
           <ul>
             <li className="flex justify-between items-center">
               <span>
-                {selectedProject ? selectedProject.ownerId.username : ''}
+                {selectedProject ? selectedProject.ownerId?.username : ''}
                 (Owner)
               </span>
             </li>
