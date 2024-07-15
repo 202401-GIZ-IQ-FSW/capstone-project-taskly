@@ -173,9 +173,9 @@ const ContactForm = () => {
           width="100%"
           height="300"
           style={{ border: '0' }}
-          allowfullscreen=""
+          allowFullScreen=""
           loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"></iframe>
+          referrerPolicy="no-referrer-when-downgrade"></iframe>
 
         <div className="max-w-lg p-6 md:p-10 rounded-lg absolute bottom-6 left-4 md:left-auto md:right-6 bg-white">
           <h1 className="font-roboto text-xl md:text-2xl font-medium tracking-wider text-custom-black mb-4 md:mb-6">
