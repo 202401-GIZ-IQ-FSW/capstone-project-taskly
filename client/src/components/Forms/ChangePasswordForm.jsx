@@ -69,7 +69,7 @@ const ChangePasswordForm = ({ onClose }) => {
           name="oldPassword"
           value={formData.oldPassword}
           onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-primary-dark focus:ring focus:ring-primary-dark focus:ring-opacity-50"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-light-blue focus:ring focus:ring-light-blue focus:ring-opacity-50"
         />
         <button
           type="button"
@@ -92,7 +92,7 @@ const ChangePasswordForm = ({ onClose }) => {
           name="newPassword"
           value={formData.newPassword}
           onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-primary-dark focus:ring focus:ring-primary-dark focus:ring-opacity-50"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-light-blue focus:ring focus:ring-light-blue focus:ring-opacity-50"
         />
         <button
           type="button"
@@ -115,7 +115,7 @@ const ChangePasswordForm = ({ onClose }) => {
           name="confirmPassword"
           value={formData.confirmPassword}
           onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-primary-dark focus:ring focus:ring-primary-dark focus:ring-opacity-50"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-light-blue focus:ring focus:ring-light-blue focus:ring-opacity-50"
         />
         <button
           type="button"
@@ -129,7 +129,7 @@ const ChangePasswordForm = ({ onClose }) => {
       <div className="my-8">
         <button
           type="submit"
-          className="w-full px-6 py-3 bg-primary-dark text-white font-semibold rounded-md hover:bg-primary-light focus:outline-none focus:ring focus:ring-primary-dark focus:ring-opacity-50">
+          className="w-full px-6 py-3 bg-light-blue text-white font-semibold rounded-md hover:bg-custom-blue focus:outline-none focus:ring focus:ring-light-blue focus:ring-opacity-50">
           Change Password
         </button>
       </div>

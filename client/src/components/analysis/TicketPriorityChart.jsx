@@ -53,7 +53,7 @@ const TicketPriorityChart = () => {
 
   return (
     <div>
-      <h2 className="bg-custom-teal text-white py-2 px-4 rounded hover:bg-green-700 cursor-pointer inline-block">
+      <h2 className="bg-custom-blue text-white py-2 px-4 rounded hover:bg-custom-blue/80 cursor-pointer inline-block">
         Tickets by Priority
       </h2>      
       <Doughnut data={chartData} />

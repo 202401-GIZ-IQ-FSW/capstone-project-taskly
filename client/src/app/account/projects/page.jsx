@@ -375,7 +375,7 @@ const Projects = () => {
           <div className="mt-4 flex justify-end">
             <button
               onClick={() => setTicketModalIsOpen(true)}
-              className="p-2 bg-green-500 text-white rounded">
+              className="p-2 bg-light-blue hover:bg-light-blue/90 text-white rounded">
               Create Ticket
             </button>
           </div>

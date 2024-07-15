@@ -22,7 +22,7 @@ const Sidebar = ({
       className={`hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:flex-col ${
         sidebarCollapsed ? 'lg:w-20' : 'lg:w-72'
       }`}>
-      <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
+      <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-custom-blue px-6 pb-4">
         <div className="flex h-16 shrink-0 items-center">
           <Link href="/">
             <img
@@ -34,7 +34,7 @@ const Sidebar = ({
         </div>
         <div className={`${sidebarCollapsed ? 'hidden' : 'block'}`}>
           <div className="mb-4">
-            <label htmlFor="projectSelect" className="mr-2">
+            <label htmlFor="projectSelect" className="mr-2 text-white font-roboto mb-2">
               Choose project:
             </label>
             <select
@@ -84,14 +84,14 @@ const Sidebar = ({
                       href={item.href}
                       className={`group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 ${
                         pathname === item.href
-                          ? 'bg-gray-50 text-black'
-                          : 'text-gray-700 hover:bg-gray-50 hover:text-black'
+                          ? 'bg-gray-50 text-custom-blue'
+                          : 'text-white hover:bg-gray-50 hover:text-custom-blue'
                       }`}>
                       <item.icon
                         className={`h-6 w-6 shrink-0 ${
                           pathname === item.href
-                            ? 'text-black'
-                            : 'text-gray-400 group-hover:text-black'
+                            ? 'text-custom-blue'
+                            : 'text-white group-hover:text-custom-blue'
                         }`}
                         aria-hidden="true"
                       />
@@ -104,9 +104,9 @@ const Sidebar = ({
             <li className="mt-auto">
               <Link
                 href="/account/settings"
-                className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-black">
+                className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-white hover:bg-gray-50 hover:text-custom-blue">
                 <FaCog
-                  className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-black"
+                  className="h-6 w-6 shrink-0 text-white group-hover:text-custom-blue"
                   aria-hidden="true"
                 />
                 {!sidebarCollapsed && 'Settings'}
