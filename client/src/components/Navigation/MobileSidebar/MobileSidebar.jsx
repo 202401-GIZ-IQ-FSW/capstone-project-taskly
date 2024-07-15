@@ -23,7 +23,7 @@ const MobileSidebar = ({
 
   return (
     <Transition show={sidebarOpen}>
-      <Dialog className="relative z-50 lg:hidden text-white" onClose={setSidebarOpen}>
+      <Dialog className="relative z-50 lg:hidden" onClose={setSidebarOpen}>
         <TransitionChild
           enter="transition-opacity ease-linear duration-300"
           enterFrom="opacity-0"
@@ -64,11 +64,13 @@ const MobileSidebar = ({
                   </button>
                 </div>
               </TransitionChild>
-              <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-custom-blue px-6 pb-4">
-                <div className="flex h-16 shrink-0 items-center">
-
               <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
-                <div className="mt-12">
+                <div className="mt-12 space-y-8">
+                  <Link
+                    href={'/'}
+                    className="font-roboto text-3xl lg:text-4xl font-extrabold text-custom-blue-200">
+                    Taskly
+                  </Link>
                   <ProjectSelectDropdown
                     projects={projects}
                     selectedProject={selectedProject}
@@ -94,14 +96,14 @@ const MobileSidebar = ({
                               href={item.href}
                               className={`group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 ${
                                 pathname === item.href
-                                  ? 'bg-gray-50 text-custom-blue'
-                                  : 'text-white hover:bg-gray-50 hover:text-custom-blue'
+                                  ? 'bg-gray-50 text-black'
+                                  : 'text-gray-700 hover:bg-gray-50 hover:text-black'
                               }`}>
                               <item.icon
                                 className={`h-6 w-6 shrink-0 ${
                                   pathname === item.href
-                                    ? 'text-custom-blue'
-                                    : 'text-white group-hover:text-custom-blue'
+                                    ? 'text-black'
+                                    : 'text-gray-400 group-hover:text-black'
                                 }`}
                                 aria-hidden="true"
                               />
@@ -114,9 +116,9 @@ const MobileSidebar = ({
                     <li className="mt-auto">
                       <Link
                         href="/account/settings"
-                        className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-white hover:bg-gray-50 hover:text-custom-blue">
+                        className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-black">
                         <FaCog
-                          className="h-6 w-6 shrink-0 text-white group-hover:text-custom-blue"
+                          className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-black"
                           aria-hidden="true"
                         />
                         Settings
@@ -124,7 +126,7 @@ const MobileSidebar = ({
                     </li>
                   </ul>
                 </nav>
-              </div></div></div>
+              </div>
             </DialogPanel>
           </TransitionChild>
         </div>
