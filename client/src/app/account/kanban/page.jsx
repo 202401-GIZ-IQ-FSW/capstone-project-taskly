@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { useProjects } from '@/context/ProjectsContext/ProjectsContext';
 import fetcher from '@/_utils/fetcher';
+import Link from 'next/link';
 
 const KanbanBoard = () => {
   const { selectedProject } = useProjects();
@@ -97,17 +98,20 @@ const KanbanBoard = () => {
                       draggableId={ticket._id}
                       index={index}>
                       {(provided) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          className="p-2 mb-2 bg-white rounded shadow cursor-pointer"
-                          onClick={() => openTicketModal(ticket)}>
-                          <h4 className="text-lg font-semibold">
-                            {ticket.title}
-                          </h4>
-                          <p className="text-gray-600">{ticket.description}</p>
-                        </div>
+                        <Link href={`/account/tickets/${ticket._id}`}>
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            className="p-2 mb-2 bg-white rounded shadow cursor-pointer">
+                            <h4 className="text-lg font-semibold">
+                              {ticket.title}
+                            </h4>
+                            <p className="text-gray-600">
+                              {ticket.description}
+                            </p>
+                          </div>
+                        </Link>
                       )}
                     </Draggable>
                   ))}

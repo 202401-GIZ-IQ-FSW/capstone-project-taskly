@@ -1,4 +1,3 @@
-'use client';
 import React from 'react';
 import TicketStats from '../../components/Tickets/TicketStats';
 import Hero from '../../components/Tickets/Hero';

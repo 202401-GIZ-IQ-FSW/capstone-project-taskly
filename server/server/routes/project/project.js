@@ -27,4 +27,13 @@ router.delete('/:projectId', validateObjectId('projectId'), deleteProject);
 // Project Tickets routes
 router.use('/:projectId/tickets', validateObjectId('projectId'), ticketRoutes);
 
+
+
+// - **Trigger Notification**
+
+const notificationController = require('../../controllers/notification/notificationController');
+
+router.post('/:projectId/tickets/:ticketId/notify', notificationController.triggerNotificationsOnTicketActions);
+router.post('/:projectId/notify', notificationController.triggerNotificationsOnProjectActions);
+
 module.exports = router;

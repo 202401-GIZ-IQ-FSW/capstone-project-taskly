@@ -21,8 +21,8 @@ const ProfileLayout = ({ children }) => {
   const { projects, selectedProject, setSelectedProject } = useProjects();
 
   const userNavigation = [
-    { name: 'Home Page', href: '/' },
-    { name: 'Your profile', href: '/account' },
+    { name: 'Home', href: '/' },
+    { name: 'Profile', href: '/account' },
     { name: 'Sign out', href: '/', onClick: () => handleLogout() },
   ];
 

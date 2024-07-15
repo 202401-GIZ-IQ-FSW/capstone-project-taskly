@@ -38,7 +38,7 @@ const DoughnutChart = () => {
 
   return (
     <div>
-      <h2>Resolved and Opened Tickets</h2>
+      <h2 className="bg-custom-teal text-white py-2 px-4 rounded hover:bg-green-700 cursor-pointer inline-block">Resolved and Opened Tickets</h2>
       <Doughnut data={chartData} />
     </div>
   );
