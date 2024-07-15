@@ -167,8 +167,8 @@ const ContactForm = () => {
           <Notification message={notificationMessage} type={notificationType} />
         </div>
       </div>
-
       <Map/>
+
     </div>
   );
 };

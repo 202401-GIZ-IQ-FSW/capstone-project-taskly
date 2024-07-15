@@ -5,6 +5,7 @@ import fetcher from '@/_utils/fetcher';
 import Notification from '@/components/Notification';
 import { useUser } from '@/hooks/useUser';
 import { FcGoogle } from 'react-icons/fc';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 
 export default function Login() {
   const { handleSetAccessToken, handleSetRefreshToken } = useUser();
@@ -12,6 +13,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [notificationMessage, setNotificationMessage] = useState('');
   const [notificationType, setNotificationType] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const generateRandomNumber = () => {
     return Math.floor(100 + Math.random() * 900);
@@ -86,7 +88,7 @@ export default function Login() {
                 className="w-full px-3 py-2 rounded font-roboto bg-gray-100 text-gray-800 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-teal-500"
               />
             </div>
-            <div className="text-start">
+            <div className="text-start relative">
               <label
                 className="text-sm font-normal font-roboto text-custom-blue"
                 htmlFor="password">
@@ -94,12 +96,20 @@ export default function Login() {
               </label>
               <input
                 id="password"
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 className="w-full px-3 py-2 rounded bg-gray-100 text-gray-800 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-teal-500"
               />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-3 flex items-center justify-center text-gray-500"
+                onClick={() => setShowPassword(!showPassword)}>
+                <div className="mt-5">
+                  {showPassword ? <FiEyeOff /> : <FiEye />}
+                </div>
+              </button>
             </div>
             <div className="flex items-center justify-between text-sm text-custom-blue">
               <label className="flex items-center">
