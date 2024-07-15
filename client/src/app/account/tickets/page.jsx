@@ -35,7 +35,6 @@ const Tickets = () => {
   if (error) {
     return <div>Error: {error}</div>;
   }
-
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-4">

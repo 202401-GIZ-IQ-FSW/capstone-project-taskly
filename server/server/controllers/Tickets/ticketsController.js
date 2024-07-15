@@ -48,7 +48,7 @@ const getAllTickets = async (req, res) => {
       .sort({ order: 1 })
       .exec();
     tickets = await sortItems(tickets);
-    res.status(200).json({ tickets });
+    res.status(200).json(tickets);
   } catch (error) {
     res
       .status(500)
