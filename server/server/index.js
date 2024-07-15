@@ -20,8 +20,6 @@ const adminRoutes = require('./routes/admin/admin');
 const projectRoutes = require('./routes/project/project');
 const notificationRoutes = require('./routes/notification/notification');
 const userRoutes = require('./routes/user/userProfileRoute');
-const ticketRoutes = require('./routes/tickets/tickets');
-const commentsRouter = require('./routes/tickets/comments');
 const contactUsRoute = require('./routes/contactUs/ContactUs');
 const dashboardRoutes = require('./routes/dashboard/main');
 const analyticsRoutes = require('./routes/analysis/analytics');
@@ -61,8 +59,7 @@ app.use('/api/v1', contactUsRoute);
 app.use(verifyJWT); // everything below this line will use verifyJWT
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/projects', projectRoutes);
-app.use('/api/v1/projects', ticketRoutes);
-app.use('/api/v1/projects', commentsRouter);
+app.use('/api/v1/notifications', notificationRoutes);
 app.use('/api/v1/dashboard', dashboardRoutes);
 app.use('/api/v1/analytics', analyticsRoutes);
 
@@ -75,17 +72,6 @@ io.on('connection', (socket) => {
 });
 
 // Function to get the local network IP address
-function getLocalIpAddress() {
-  const interfaces = os.networkInterfaces();
-  for (let name of Object.keys(interfaces)) {
-    for (let iface of interfaces[name]) {
-      if (iface.family === 'IPv4' && !iface.internal) {
-        return iface.address;
-      }
-    }
-  }
-  return 'localhost';
-}// Function to get the local network IP address
 function getLocalIpAddress() {
   const interfaces = os.networkInterfaces();
   for (let name of Object.keys(interfaces)) {
