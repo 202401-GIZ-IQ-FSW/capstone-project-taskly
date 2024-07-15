@@ -1,6 +1,9 @@
 // server\server\index.js
 const express = require('express');
 const cors = require('cors');
+// const cookieParser = require('cookie-parser');
+const http = require('http');
+const socketIo = require('socket.io');
 const passport = require('passport');
 const os = require('os');
 
@@ -15,13 +18,20 @@ const verifyJWT = require('./middleware/verifyJWT');
 const authRoutes = require('./routes/auth/auth');
 const adminRoutes = require('./routes/admin/admin');
 const projectRoutes = require('./routes/project/project');
+const notificationRoutes = require('./routes/notification/notification');
 const userRoutes = require('./routes/user/userProfileRoute');
 const ticketRoutes = require('./routes/tickets/ticket');
 const commentsRouter = require('./routes/comment/commentRoute');
 const contactUsRoute = require('./routes/contactUs/ContactUs');
 const dashboardRoutes = require('./routes/dashboard/main');
+const analyticsRoutes = require('./routes/analysis/analytics');
 
 const app = express();
+
+//set up socketIo
+const server = http.createServer(app);
+const io = socketIo(server);
+
 const port =
   process.env.NODE_ENV === 'test'
     ? process.env.NODE_LOCAL_TEST_PORT
@@ -54,7 +64,28 @@ app.use('/api/v1/projects', projectRoutes);
 app.use('/api/v1/projects', ticketRoutes);
 app.use('/api/v1/projects', commentsRouter);
 app.use('/api/v1/dashboard', dashboardRoutes);
+app.use('/api/v1/analytics', analyticsRoutes);
+
+// Socket.io connection
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
+
 // Function to get the local network IP address
+function getLocalIpAddress() {
+  const interfaces = os.networkInterfaces();
+  for (let name of Object.keys(interfaces)) {
+    for (let iface of interfaces[name]) {
+      if (iface.family === 'IPv4' && !iface.internal) {
+        return iface.address;
+      }
+    }
+  }
+  return 'localhost';
+}// Function to get the local network IP address
 function getLocalIpAddress() {
   const interfaces = os.networkInterfaces();
   for (let name of Object.keys(interfaces)) {

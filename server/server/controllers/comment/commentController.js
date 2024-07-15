@@ -41,7 +41,6 @@ const createComment = async (req, res) => {
 // - GET /api/v1/projects/{projectId}/tickets/{ticketId}/comments - Get all comments for a ticket
 const getAllComments = async (req, res) => {
   const { ticketId } = req.params;
-  const userId = req.user.id;
   try {
     const checkTicket = await TicketModel.findById(ticketId);
     if (!checkTicket) {

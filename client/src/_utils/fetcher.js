@@ -17,7 +17,13 @@ const fetcher = async (url, options = {}) => {
     : {};
 
   // Don't attempt to fetch the user profile if they aren't logged in (no token)
-  if (url && url.includes('/account') && !accessToken) {
+  if (
+    url &&
+    (url.includes('/account') ||
+      url.includes('/profile') ||
+      url.includes('/projects')) &&
+    !accessToken
+  ) {
     return null;
   }
 

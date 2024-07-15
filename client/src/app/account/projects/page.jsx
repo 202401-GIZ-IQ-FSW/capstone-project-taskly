@@ -32,8 +32,6 @@ const ProjectsPage = () => {
     projects ?? (window['projectSelect'].value = projects[0]._id);
     setSelectedProject(projects[0]);
   }, [projects]);
-  useEffect(() => {
-  }, [selectedProject]);
 
   const handleClicks = (event) => {
     if (!event.target.id.includes('settings')) {

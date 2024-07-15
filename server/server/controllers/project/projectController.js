@@ -8,7 +8,9 @@ const createProject = async (req, res) => {
 
   try {
     if (!name || !description) {
-      return res.status(400).json({ message: 'Project name and description are required!' });
+      return res
+        .status(400)
+        .json({ message: 'Project name and description are required!' });
     }
 
     const project = await ProjectModel.create({
@@ -18,7 +20,10 @@ const createProject = async (req, res) => {
     });
     res.status(201).json(project);
   } catch (error) {
-    res.status(500).json({ error: 'An error occurred while creating the project', message: error.message });
+    res.status(500).json({
+      error: 'An error occurred while creating the project',
+      message: error.message,
+    });
   }
 };
 
@@ -29,7 +34,9 @@ const getAllProjects = async (req, res) => {
     // Validate the user ID
     const checkUser = await UserModel.findById(userId);
     if (!checkUser) {
-      return res.status(404).json({ message: 'You have to be logged in to view your projects' });
+      return res
+        .status(404)
+        .json({ message: 'You have to be logged in to view your projects' });
     }
 
     // Find projects owned by the user
@@ -39,7 +46,10 @@ const getAllProjects = async (req, res) => {
     );;
     res.json(projects);
   } catch (error) {
-    res.status(500).json({ error: 'An error occurred while getting the projects', message: error.message });
+    res.status(500).json({
+      error: 'An error occurred while getting the projects',
+      message: error.message,
+    });
   }
 };
 
@@ -53,7 +63,10 @@ const getSingleProject = async (req, res) => {
     }
     res.json(project);
   } catch (error) {
-    res.status(500).json({ error: 'An error occurred while getting the project', message: error.message });
+    res.status(500).json({
+      error: 'An error occurred while getting the project',
+      message: error.message,
+    });
   }
 };
 
@@ -62,20 +75,27 @@ const updateProject = async (req, res) => {
   const { name, description } = req.body;
 
   if (!name && !description) {
-    return res
-      .status(400)
-      .json({ message: 'please provide a new name or description to update the project' });
+    return res.status(400).json({
+      message: 'please provide a new name or description to update the project',
+    });
   }
 
   try {
-    const updateProject = await ProjectModel.findByIdAndUpdate(projectId, req.body, { new: true });
+    const updateProject = await ProjectModel.findByIdAndUpdate(
+      projectId,
+      req.body,
+      { new: true }
+    );
 
     if (!updateProject) {
       return res.status(400).json({ message: 'project not found.' });
     }
     res.json(updateProject);
   } catch (error) {
-    res.status(500).json({ error: 'An error occurred while updating the project', message: error.message });
+    res.status(500).json({
+      error: 'An error occurred while updating the project',
+      message: error.message,
+    });
   }
 };
 
@@ -90,25 +110,27 @@ const deleteProject = async (req, res) => {
 
     res.status(200).json({ message: 'Project deleted successfully' });
   } catch (error) {
-    res.status(500).json({ error: 'An error occurred while deleting the project', message: error.message });
+    res.status(500).json({
+      error: 'An error occurred while deleting the project',
+      message: error.message,
+    });
   }
 };
 
-
 // - GET /api/v1/projects/{projectId}/tickets/search?q={query} - Search tickets within a project
-const searchTicket = async (req, res) => {
+const searchTickets = async (req, res) => {
   try {
+    const projectId = req.params.projectId;
     const query = req.query.q;
+
     if (!query) {
       return res.status(400).json({ message: 'Query parameter q is required' });
     }
 
-    const regex = new RegExp(query, 'i');  
+    const regex = new RegExp(query, 'i');
     const result = await TicketModel.find({
-      $or: [
-        { name: regex },
-        { description: regex },  
-      ],
+      projectId,
+      title: regex, // Search only by ticket title
     });
 
     if (result.length === 0) {
@@ -117,49 +139,57 @@ const searchTicket = async (req, res) => {
 
     res.status(200).json(result);
   } catch (error) {
-    res.status(500).json({ error: 'An error occurred while searching for tickets', message: error.message });
+    res.status(500).json({
+      error: 'An error occurred while searching for tickets',
+      message: error.message,
+    });
   }
 };
+
 
 // - GET /api/v1/projects/{projectId}/tickets/filter?status={status}&priority={priority} - Filter tickets within a project by status and priority
-const filterTicket = async(req, res) => {
-  try{
-     const projectId = req.params;
-     const {status, priority} = req.query;
+const filterTickets = async (req, res) => {
+  try {
+    const projectId = req.params.projectId;
+    const { status, priority, assignee } = req.query;
 
-     if(!projectId){
-      res.status(400).json({message: 'No Project provided!'});
-     }
-      const filter = {projectId};
-      if(status){
-        filter.status = status;
-      }
-      if(priority){
-        filter.priority = priority;
-      }
-      const data = await TicketModel.find(filter);
+    if (!projectId) {
+      return res.status(400).json({ message: 'Project ID is required' });
+    }
 
-      if(data.length === 0){
-      return res.status(404).json({message:'no Ticket found'});
+    const filter = { projectId };
 
-      }
+    if (status) {
+      filter.status = status;
+    }
+    if (priority) {
+      filter.priority = priority;
+    }
+    if (assignee) {
+      filter.assignees = assignee;
+    }
 
-      res.status(200).json(data);
-  }
-  catch (error) {
-    res.status(500).json({ error: 'An error occurred while filtering tickets', message: error.message });
+    const result = await TicketModel.find(filter);
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: 'No tickets found' });
+    }
+
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({
+      error: 'An error occurred while filtering tickets',
+      message: error.message,
+    });
   }
 };
 
-
-
-
- module.exports = {
+module.exports = {
   createProject,
   getAllProjects,
   getSingleProject,
   updateProject,
   deleteProject,
-  searchTicket,
-  filterTicket,
+  searchTickets,
+  filterTickets,
 };
