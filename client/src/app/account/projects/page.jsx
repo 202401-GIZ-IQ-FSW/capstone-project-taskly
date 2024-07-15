@@ -1,5 +1,6 @@
 // client\src\app\account\projects\page.jsx
 'use client';
+import Button from '@/components/Button/Button';
 import CreateProjectModal from '@/components/Projects/CreateProjectModal';
 import ProjectSettings from '@/components/Projects/ProjectSettings';
 import TicketManagement from '@/components/Projects/TicketManagement';
@@ -34,11 +35,9 @@ const ProjectsPage = () => {
 
         <div className="flex flex-row justify-end w-full">
           {!selectedProject && (
-            <button
-              className="p-2 bg-green-500 text-white rounded"
-              onClick={() => setShowCreateProjectModal(true)}>
+            <Button onClick={() => setShowCreateProjectModal(true)}>
               Create Project
-            </button>
+            </Button>
           )}
           {selectedProject && (
             <ProjectSettings

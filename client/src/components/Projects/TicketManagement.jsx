@@ -3,6 +3,7 @@ import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import fetcher from '@/_utils/fetcher';
 import TicketViewModal from '@/components/Projects/TicketViewModal';
 import TicketModal from '@/components/Projects/TicketModal';
+import Button from '../Button/Button';
 
 const TicketManagement = ({ selectedProject, setError }) => {
   const [tickets, setTickets] = useState([]);
@@ -114,11 +115,7 @@ const TicketManagement = ({ selectedProject, setError }) => {
       </DragDropContext>
 
       <div className="mt-4 flex justify-end">
-        <button
-          onClick={() => setShowTicketModal(true)}
-          className="p-2 bg-green-500 text-white rounded">
-          Create Ticket
-        </button>
+        <Button onClick={() => setShowTicketModal(true)}>Create Ticket</Button>
       </div>
 
       <TicketViewModal
