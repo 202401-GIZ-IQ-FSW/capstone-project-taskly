@@ -8,9 +8,11 @@ import ProgressDropdown from '@/components/Dropdowns/ProgressDropdown';
 import { useProjects } from '@/context/ProjectsContext/ProjectsContext';
 import SuccessAlert from '@/components/Alerts/SuccessAlert';
 import WarnAlert from '@/components/Alerts/WarnAlert';
+import { useUser } from '@/hooks/useUser';
 
 const TicketDetail = ({ params }) => {
   const { ticketId } = params;
+  const { user } = useUser();
   const { selectedProject } = useProjects();
   const [ticket, setTicket] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -53,7 +55,10 @@ const TicketDetail = ({ params }) => {
 
   const sendNotificationToAssignees = async (message) => {
     for (const assignee of assignees) {
-      await sendNotification(assignee._id, message);
+      // Check if assignee is not the logged-in user before sending notification
+      if (assignee._id !== user._id) {
+        await sendNotification(assignee._id, message);
+      }
     }
   };
 
@@ -160,13 +165,16 @@ const TicketDetail = ({ params }) => {
 
   const sendNotification = async (userId, message) => {
     try {
-      await fetcher(
-        `/v1/projects/${selectedProject._id}/tickets/${ticketId}/notify`,
-        {
-          method: 'POST',
-          body: JSON.stringify({ userId, message }),
-        }
-      );
+      // Check if userId is not equal to the logged-in user's ID before sending notification
+      if (userId !== user._id) {
+        await fetcher(
+          `/v1/projects/${selectedProject._id}/tickets/${ticketId}/notify`,
+          {
+            method: 'POST',
+            body: JSON.stringify({ userId, message }),
+          }
+        );
+      }
     } catch (err) {
       console.error('Error sending notification:', err.message);
     }
