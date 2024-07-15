@@ -3,12 +3,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { FiMoreHorizontal } from 'react-icons/fi';
 
-const CommentActionsDropdown = ({ onEditClick, onDeleteClick }) => {
+const TicketActionsDropdown = ({ onEditClick, onDeleteClick }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -17,12 +17,14 @@ const CommentActionsDropdown = ({ onEditClick, onDeleteClick }) => {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem onClick={onEditClick}>Edit</DropdownMenuItem>
+        <DropdownMenuItem onClick={onEditClick}>Edit Ticket</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={onDeleteClick}>Delete</DropdownMenuItem>
+        <DropdownMenuItem onClick={onDeleteClick} className="text-red-600">
+          Delete Ticket
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
 };
 
-export default CommentActionsDropdown;
+export default TicketActionsDropdown;

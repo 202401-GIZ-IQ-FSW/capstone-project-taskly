@@ -9,6 +9,9 @@ import { useProjects } from '@/context/ProjectsContext/ProjectsContext';
 import SuccessAlert from '@/components/Alerts/SuccessAlert';
 import WarnAlert from '@/components/Alerts/WarnAlert';
 import { useUser } from '@/hooks/useUser';
+import TicketActionsDropdown from '@/components/Dropdowns/TicketActionsDropdown';
+import Button from '@/components/Button/Button';
+import { useRouter } from 'next/navigation';
 
 const TicketDetail = ({ params }) => {
   const { ticketId } = params;
@@ -19,7 +22,58 @@ const TicketDetail = ({ params }) => {
   const [error, setError] = useState(null);
   const [comments, setComments] = useState([]);
   const [assignees, setAssignees] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedTitle, setEditedTitle] = useState('');
+  const [editedDescription, setEditedDescription] = useState('');
+  const router = useRouter();
 
+  const handleEditClick = () => {
+    setIsEditing(true);
+    setEditedTitle(ticket.title);
+    setEditedDescription(ticket.description);
+  };
+
+  const handleSaveEdit = async () => {
+    try {
+      const updatedTicket = await fetcher(
+        `/v1/projects/${selectedProject._id}/tickets/${ticketId}`,
+        {
+          method: 'PUT',
+          body: JSON.stringify({
+            title: editedTitle,
+            description: editedDescription,
+          }),
+        }
+      );
+      setTicket(updatedTicket);
+      setIsEditing(false);
+      SuccessAlert('Ticket updated successfully');
+    } catch (err) {
+      setError(err.message);
+      WarnAlert(`Error updating ticket: ${err.message}`);
+    }
+  };
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+  };
+
+  const handleDeleteClick = async () => {
+    if (window.confirm('Are you sure you want to delete this ticket?')) {
+      try {
+        await fetcher(
+          `/v1/projects/${selectedProject._id}/tickets/${ticketId}`,
+          {
+            method: 'DELETE',
+          }
+        );
+        SuccessAlert('Ticket deleted successfully');
+        router.push('/account/tickets');
+      } catch (err) {
+        setError(err.message);
+        WarnAlert(`Error deleting ticket: ${err.message}`);
+      }
+    }
+  };
   useEffect(() => {
     if (ticketId && selectedProject) {
       fetchTicket();
@@ -186,9 +240,49 @@ const TicketDetail = ({ params }) => {
 
   return (
     <div className="p-4 bg-white flex flex-col md:flex-row">
-      <div className="md:w-3/4 md:pr-4">
-        <h2 className="text-2xl font-bold mb-2">{ticket?.title}</h2>
-        <p className="text-gray-600 mb-4 line-clamp-2">{ticket?.description}</p>
+      <div className="md:w-3/4 md:pr-4 relative">
+        <div className="mb-16">
+          {isEditing ? (
+            <>
+              <input
+                type="text"
+                value={editedTitle}
+                onChange={(e) => setEditedTitle(e.target.value)}
+                className="text-2xl font-bold mb-2 w-full"
+              />
+              <textarea
+                value={editedDescription}
+                onChange={(e) => setEditedDescription(e.target.value)}
+                className="text-gray-600 mb-4 w-full h-24"
+              />
+              <div className="mt-2">
+                <Button
+                  onClick={handleSaveEdit}
+                  className="bg-blue-500 text-white px-4 py-2 rounded mr-2">
+                  Save
+                </Button>
+                <Button
+                  onClick={handleCancelEdit}
+                  className="bg-gray-300 text-black px-4 py-2 rounded">
+                  Cancel
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <h2 className="text-2xl font-bold mb-2">{ticket?.title}</h2>
+              <p className="text-gray-600 mb-4 line-clamp-2">
+                {ticket?.description}
+              </p>
+              <div className="absolute top-0 right-6">
+                <TicketActionsDropdown
+                  onEditClick={handleEditClick}
+                  onDeleteClick={handleDeleteClick}
+                />
+              </div>
+            </>
+          )}
+        </div>
         <CommentList
           selectedProject={selectedProject}
           ticketId={ticketId}

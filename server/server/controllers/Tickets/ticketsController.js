@@ -98,7 +98,8 @@ const getTicketById = async (req, res) => {
 const updateTicket = async (req, res) => {
   const ticketId = req.params.ticketId;
   const projectId = req.params.projectId;
-  const { newStatus, newOrder, status, priority } = req.body;
+  const { newStatus, newOrder, status, priority, title, description } =
+    req.body;
 
   try {
     if (newOrder !== undefined && newOrder < 0) {
@@ -131,10 +132,21 @@ const updateTicket = async (req, res) => {
       } else {
         res.status(404).json({ message: 'Tickets not found' });
       }
-    } else if (status !== undefined || priority !== undefined) {
+    } else if (
+      status !== undefined ||
+      priority !== undefined ||
+      title !== undefined ||
+      description !== undefined
+    ) {
+      const updateFields = {};
+      if (status !== undefined) updateFields.status = status;
+      if (priority !== undefined) updateFields.priority = priority;
+      if (title !== undefined) updateFields.title = title;
+      if (description !== undefined) updateFields.description = description;
+
       const updatedTicket = await TicketModel.findByIdAndUpdate(
         ticketId,
-        { status, priority },
+        updateFields,
         { new: true, runValidators: true }
       ).populate('assignees', [
         '_id',

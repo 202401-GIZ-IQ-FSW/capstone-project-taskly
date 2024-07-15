@@ -84,7 +84,9 @@ const CommentList = ({ selectedProject, ticketId, comments, setComments }) => {
           placeholder="Add a comment"
           rows="4"
           required></textarea>
-        <Button onClick={handleAddComment}>Submit</Button>
+        <Button disabled={newComment.trim() === ''} onClick={handleAddComment}>
+          Submit
+        </Button>
       </div>
     </div>
   );
