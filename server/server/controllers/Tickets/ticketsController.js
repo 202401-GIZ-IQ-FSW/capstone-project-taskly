@@ -48,7 +48,7 @@ const getAllTickets = async (req, res) => {
       .sort({ order: 1 })
       .exec();
     tickets = await sortItems(tickets);
-    res.status(200).json({ tickets });
+    res.status(200).json(tickets);
   } catch (error) {
     res
       .status(500)
@@ -97,39 +97,59 @@ const getTicketById = async (req, res) => {
 
 const updateTicket = async (req, res) => {
   const ticketId = req.params.ticketId;
-
   const projectId = req.params.projectId;
-  const { newStatus, newOrder } = req.body;
+  const { newStatus, newOrder, status, priority } = req.body;
 
   try {
-    if (newOrder < 0) {
+    if (newOrder !== undefined && newOrder < 0) {
       const ticket = await TicketModel.findOne({ status: newStatus, order: 0 });
       if (ticket) {
         ticket.order = 0.9;
         await ticket.save();
       }
     }
-    await TicketModel.findByIdAndUpdate(
-      ticketId,
-      { status: newStatus, order: newOrder },
-      { new: true, runValidators: true }
-    );
-    let tickets = await TicketModel.find({ projectId })
-      .populate('assignees', ['_id', 'profilePicture', 'username', 'firstName'])
-      .sort({ order: 1 })
-      .exec();
-    tickets = await sortItems(tickets);
 
-    if (tickets) {
-      // send users emails for telling them that the ticket has updated
-      // const userEmail = updatedTicket.user.email;
-      // const subject =  `your ticket has been updated ${ticketId}`;
-      // const text = `Dear user,\n\nYour ticket with ID ${ticketId} is now ${updatedTicket.status}.\n\nThank you,\nSupport Team`;
+    if (newStatus !== undefined || newOrder !== undefined) {
+      await TicketModel.findByIdAndUpdate(
+        ticketId,
+        { status: newStatus, order: newOrder },
+        { new: true, runValidators: true }
+      );
+      let tickets = await TicketModel.find({ projectId })
+        .populate('assignees', [
+          '_id',
+          'profilePicture',
+          'username',
+          'firstName',
+        ])
+        .sort({ order: 1 })
+        .exec();
+      tickets = await sortItems(tickets);
 
-      // await sendEmails(userEmail, subject, text);
-      res.status(200).json(tickets);
+      if (tickets) {
+        res.status(200).json(tickets);
+      } else {
+        res.status(404).json({ message: 'Tickets not found' });
+      }
+    } else if (status !== undefined || priority !== undefined) {
+      const updatedTicket = await TicketModel.findByIdAndUpdate(
+        ticketId,
+        { status, priority },
+        { new: true, runValidators: true }
+      ).populate('assignees', [
+        '_id',
+        'profilePicture',
+        'username',
+        'firstName',
+      ]);
+
+      if (updatedTicket) {
+        res.status(200).json(updatedTicket);
+      } else {
+        res.status(404).json({ message: 'Ticket not found' });
+      }
     } else {
-      res.status(404).json({ message: 'Ticket not found' });
+      res.status(400).json({ message: 'Invalid update parameters' });
     }
   } catch (error) {
     res

@@ -1,128 +1,143 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
-import { useProjects } from '@/context/ProjectsContext/ProjectsContext';
 import fetcher from '@/_utils/fetcher';
+import TicketViewModal from '@/components/Projects/TicketViewModal';
+import TicketModal from '@/components/Projects/TicketModal';
+import { useProjects } from '@/context/ProjectsContext/ProjectsContext';
 import Link from 'next/link';
+import Button from '@/components/Button/Button';
 
-const KanbanBoard = () => {
-  const { selectedProject } = useProjects();
+const TicketsKanban = () => {
   const [tickets, setTickets] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [selectedTicket, setSelectedTicket] = useState(null);
+  const [showTicketModal, setShowTicketModal] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const { selectedProject } = useProjects();
   const [error, setError] = useState(null);
-
-  useEffect(() => {
-    if (selectedProject) {
-      fetchProjectTickets();
-    }
-  }, [selectedProject]);
-
-  const fetchProjectTickets = async () => {
-    setLoading(true);
-    try {
-      const data = await fetcher(`/v1/projects/${selectedProject._id}/tickets`);
-      setTickets(data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const statuses = ['open', 'in progress', 'resolved', 'closed'];
 
+  useEffect(() => {
+    if (selectedProject) {
+      const fetchTickets = async () => {
+        try {
+          const data = await fetcher(
+            `/v1/projects/${selectedProject._id}/tickets`
+          );
+          if (data) setTickets(data);
+        } catch (err) {
+          setError(err.message);
+          console.error(err);
+        }
+      };
+
+      fetchTickets();
+    }
+  }, [selectedProject]);
+
   const handleDragEnd = async (result) => {
-    const { destination, source, draggableId } = result;
+    const { destination, draggableId } = result;
+    setIsDragging(true);
     if (!destination) return;
+    const newOrder = destination.index - 0.5;
 
-    // Create a copy of tickets array to modify
-    const updatedTickets = [...tickets];
-
-    // Remove the dragged ticket from its original position
-    const [movedTicket] = updatedTickets.splice(source.index, 1);
-
-    // Update the status of the moved ticket to the destination column
-    movedTicket.status = destination.droppableId;
-
-    // Insert the moved ticket into the new position
-    updatedTickets.splice(destination.index, 0, movedTicket);
-
-    // Update state with the modified tickets array
-    setTickets(updatedTickets);
-
-    // Update ticket status in the backend
     try {
-      await fetcher(
+      const res = await fetcher(
         `/v1/projects/${selectedProject._id}/tickets/${draggableId}`,
         {
           method: 'PUT',
-          body: JSON.stringify({ status: destination.droppableId }),
           headers: {
             'Content-Type': 'application/json',
           },
+          body: JSON.stringify({
+            newStatus: destination.droppableId,
+            newOrder,
+          }),
         }
       );
-    } catch (err) {
-      setError(err.message);
+      if (res) {
+        setTickets(res);
+        setIsDragging(false);
+      }
+    } catch (error) {
+      setError('Failed to update ticket order');
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  const capitalize = (str) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+  const openTicketModal = (ticket) => {
+    setSelectedTicket(ticket);
+    setShowTicketViewModal(true);
   };
 
   return (
-    <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="grid grid-cols-4 gap-4">
-        {statuses.map((status) => (
-          <Droppable key={status} droppableId={status}>
-            {(provided) => (
-              <div
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                className="p-4 bg-gray-100 rounded shadow">
-                <h3 className="text-lg font-bold mb-4">{capitalize(status)}</h3>
-                {tickets
-                  .filter((ticket) => ticket.status === status)
-                  .map((ticket, index) => (
-                    <Draggable
-                      key={ticket._id}
-                      draggableId={ticket._id}
-                      index={index}>
-                      {(provided) => (
-                        <Link href={`/account/tickets/${ticket._id}`}>
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            className="p-2 mb-2 bg-white rounded shadow cursor-pointer">
-                            <h4 className="text-lg font-semibold">
-                              {ticket.title}
-                            </h4>
-                            <p className="text-gray-600">
-                              {ticket.description}
-                            </p>
-                          </div>
-                        </Link>
-                      )}
-                    </Draggable>
-                  ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        ))}
+    <>
+      {isDragging && (
+        <div className="fixed top-0 left-0 w-full h-full bg-gray-300 bg-opacity-50 flex justify-center items-center z-50">
+          <p className="text-lg font-bold">Loading...</p>
+        </div>
+      )}
+
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <div className="grid grid-cols-4 gap-4">
+          {statuses.map((status) => (
+            <Droppable key={status} droppableId={status}>
+              {(provided) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  className="p-4 bg-gray-100 rounded shadow">
+                  <h3 className="text-lg font-bold mb-4">
+                    {status.charAt(0).toUpperCase() + status.slice(1)}
+                  </h3>
+                  {tickets &&
+                    tickets
+                      .filter((ticket) => ticket.status === status)
+                      .map((ticket, index) => (
+                        <Draggable
+                          key={ticket._id}
+                          draggableId={ticket._id}
+                          index={index}>
+                          {(provided) => (
+                            <Link href={`/account/tickets/${ticket._id}`}>
+                              <div
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                className="p-2 mb-2 bg-white rounded shadow cursor-pointer">
+                                {ticket.title}
+                              </div>
+                            </Link>
+                          )}
+                        </Draggable>
+                      ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          ))}
+        </div>
+      </DragDropContext>
+
+      <div className="mt-4 flex justify-end">
+        <Button
+          onClick={() => setShowTicketModal(true)}
+          className="">
+          Create Ticket
+        </Button>
       </div>
-    </DragDropContext>
+
+      <TicketModal
+        showTicketModal={showTicketModal}
+        setShowTicketModal={setShowTicketModal}
+        selectedTicket={selectedTicket}
+        tickets={tickets}
+        selectedProject={selectedProject}
+        setError={setError}
+        setTickets={setTickets}
+      />
+    </>
   );
 };
 
-export default KanbanBoard;
+export default TicketsKanban;

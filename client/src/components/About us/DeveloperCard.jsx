@@ -39,7 +39,7 @@ const DeveloperCard = () => {
       {teamMembers.map((member, index) => (
         <div key={index} className="mb-8 mx-4 md:mx-7">
           <img
-            className="inline-flex object-cover border-4 border-teal-600 rounded-full shadow-[5px_5px_0_0_rgba(0,0,0,1)] shadow-teal-600/100 bg-teal-50 text-teal-600 h-24 w-24 sm:h-32 sm:w-32"
+            className="inline-flex object-cover border-4 border-sky-600 rounded-full shadow-[5px_5px_0_0_rgba(0,0,0,1)] shadow-sky-600/100 bg-sky-50 text-sky-600 h-24 w-24 sm:h-32 sm:w-32"
             src={member.imageUrl}
             alt={member.name}
           />

@@ -3,6 +3,7 @@ import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import fetcher from '@/_utils/fetcher';
 import TicketViewModal from '@/components/Projects/TicketViewModal';
 import TicketModal from '@/components/Projects/TicketModal';
+import Button from '../Button/Button';
 
 const TicketManagement = ({ selectedProject, setError }) => {
   const [tickets, setTickets] = useState([]);
@@ -22,7 +23,7 @@ const TicketManagement = ({ selectedProject, setError }) => {
           const data = await fetcher(
             `/v1/projects/${selectedProject._id}/tickets`
           );
-          if (data) setTickets(data.tickets);
+          if (data) setTickets(data);
         } catch (err) {
           setError(err.message);
         }
@@ -85,25 +86,26 @@ const TicketManagement = ({ selectedProject, setError }) => {
                   <h3 className="text-lg font-bold mb-4">
                     {status.charAt(0).toUpperCase() + status.slice(1)}
                   </h3>
-                  {tickets
-                    .filter((ticket) => ticket.status === status)
-                    .map((ticket, index) => (
-                      <Draggable
-                        key={ticket._id}
-                        draggableId={ticket._id}
-                        index={index}>
-                        {(provided) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            className="p-2 mb-2 bg-white rounded shadow cursor-pointer"
-                            onClick={() => openTicketModal(ticket)}>
-                            {ticket.title}
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
+                  {tickets &&
+                    tickets
+                      .filter((ticket) => ticket.status === status)
+                      .map((ticket, index) => (
+                        <Draggable
+                          key={ticket._id}
+                          draggableId={ticket._id}
+                          index={index}>
+                          {(provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              className="p-2 mb-2 bg-white rounded shadow cursor-pointer"
+                              onClick={() => openTicketModal(ticket)}>
+                              {ticket.title}
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
                   {provided.placeholder}
                 </div>
               )}
@@ -113,11 +115,7 @@ const TicketManagement = ({ selectedProject, setError }) => {
       </DragDropContext>
 
       <div className="mt-4 flex justify-end">
-        <button
-          onClick={() => setShowTicketModal(true)}
-          className="p-2 bg-green-500 text-white rounded">
-          Create Ticket
-        </button>
+        <Button onClick={() => setShowTicketModal(true)}>Create Ticket</Button>
       </div>
 
       <TicketViewModal

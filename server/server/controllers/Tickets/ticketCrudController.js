@@ -88,9 +88,7 @@ const getTicketById = async (req, res) => {
       'username email'
     );
     if (ticket) {
-      res
-        .status(200)
-        .json({ message: 'Ticket retrieved successfully', ticket });
+      res.status(200).json(ticket);
     } else {
       res.status(404).json({ message: 'Ticket not found' });
     }
@@ -126,10 +124,7 @@ const updateTicket = async (req, res) => {
     tickets = await sortItems(tickets);
 
     if (tickets) {
-      res.status(200).json({
-        message: 'Ticket updated successfully',
-        tickets: tickets,
-      });
+      res.status(200).json(tickets);
     } else {
       res.status(404).json({ message: 'Ticket not found' });
     }
