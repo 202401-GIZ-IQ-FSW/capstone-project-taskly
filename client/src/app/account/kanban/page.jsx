@@ -79,7 +79,7 @@ const TicketsKanban = () => {
       )}
 
       <DragDropContext onDragEnd={handleDragEnd}>
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {statuses.map((status) => (
             <Droppable key={status} droppableId={status}>
               {(provided) => (
@@ -120,9 +120,7 @@ const TicketsKanban = () => {
       </DragDropContext>
 
       <div className="mt-4 flex justify-end">
-        <Button
-          onClick={() => setShowTicketModal(true)}
-          className="">
+        <Button onClick={() => setShowTicketModal(true)} className="">
           Create Ticket
         </Button>
       </div>
