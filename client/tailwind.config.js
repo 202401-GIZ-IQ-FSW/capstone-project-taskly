@@ -56,7 +56,9 @@ module.exports = {
         'custom-gray': '#eee',
         'custom-black': '#181717',
         'custom-teal': ' #149c90',
-        'custom-gray': '#eee'
+        'custom-gray': '#eee',
+        'custom-blue': '#0B2D50',
+        'light-blue': '#A2C7EB'
       },
     },
   },

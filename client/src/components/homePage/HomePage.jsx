@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../components/Header';
+import Header from '../header/Header';
 import TicketSubmission from '../components/TicketSubmission';
 import TicketStats from '../components/TicketStats';
 import Footer from '../components/Footer';

@@ -8,7 +8,7 @@ const Timeline = () => {
   return (
     <ul className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
       <li>
-        <div className="timeline-middle text-custom-teal">
+        <div className="timeline-middle text-light-blue">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -22,13 +22,13 @@ const Timeline = () => {
           </svg>
         </div>
         <div className="timeline-start mb-10 md:text-end">
-          <time className="font-dancing text-lg text-custom-teal italic">
+          <time className="font-dancing text-lg text-light-blue italic">
             January
           </time>
-          <div className="text-lg font-black text-custom-black">
+          <div className="text-lg font-black text-custom-blue">
             <div className="flex items-center font-robot justify-start md:justify-end ">
               Re:Coded BootCamp Kick-off
-              <IoRocketOutline className="ml-2 text-custom-teal" />
+              <IoRocketOutline className="ml-2 text-light-blue" />
             </div>
           </div>
           <p className="font-lato text-end">
@@ -43,7 +43,7 @@ const Timeline = () => {
       </li>
       <li>
         <hr />
-        <div className="timeline-middle text-custom-teal">
+        <div className="timeline-middle text-light-blue">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -57,13 +57,13 @@ const Timeline = () => {
           </svg>
         </div>
         <div className="timeline-end mb-10">
-          <time className="font-dancing text-lg text-custom-teal italic">
+          <time className="font-dancing text-lg text-light-blue italic">
             January-March
           </time>
-          <div className="text-lg font-black text-custom-black">
+          <div className="text-lg font-black text-custom-blue">
             <div className="flex items-center font-robot justify-start">
               Front-end phase
-              <FaReact className="ml-2 text-custom-teal" />
+              <FaReact className="ml-2 text-light-blue" />
             </div>
           </div>
           <div className="text-lg font-black"></div>
@@ -75,7 +75,7 @@ const Timeline = () => {
       </li>
       <li>
         <hr />
-        <div className="timeline-middle text-custom-teal">
+        <div className="timeline-middle text-light-blue">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -89,13 +89,13 @@ const Timeline = () => {
           </svg>
         </div>
         <div className="timeline-start mb-10 md:text-end">
-          <time className="font-dancing text-lg text-custom-teal italic">
+          <time className="font-dancing text-lg text-light-blue italic">
             April-June
           </time>
-          <div className="text-lg font-black text-custom-black">
+          <div className="text-lg font-black text-custom-blue">
             <div className="flex items-center font-robot justify-start md:justify-end">
               Back-end phase
-              <IoServer className="ml-2 text-custom-teal" />
+              <IoServer className="ml-2 text-light-blue" />
             </div>
           </div>
           During which we learned to work with Express.js, SQL & NoSQL
@@ -106,7 +106,7 @@ const Timeline = () => {
       </li>
       <li>
         <hr />
-        <div className="timeline-middle text-custom-teal">
+        <div className="timeline-middle text-light-blue">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -120,13 +120,13 @@ const Timeline = () => {
           </svg>
         </div>
         <div className="timeline-end mb-10">
-          <time className="font-dancing text-lg text-custom-teal italic">
+          <time className="font-dancing text-lg text-light-blue italic">
             June-July
           </time>
-          <div className="text-lg font-black text-custom-black">
+          <div className="text-lg font-black text-custom-blue">
             <div className="flex items-center font-robot justify-start">
               Capstone Project
-              <GoMilestone className="ml-2 text-custom-teal" />
+              <GoMilestone className="ml-2 text-light-blue" />
             </div>
           </div>
           in our final phase, working on our graduation capstone project: a
@@ -138,7 +138,7 @@ const Timeline = () => {
       </li>
       <li>
         <hr />
-        <div className="timeline-middle text-custom-teal">
+        <div className="timeline-middle text-light-blue">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -152,13 +152,13 @@ const Timeline = () => {
           </svg>
         </div>
         <div className="timeline-start mb-10 md:text-end">
-          <time className="font-dancing text-lg text-custom-teal italic">
+          <time className="font-dancing text-lg text-light-blue italic">
             June-July
           </time>
-          <div className="text-lg font-black text-custom-black">
+          <div className="text-lg font-black text-custom-blue">
             <div className="flex items-center font-robot justify-start md:justify-end">
               Our Mission
-              <FaCrosshairs className="ml-2 text-custom-teal" />
+              <FaCrosshairs className="ml-2 text-light-blue" />
             </div>
           </div>
           Our mission is to create an advanced Ticket Management System that

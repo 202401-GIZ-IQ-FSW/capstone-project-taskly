@@ -82,7 +82,7 @@ const Register = () => {
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-custom-gray p-10">
       <div className="flex flex-col md:flex-row max-w-4xl w-full bg-white/50 rounded-lg shadow-xl overflow-hidden">
-        <div className="flex-1 bg-teal-500 p-8 flex flex-col justify-center items-center text-white">
+        <div className="flex-1 bg-custom-blue p-8 flex flex-col justify-center items-center text-white">
           <h2 className="text-3xl md:text-4xl font-roboto font-bold mb-2">
             WELCOME!
           </h2>
@@ -91,7 +91,7 @@ const Register = () => {
           </p>
         </div>
         <div className="flex-1 p-8">
-          <h2 className="text-3xl font-semibold mb-6 font-roboto text-teal-600">
+          <h2 className="text-3xl font-semibold mb-6 font-roboto text-custom-blue">
             Sign Up
           </h2>
 
@@ -109,7 +109,7 @@ const Register = () => {
                       value={formData.firstName}
                       onChange={handleChange}
                       placeholder="First Name"
-                      className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-light-blue"
                       required
                     />
                   </div>
@@ -123,7 +123,7 @@ const Register = () => {
                       value={formData.lastName}
                       onChange={handleChange}
                       placeholder="Last Name"
-                      className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-light-blue"
                       required
                     />
                   </div>
@@ -139,7 +139,7 @@ const Register = () => {
                     value={formData.username}
                     onChange={handleChange}
                     placeholder="Username"
-                    className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border focus:outline-none focus:ring-2 focus:ring-light-blue"
                     required
                   />
                 </div>
@@ -154,7 +154,7 @@ const Register = () => {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="Email"
-                    className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-light-blue"
                     required
                   />
                 </div>
@@ -167,7 +167,7 @@ const Register = () => {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-light-blue"
                     required
                   />
                   <button
@@ -188,7 +188,7 @@ const Register = () => {
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-light-blue"
                     required
                   />
                   <button
@@ -208,7 +208,7 @@ const Register = () => {
                 </p>
                 <button
                   type="submit"
-                  className="w-full py-2 bg-teal-500 text-white font-roboto rounded hover:bg-teal-600 focus:bg-teal-500">
+                  className="w-full py-2 bg-custom-blue text-white font-roboto rounded hover:bg-custom-blue/80 focus:bg-custom-blue">
                   Sign up
                 </button>
               </form>
@@ -217,7 +217,7 @@ const Register = () => {
             <div className="mt-4 flex flex-col items-center justify-center">
             <div className="relative flex items-center w-full mb-4">
               <div className="flex-grow border-t border-gray-200"></div>
-              <span className="flex-shrink px-3 text-gray-900 text-sm font-medium leading-6">
+              <span className="flex-shrink px-3 text-custom-blue text-sm font-medium leading-6">
                 Or Sign In with
               </span>
               <div className="flex-grow border-t border-gray-200"></div>
