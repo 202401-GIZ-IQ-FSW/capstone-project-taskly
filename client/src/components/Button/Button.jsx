@@ -11,7 +11,7 @@ const Button = ({
     <button
       onClick={onClick}
       type={type}
-      className={`rounded-md bg-accent-dark  px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-dark ${
+      className={`rounded-md bg-light-blue  px-3 py-2 text-lg font-bold text-white shadow-sm hover:bg-custom-blue ${
         processing && 'opacity-75'
       } ${disabled ? 'cursor-not-allowed' : ''} ${className}`}
       disabled={disabled} // Disable the button if disabled prop is true
