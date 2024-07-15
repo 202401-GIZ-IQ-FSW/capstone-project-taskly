@@ -1,7 +1,7 @@
-// client\src\components\Projects\TicketModal.jsx
 'use client';
 import React, { useState } from 'react';
 import fetcher from '@/_utils/fetcher';
+import Button from '../Button/Button';
 
 const TicketModal = ({
   showTicketModal,
@@ -86,16 +86,12 @@ const TicketModal = ({
             <option value="medium">Medium</option>
             <option value="high">High</option>
           </select>
-          <button
+          <Button
             onClick={handleSubmit}
             className="p-2 bg-blue-500 text-white rounded mr-2">
             {selectedTicket ? 'Save' : 'Create'}
-          </button>
-          <button
-            onClick={() => setShowTicketModal(false)}
-            className="p-2 bg-gray-300 rounded">
-            Cancel
-          </button>
+          </Button>
+          <Button onClick={() => setShowTicketModal(false)}>Cancel</Button>
         </div>
       </div>
     )

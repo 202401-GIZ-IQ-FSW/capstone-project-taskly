@@ -5,12 +5,11 @@ import fetcher from '@/_utils/fetcher';
 import TicketViewModal from '@/components/Projects/TicketViewModal';
 import TicketModal from '@/components/Projects/TicketModal';
 import { useProjects } from '@/context/ProjectsContext/ProjectsContext';
+import Link from 'next/link';
+import Button from '@/components/Button/Button';
 
 const TicketsKanban = () => {
   const [tickets, setTickets] = useState([]);
-  const [showTicketViewModal, setShowTicketViewModal] = useState(false);
-  const [comments, setComments] = useState([]);
-  const [activityLog, setActivityLog] = useState([]);
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [showTicketModal, setShowTicketModal] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -100,14 +99,15 @@ const TicketsKanban = () => {
                           draggableId={ticket._id}
                           index={index}>
                           {(provided) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              className="p-2 mb-2 bg-white rounded shadow cursor-pointer"
-                              onClick={() => openTicketModal(ticket)}>
-                              {ticket.title}
-                            </div>
+                            <Link href={`/account/tickets/${ticket._id}`}>
+                              <div
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                className="p-2 mb-2 bg-white rounded shadow cursor-pointer">
+                                {ticket.title}
+                              </div>
+                            </Link>
                           )}
                         </Draggable>
                       ))}
@@ -120,23 +120,12 @@ const TicketsKanban = () => {
       </DragDropContext>
 
       <div className="mt-4 flex justify-end">
-        <button
+        <Button
           onClick={() => setShowTicketModal(true)}
-          className="p-2 bg-green-500 text-white rounded">
+          className="">
           Create Ticket
-        </button>
+        </Button>
       </div>
-
-      <TicketViewModal
-        isOpen={showTicketViewModal}
-        setIsOpen={setShowTicketViewModal}
-        selectedTicket={selectedTicket}
-        selectedProject={selectedProject}
-        comments={comments}
-        setComments={setComments}
-        activityLog={activityLog}
-        setActivityLog={setActivityLog}
-      />
 
       <TicketModal
         showTicketModal={showTicketModal}
