@@ -20,10 +20,10 @@ const ProjectSettings = ({
   const [inviteRole, setInviteRole] = useState('view');
 
   return (
-    <div className="relative">
+    <div className="">
       <button
         onClick={() => setShowSettingsDropdown(!showSettingsDropdown)}
-        className="font-extrabold text-2xl"
+        className="font-extrabold text-2xl absolute -top-10 right-0"
         title="Project Settings"
         id="settings">
         ...

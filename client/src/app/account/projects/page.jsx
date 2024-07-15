@@ -25,15 +25,20 @@ const ProjectsPage = () => {
   }
 
   return (
-    <div className="p-4" onClick={handleClicks}>
+    <div className="p-4 relative" onClick={handleClicks}>
       <div className="mb-4 flex justify-left items-center">
         {/* <ProjecstList
           selectedProject={selectedProject}
           projects={projects}
           setSelectedProject={setSelectedProject}
         /> */}
-
-        <div className="flex flex-row justify-end w-full">
+        <div className="w-full pb-8">
+          <h1 className="text-4xl text-custom-blue mb-4">
+            {selectedProject?.name}
+          </h1>
+          <p>{selectedProject?.description}</p>
+        </div>
+        <div className="flex flex-row justify-end w-full absolute top-0 md:top-16 right-0">
           {!selectedProject && (
             <Button onClick={() => setShowCreateProjectModal(true)}>
               Create Project
