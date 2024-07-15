@@ -93,7 +93,7 @@ const InviteMemberModal = ({
           <ul>
             <li className="flex justify-between items-center">
               <span>
-                {selectedProject ? selectedProject.ownerId.username : ''}{' '}
+                {selectedProject ? selectedProject.ownerId.username : ''}
                 (Owner)
               </span>
             </li>

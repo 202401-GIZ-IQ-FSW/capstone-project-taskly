@@ -21,7 +21,6 @@ const ProjectsPage = () => {
         setProjects(Array.isArray(response) ? response : []);
         if (projects && projects.length != 0) {
           window['projectSelect'].value = projects[0]._id;
-          setSelectedProject(projects[0]);
         }
       } catch (err) {
         setError(err.message);
@@ -34,12 +33,14 @@ const ProjectsPage = () => {
     setSelectedProject(projects[0]);
   }, [projects]);
   useEffect(() => {
-    // console.log(selectedProject);
   }, [selectedProject]);
 
   const handleClicks = (event) => {
-    !event.target.id.includes('settings') ? setShowSettingsDropdown(false) : '';
+    if (!event.target.id.includes('settings')) {
+      setShowSettingsDropdown(false);
+    }
   };
+
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -53,7 +54,7 @@ const ProjectsPage = () => {
           setSelectedProject={setSelectedProject}
         />
 
-        <div className="flex flex-row justify-end w-full ">
+        <div className="flex flex-row justify-end w-full">
           {!selectedProject && (
             <button
               className="p-2 bg-green-500 text-white rounded"
@@ -65,7 +66,7 @@ const ProjectsPage = () => {
             <ProjectSettings
               projects={projects}
               setProjects={setProjects}
-              SelectedProject={selectedProject}
+              selectedProject={selectedProject}
               setSelectedProject={setSelectedProject}
               showCreateProjectModal={showCreateProjectModal}
               setShowCreateProjectModal={setShowCreateProjectModal}
@@ -82,7 +83,6 @@ const ProjectsPage = () => {
             selectedProject={selectedProject}
             setError={setError}
           />
-
           <div className="mt-8">
             <h2 className="text-2xl font-bold mb-4">Project Activity Log</h2>
             {/* <ul>
@@ -94,7 +94,7 @@ const ProjectsPage = () => {
             </ul> */}
           </div>
         </div>
-      )}{' '}
+      )}
       {showCreateProjectModal && (
         <CreateProjectModal
           setIsOpen={setShowCreateProjectModal}

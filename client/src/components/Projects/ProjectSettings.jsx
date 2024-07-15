@@ -55,20 +55,22 @@ const ProjectSettings = ({
 
       {showEditProjectModal && (
         <EditProjectModal
-        selectedProject={selectedProject}
+          selectedProject={selectedProject}
           setIsOpen={setShowEditProjectModal}
           setProjects={setProjects}
         />
       )}
-     {showDeleteProjectModal && <DeleteProjectModal
-        isOpen={showDeleteProjectModal}
-        setIsOpen={setShowDeleteProjectModal}
-        selectedProject={selectedProject}
-        setSelectedProject={setSelectedProject}
-        setProjects={setProjects}
-        setError={setError}
-        projects={projects}
-      />}
+      {showDeleteProjectModal && (
+        <DeleteProjectModal
+          isOpen={showDeleteProjectModal}
+          setIsOpen={setShowDeleteProjectModal}
+          selectedProject={selectedProject}
+          setSelectedProject={setSelectedProject}
+          setProjects={setProjects}
+          setError={setError}
+          projects={projects}
+        />
+      )}
       {showInviteMemberModal && (
         <InviteMemberModal
           isOpen={showInviteMemberModal}

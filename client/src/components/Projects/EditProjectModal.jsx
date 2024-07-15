@@ -3,12 +3,9 @@ import React, { useState, useEffect } from 'react';
 import fetcher from '@/_utils/fetcher';
 
 const EditProjectModal = ({ setIsOpen, selectedProject, setProjects }) => {
-  const [project, setProject] = useState(selectedProject);
   const [projectName, setProjectName] = useState('');
   const [projectDescription, setProjectDescription] = useState('');
 
-  console.log(selectedProject);
-  console.log(project);
   useEffect(() => {
     if (selectedProject) {
       setProjectName(selectedProject.name);

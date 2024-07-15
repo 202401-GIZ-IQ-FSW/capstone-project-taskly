@@ -1,4 +1,5 @@
 // client\src\components\Projects\TicketViewModal.jsx
+'use client';
 import React, { useState, useEffect } from 'react';
 import fetcher from '@/_utils/fetcher';
 

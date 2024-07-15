@@ -1,4 +1,5 @@
 // client\src\components\Projects\TicketModal.jsx
+'use client';
 import React, { useState } from 'react';
 import fetcher from '@/_utils/fetcher';
 
@@ -6,7 +7,10 @@ const TicketModal = ({
   showTicketModal,
   setShowTicketModal,
   selectedTicket,
-  setSelectedTicket, setError
+  setError,
+  selectedProject,
+  setTickets,
+  tickets,
 }) => {
   const [newTicketTitle, setNewTicketTitle] = useState(
     selectedTicket ? selectedTicket.title : ''
@@ -17,9 +21,7 @@ const TicketModal = ({
   const [newTicketPriority, setNewTicketPriority] = useState(
     selectedTicket ? selectedTicket.priority : 'medium'
   );
-  const [newTicketAssignee, setNewTicketAssignee] = useState(
-    selectedTicket ? selectedTicket.assignees[0] : ''
-  );
+
   const handleCreateTicket = async () => {
     try {
       const data = await fetcher(
@@ -30,42 +32,29 @@ const TicketModal = ({
             title: newTicketTitle,
             description: newTicketDescription,
             priority: newTicketPriority,
-            assignees: [newTicketAssignee],
           }),
           headers: {
             'Content-Type': 'application/json',
           },
         }
       );
-      setTickets([...tickets, data]);
-      setTicketModalIsOpen(false);
+      setTickets([...tickets, data.ticket]);
+      setShowTicketModal(false);
       setNewTicketTitle('');
       setNewTicketDescription('');
       setNewTicketPriority('medium');
-      setNewTicketAssignee('');
     } catch (err) {
       setError(err.message);
     }
   };
 
-
   const handleSubmit = () => {
-    if (selectedTicket) {
-      // handleEditTicket({
-      //   ...selectedTicket,
-      //   title: newTicketTitle,
-      //   description: newTicketDescription,
-      //   priority: newTicketPriority,
-      //   assignees: [newTicketAssignee],
-      // });
-    } else {
-      handleCreateTicket({
-        title: newTicketTitle,
-        description: newTicketDescription,
-        priority: newTicketPriority,
-        assignees: [newTicketAssignee],
-      });
-    }
+    handleCreateTicket({
+      title: newTicketTitle,
+      description: newTicketDescription,
+      priority: newTicketPriority,
+    });
+
     setShowTicketModal(false);
   };
 
@@ -97,13 +86,6 @@ const TicketModal = ({
             <option value="medium">Medium</option>
             <option value="high">High</option>
           </select>
-          {/* <input
-            type="text"
-            placeholder="Assignee"
-            value={newTicketAssignee}
-            onChange={(e) => setNewTicketAssignee(e.target.value)}
-            className="p-2 border rounded w-full mb-4"
-          /> */}
           <button
             onClick={handleSubmit}
             className="p-2 bg-blue-500 text-white rounded mr-2">
