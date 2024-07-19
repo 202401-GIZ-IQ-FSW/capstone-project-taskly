@@ -4,7 +4,7 @@ import Button from '../../components/Button/Button';
 import Link from 'next/link';
 // homepage 
 const Hero = () => {
-  const { user } = useUser();
+  const { user } = useUser;
 
   // Define the URLs for logged in and logged out states
   const newTicketUrl = user ? '/account/dashboard' : '/auth/login';

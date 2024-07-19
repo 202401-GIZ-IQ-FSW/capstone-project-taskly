@@ -16,8 +16,6 @@ const ProjectSettings = ({
   const [showEditProjectModal, setShowEditProjectModal] = useState(false);
   const [showDeleteProjectModal, setShowDeleteProjectModal] = useState(false);
   const [showInviteMemberModal, setShowInviteMemberModal] = useState(false);
-  const [newMemberId, setNewMemberId] = useState('');
-  const [inviteRole, setInviteRole] = useState('view');
 
   return (
     <div className="relative">
@@ -76,11 +74,8 @@ const ProjectSettings = ({
           isOpen={showInviteMemberModal}
           setIsOpen={setShowInviteMemberModal}
           selectedProject={selectedProject}
-          newMemberId={newMemberId}
           setSelectedProject={setSelectedProject}
-          setNewMemberId={setNewMemberId}
-          inviteRole={inviteRole}
-          setInviteRole={setInviteRole}
+          setError={setError}
         />
       )}
     </div>

@@ -225,7 +225,7 @@ const Register = () => {
 
               <div>
                 <Link
-                  href="http://localhost:3001/api/v1/auth/google"
+                  href="https://tickets-backend-ahmedesam24.replit.app/api/api/v1/auth/google"
                   className="bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow hover:bg-gray-100 flex items-center">
                   <FcGoogle className="h-5 w-5" />
                   <span className="text-sm font-semibold leading-6">

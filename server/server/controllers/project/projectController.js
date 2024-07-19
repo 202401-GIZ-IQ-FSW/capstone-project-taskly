@@ -40,10 +40,11 @@ const getAllProjects = async (req, res) => {
     }
 
     // Find projects owned by the user
-    const projects = await ProjectModel.find({ ownderId: userId }).populate(
-      'ownerId',
-      'username'
-    );;
+    const projects = await ProjectModel.find({ ownderId: userId })
+    .populate('editorsInvited', 'username')
+    .populate('viewersInvited', 'username')
+    .populate('editAccess', 'username')
+    .populate('viewAccess', 'username'); 
     res.json(projects);
   } catch (error) {
     res.status(500).json({
@@ -56,8 +57,11 @@ const getAllProjects = async (req, res) => {
 const getSingleProject = async (req, res) => {
   const projectId = req.params.projectId;
   try {
-    const project = await ProjectModel.findById(projectId);
-
+    const project = await ProjectModel.findById(projectId)
+      .populate('editorsInvited', 'username')
+      .populate('viewersInvited', 'username')
+      .populate('editAccess', 'username')
+      .populate('viewAccess', 'username');
     if (!project) {
       return res.status(404).json({ message: 'Project does not exist!' });
     }
@@ -145,7 +149,6 @@ const searchTickets = async (req, res) => {
     });
   }
 };
-
 
 // - GET /api/v1/projects/{projectId}/tickets/filter?status={status}&priority={priority} - Filter tickets within a project by status and priority
 const filterTickets = async (req, res) => {
